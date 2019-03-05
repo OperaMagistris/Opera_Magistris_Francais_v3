@@ -1,0 +1,806 @@
+	%to make section start on odd page
+	\newpage
+	\thispagestyle{empty}
+	\mbox{}
+	\parpic[l][t]{%
+	  \begin{minipage}{30mm}
+	    \fbox{\includegraphics[width=80px,height=100px]{img/einstein.eps}}
+	  \end{minipage}
+	}		
+	Ce livre dont la première édition a été publiée en 2001 est conçu pour que les connaissances requises pour le lire soient aussi simples que possible. Il n'est pas nécessaire d'avoir un doctorat pour le consulter, il suffit de savoir raisonner, penser de façon critique, observer et avoir le temps...
+	\begin{flushright}
+	\textit{"La simplicité est le sceau de la vérité et elle rayonne de beauté"} \\
+	 Albert EINSTEIN
+	\end{flushright}
+	
+	\section{Avant-Propos}
+	Aucun entreprise humaine n'a eu plus d'impact que la Science\footnote{Du latin \textit{scientia} "connaissance, savoir, expertise". Lui-même venant de \textit{sciens} (génitif scientis) qui signifie "intelligent, talentueux", participe présent de \textit{scire} qui signifie "connaître" vient probablement de "séparer une chose d'une autre, distinguer" lié à \textit{scindere} "couper, diviser".} sur nos vies et notre conception de notre Monde et de nous-mêmes. Ses théories, conquêtes et résultats sont tout autour de nous dans le quotidien de la majorité des habitants de cette planète.
+
+	Omniprésents dans l'industrie (aérospatiale, imagerie, cryptographie, transport, chimie, algorithmique, etc.) ou dans les services (banque, fintech, assurance, ressources humaines, projets, logistique, architecture, communication, etc.), les mathématiques appliquées apparaîssent également dans d'autres domaines: enquêtes, modélisation des risques, protection des données, politique, etc. Les mathématiques appliquées (parfois aussi appelées "ingénierie mathématique") influencent nos vies (télécommunications, transport, médecine, météorologie, musique, gestion de projet) et contribuent à la résolution des enjeux d'actualité: énergie, santé, environnement, climat, optimisation, développement durable, etc. bien plus que toute technique ou méthodologie de soft skills! Leur grand succès est leur fabuleuse dispersion dans le monde réel et leur intégration croissante dans toutes les activités d'intelligence humaine et artificielle qui nécessitent transparence et l'évitement de biais cognitifs. Nous allons donc à une situation où les mathématiciens et les ingénieurs n'auront plus le monopole des mathématiques, mais où presque tous les postes de "cols blancs" devront faire des mathématiques avancées.
+
+	En tant qu'ancien étudiant dans le domaine de l'ingénierie, j'ai souvent regretté l'absence d'un seul livre assez complet, détaillé (sans aller à l'extrême ...) et éducatif si possible gratuit (!) et portable (êtant personnellement fan des eBooks ...) contenant au moins une idée non exhaustive du programme général de mathématiques appliquées dans les écoles d'ingénieurs avec un aperçu de ce qui est utilisé dans les entreprises avec des preuves plus intuitives que rigoureuses, mais avec suffisamment de détails pour éviter tout effort inutile au lecteur. Aussi un livre qui n'exige pas que le lecteur adopte à chaque fois une nouvelle notation ou une terminologie spécifique à l'auteur - quand il n'est pas carrément nécessaire parfois de changer la lecture dans une langue étrangère ... - et où n'importe qui peut suggérer des améliorations ou des ajouts (à travers un forum, uen livre d'or ou un simple courriel).
+
+	J'ai aussi été frustré pendant mes études d'avoir souvent à avaler des «formules» ou des «lois» censées être (et à tort) non prouvables ou trop compliquées comme le disaient mes professeurs ou même d'être déçu par des livres d'auteurs de renom (où les développements sont laissés au lecteur ou comme exercice et où aucune application réelle est mentionné ...). Dans ce présent livre prédomine la volonté de ne jamais confondre le lecteur avec des phrases vides comme "il est évident que ...", "il est facile de prouver que ...", "nous laissons cela au lecteur comme un exercice ... ", puisque tous les développements sont présentés en détail. Mais je ne suis pas un puriste des maths! Je n'ai qu'une ambition: expliquer le plus facilement possible.
+	
+	Bien que je doive admettre que certaines relations mathématiques présentées dans le cursus des écoles d'ingénieurs ne peuvent être réalisées faute de temps dans le programme officiel ou à cause de la taille limite d'un livre papier, je ne peux accepter qu'un enseignant ou un auteur en racontent à ses élèves (respectivement, ses lecteurs) que certaines lois et relations ne sont pas prouvables (parce que la plupart du temps ce n'est pas vrai!) ou que telle ou telle preuve est trop compliquée sans donner de référence (où l'étudiant pourrait trouver l'information nécessaire pour satisfaire sa curiosité) ou au moins une preuve simplifiée mais satisfaisante.
+	
+	De plus, je pense qu'il est totalement archaïque aujourd'hui que certains enseignants continuent à demander à leurs élèves de prendre une quantité massive de notes pendant les cours. Il serait beaucoup plus favorable et optimal de distribuer un document de cours contenant tous les détails afin de pouvoir se concentrer sur les points essentiels avec les élèves, c'est-à-dire les explications orales, les interprétations, la compréhension, le raisonnement et la pratique. Évidemment en fournissant un support de cours complet, certains élèves seront brillants par leur absence mais ... c'est probablement mieux ainsi! Ainsi, ceux qui sont passionnés peuvent approfondir des sujets à la maison ou à la bibliothèque universitaire, les non-intéressés et je m'en foutistes feront ce qu'ils ont à faire (...) et le reste (étudiants en difficulté mais travailleurs) suivra le cours dispensé par l'enseignant pour profiter de poser des questions plutôt que de suivre un cours sans réfléchir à copier un tableau noir dans une salle avec un effectif d'élève surnuméaire.
+	
+	Inspiré d'un modèle d'apprentissage d'un érudit américain, dont j'ai oublié le nom (...), ce livre propose et impose au lecteur les caractéristiques suivantes: découvrir, mémoriser, citer, intégrer, expliquer, reformuler, déduire, sélectionner, utiliser, décomposer, comparer, interpréter, juger, argumenter, modéliser, développer, créer, rechercher, raisonner, développer dans un  enseignement progressif limpide pour développer les compétences analytiques et l'ouverture d'esprit.
+
+	Donc, dans mon esprit, ce livre non exhaustif (et ses PDF compagnons associés) doit être un substitut, gratuit pour tous les étudiants et employés à travers le monde, à de nombreuses références et lacunes du système scolaire, permettant à tout étudiant curieux de ne pas être frustré pendant de nombreuses années pendant son cursus académique. Sinon, la science de l'ingénieur pourrait avoir l'aspect d'une science figée, mis à part les développements scientifiques et techniques, une accumulation hétéroclite de connaissances et surtout de formules qui la ferait considérer comme un sous-produit insipide des mathématiques et qui amène les entreprises et les gouvernements à beaucoup de faux résultats et de mauvaises décisions ...
+	
+	Ce livre a également été conçu pour répondre aux besoins des dirigeants, aussi bien financiers que non financiers. Tout dirigeant qui veut approfondir et comprendre les fondamentaux de la finance stratégique, du marketing stratégique ou de l'ingénierie de gestion de projet, et de l'ingénierie de la gestion d'entreprise/administrations et des questions liées à la chaîne d'approvisionnement bénéficiera de la lecture de ce livre.
+	
+	Ce livre a également pour but de décrire et d'expliquer comment notre Univers et notre Monde (également probablement d'autres "mondes" de notre Univers) fonctionne d'une manière beaucoup plus précise, plus complète et plus détaillée que n'importe quel livre "Saint". Il donne des modèles et des méthodes de quantification pour l'origine des espèces, des galaxies, des planètes, des phénomènes quantiques, des mouvements physiques, de la physique stellaire, des événements extrêmes observables et aussi des événements extrêmement rares et explique les stratégies sociales et technologiques de manière prouvable que tout tout à chacun peut vérifier par lui-même et ce en exposant chaque fois les hypothèses que toute entité raisonnable devrait prendre a priori en charge dans l'état actuel de nos connaissances!
+	
+	De toute évidence, les mathématiques appliquées sont un sujet si vast qu'un livre de cette envergure ne peut qu'aborder la base. Les lecteurs sont certainement encouragés à aller au-delà (voir la bibliographie à la fin du livre).
+
+	Maintenant, ceux qui voient les Mathématiques Appliquées seulement comme un outil (ce qu'elles sont aussi), ou comme l'ennemi des croyances religieuses, ou comme une école de campagne ennuyeuse, sont légion. Cependant, il est peut-être utile de rappeler que, comme l'a dit Galilée, «\textit{le livre de la nature est écrit dans le langage des mathématiques}» (sans vouloir faire de scientisme!). Quand vous allez en Chine, vous apprenez le chinois. Quand vous voulez aller à l'Univers, vous apprenez la mathématique parce que cette dernière est la langue de l'Univers et de la Nature perceptible. C'est pourquoi la mathématique est fondamentale et si incroyable car elle s'applique à tout l'Univers et ce à l'état de nos connaissances actuelles, aussi à travers le temps. C'est dans cet esprit que ce livre traite des mathématiques appliquées pour les étudiants en sciences naturelles, terrestres et de la vie, ainsi que pour tous ceux qui ont une occupation liée aux différents sujets, y compris la philosophie ou pour toute personne intéressée par la science dans la vie de tous les jours.
+
+	Le choix d'étudier l'ingénierie dans ce livre comme une branche des Mathématiques Appliquées vient du fait que les différences entre tous les domaines de la physique (anciennement connu comme «philosophie naturelle») et les mathématiques sont si difficilement distinguable que la médaille Fields (la plus haute distinction aujourd'hui dans le domaine des mathématiques) a été décerné en 1990 au physicien Edward Witten, qui a utilisé des idées de la physique pour prouver un théorème mathématique. Cette tendance n'est certainement pas fortuite, car on peut observer que toute la science, puisqu'elle cherche à approfondir la compréhension du sujet qu'elle étudie, finit toujours ses essais et erreurs dans le domaines mathématiques pures (le chemin absolu par excellence!). Ainsi, nous pouvons prédire dans un futur lointain, la convergence de toutes les sciences (pures, exactes ou sociales) vers les mathématiques pour les techniques de modélisation (voir par exemple le PDF français "\textit{L'explosion des mathématiques}" disponible sur la page de téléchargement du site Web compagnon).
+
+	Il peut parfois nous sembler difficile (en raison de la peur irrationnelle et injustifiée des sciences pures d'une partie significative de la population) de transmettre le sentiment de la beauté mathématique de la Nature, son harmonie la plus profonde et la mécanique bien huilée de l'Univers à ceux qui ne connaissent que les bases de l'algèbre. Le physicien Richard Feynman a parlé d'une une fois de «deux cultures»: les gens qui ont et ceux qui n'ont pas une compréhension suffisante des mathématiques pour apprécier la structure scientifique de la Nature. Il est dommage que les mathématiques soient nécessaires pour comprendre profondément la Nature et qu'elles aient également une mauvaise réputation. Pour l'anecdote, on prétend qu'un roi qui a demandé à Euclide de lui enseigner la géométrie se plaignait de la difficulté de cette dernière. Euclide répondit: "Il n'y a pas de voie royale". Les physiciens et les mathématiciens ne peuvent pas se convertir à une langue différente. Si vous voulez en apprendre davantage sur la Nature, pour en apprécier la vraie valeur, vous devez comprendre sa langue. La Nature n'est révélée que sous cette forme et nous ne pouvons être prétentieux au point de lui demander de changer ce fait.
+	
+	De même, aucune discussion intellectuelle ne vous permettra de communiquer avec une personne sourde ce que vous ressentez en écoutant de la musique. De même, toute discussion sur le monde reste vaine pour  transmettre une compréhension intime de la Nature de ceux de «l'autre culture». Les philosophes et les théologiens peuvent essayer de vous donner des idées qualitatives sur l'Univers. Le fait que la méthode scientifique (au sens propre du terme) ne puisse pas convaincre le Monde de ses forces à travers son processus itératif (le fait que la science est réécrite, réécrite et réécrite par améliorations incrémentales comme dans la méthodologie DMAIC Six Sigma\footnote{DMAIC (acronyme anglais pour Définir, Mesurer, Analyser, Améliorer et Contrôler) se réfère à un cycle d'amélioration piloté par les données utilisé pour améliorer, optimiser et stabiliser les processus et la conception. Le cycle d'amélioration DMAIC est l'outil de base utilisé pour conduire les projets Six Sigma que nous étudierons en profondeur dans la section de Génie Industriel. Cependant, DMAIC n'est pas exclusif à Six Sigma et peut être utilisé comme cadre pour d'autres applications d'amélioration.}) est peut-être le fait de l'horizon limité de certaines personnes qui imaginent que l'humain, ou un autre concept intuitif, sentimental ou arbitraire est le centre de l'Univers (principe anthropocentrique).
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{img/intro/scientific_method.jpg}
+		\caption[Scientific Method Cyclic Process]{Scientific Method Cyclic Process (source: ?)}
+	\end{figure}
+	Bien sûr, afin de partager cette connaissance mathématique, il peut sembler paradoxal d'augmenter, avec notre ouvrage, la longue liste de livres déjà disponibles dans les bibliothèques, dans le commerce et sur Internet. Néanmoins, je dois être capable de présenter des arguments qui justifient la création d'un tel ouvrage (et de son site Internet compagnon) par rapport à des livres tels que les Feynman, Landau ou Bourbaki et Wikipedia / Wolfram eux-mêmes ou Khan Academy ou OpenStax. Alors qu'est-ce que je pense que je peux ajouter à une telle richesse de matériels?
+	\begin{enumerate}
+		\item Le grand plaisir que nous prenons à écrire ce livre ("garder la main" et améliorer nos compétences) et à avoir un compendium détaillé de haute qualité des outils mathématiques pour nos clients et nos étudiants (et aussi tous ceux du Monde entier) et ce gratuitement!
+
+		\item La passion pour le partage de connaissances gratuitement (bataille contre la "folie des droits d'auteur" (RIP Aaron Swartz!)) et sans frontières avec un outil de haute qualité comme \LaTeX{} (à l'opposé de Wikipedia qui mélange \LaTeX{} et le contenu horrible et honteux de Khan Academy \footnote{OpenStax a de bons PDF de premier cycle - en particulier les exemples dans leurs livres - mais il y a entre $40$-$60\%$ de démonstrations mathématiques manquantes dans leurs PDF et la table des matières et l'index de leur PDF ne sont à ce jour pas interactifs ... et problème majeur ...: le contenu est limité uniquement aux sujets de premier cycle}).
+		
+		\item Soutenir l'éducation scientifique gratuite, la pensée critique et la compréhension fondée sur les preuves. En outre, il est clair qu'il existe un appétit insatiable pour certains gens à comprendre les choses (même si cela semble être actuellement une minorité) et ce livre a été écrit à cette fin.
+		
+		\item Nous voulons présenter les Mathématiques Appliquées d'une manière agréable et facile à apprendre (typiquement à l'opposé des livres des $9$ livres de Landau), parce que nous pensons que la maîtrise des Mathématiques Appliquées changent la façon dont nous comprenons l'Univers et améliore la compréhension et tolérance mutuelle entre humains et nos interactions avec la Nature.
+		
+		\item Cet ouvrage a été écrit avant (année 2001) que la version française de Wikipédia ait un contenu mathématique satisfaisant et longtemps avant que Khan Academy ou OpenStax n'existent.
+
+		\item Les possibilité d'effectuer rapidement des mises à jour ou corrections critiques  (à l'opposé des vidéos de Khan Academy) ainsi que de  collaboration que permettent un e-book gratuit (avec en plus les opportunités qu'offrent les outils de recherche et d'annotation des lecteurs de PDF).
+
+		\item Le contenu peut facilement être adapté en fonction des demandes / commentaires des lecteurs et de nos intérêts (à l'opposé des vidéos de Khan Academy ou des livres de OpenStax ou Landau)!
+		
+		\item A l'opposé des publications scientifiques (PRL ou autre) qui sont discutables car ne donnent pas de preuves détaillées et tournent parfois dans une boucle infinie de références bibliographiques, nous fournissons toujours les démonstration les plus détaillées possible.
+		
+		\item L'accès aux sources \LaTeX{} est disponible au Monde entier gratuit, donc personne (élève ou prof) n'a besoin de recréer la roue et perdre des centaines ou des milliers d'heures de rédaction au lieu de faire de l'innovation (à l'opposé des livres de Landau)!
+
+		\item Une présentation rigoureuse avec des preuves détaillées simplifiées de tous les concepts présentés (à l'opposé de Wikipedia, Khan Academy et OpenStax qui se concentrent uniquement sur les démonstrations mathématiques des concepts de premier cycle et souvent avec des démonstrations très lacunaires).
+
+		\item La présentation de nombreux outils mathématiques avancés et détaillés utilisés dans les affaires et la R\&D en gardant à l'esprit que le langage mathématique semble éternel et d'être l'un des seuls dénominateurs culturel commun entre tous les pays de notre Planète.
+
+		\item L'occasion pour les étudiants et les enseignants de pouvoir réutiliser un contenu par copier/coller (à l'opposé de Khan Academy ou des livres de Landau Books).
+
+		\item Proposer une notation constante (à l'opposé de Wikipédia, Khan Academy et OpenStax) tout au long du livre pour les opérateurs mathématiques, un langage clair sur tous les sujets (critère 3.C.: clair, complet et concis) et se concentrer sur les bases pour faire un important travail pédagogique sur les sujets (à l'opposé des livres de Landau).
+
+		\item Compiler autant d'informations que possible sur les sciences pures et exactes dans un unique livre électronique (portable), homogène et rigoureux et de haute qualité visuelle (mais en allant pas aussi loin que les livres de Landau).
+
+		\item Distinguer de toutes les pseudo-vérités, seulement les vérités qui peuvent être prouvées par la démarche mathématique.
+
+		\item Bénéficier du développement des méthodes d'enseignement qui utilisent Internet pour rechercher la solution de problèmes mathématiques.
+
+		\item L'amélioration spectaculaire des logiciels de traduction automatique et de la puissance de calcul qui fera de ce livre, du moins on l'espère, une référence internationale dans le domaine des sciences.
+		
+		\item Un PDF est meilleur qu'un site Internet car d'abord tous ceux qui utilisent Internet depuis 1990 savent que la grande majorité des sites disparaissent après environ $10$ ans et deuxièmement il est bien connu que certains pays bloquent Wikipédia et autres sites de connaissances pour garder leur population dans l'ignorance (et bloquer un PDF qui peut être partagé dans un e-mail est beaucoup plus difficile).
+		
+		\item et ... parce que les Mathématiques Appliquées sont belles et surtout lorsqu'elles sont écrites en \LaTeX{} et illustrées (à l'opposé des livres de Landau dont les illustrations sont assez anciennes et pauvres en couleurs).
+\end{enumerate}
+
+	Et aussi ... Je tends à penser que les résultats de la recherche sont la propriété de l'humanité et devraient être accessibles gratuitement à tous ceux qui explorent les phénomènes de la Nature. De cette façon, le travail de chacun bénéficie à tous, et c'est pour toute l'humanité que nos connaissances se cumulent et c'est la tendance que permet Internet.
+
+	Je ne cache pas que ma contribution est largement limitée à ce jour à celle d'un collectionneur qui glane ses informations dans les oeuvres de maîtres ou de publications ou de pages web anonymes et qui complète et argumente les développements mathématiques et les améliore quand c'est possible. Par conséquent, certains éléments de ce livre sont originaux et certains proviennent de la littérature de référence. Cependant la grande majorité de ce que nous avons écrit est une reformulation des résultats présentés dans la vaste bibliothèque d'existences de quelques livres fantastiques (et rares). Pour ceux qui m'accuseraient de plagiat, ils devraient penser que les théorèmes présentés dans la plupart des livres non libres et disponibles dans le commerce ont été découverts et écrits par leurs prédécesseurs des auteurs de ces mêmes livres et que leur contribution personnelle a été, comme la mienne, de mettre toutes ces informations sous une forme claire et moderne quelques centaines d'années plus tard. En outre, on peut douter que nous demandions à payer pour l'accès à une culture qui est certainement la seule vraiment valable et juste dans le Monde et où il n'y a pas de brevets ou de droits de propriété intellectuelle.
+	
+	Ce livre reflète également en grande partie mes propres limites intellectuelles relativement aux sciences dures et pures. Bien que j'essaie d'étudier autant de domaines scientifiques et mathématiques que possible, il est impossible de les maîtriser tous. Ce livre ne montre clairement que mes propres intérêts et expériences en tant que consultant et professeur, mais aussi mes forces et mes faiblesses. Je suis responsable de la sélection des intrants et, bien sûr, en grande partie des erreurs et des imperfections possibles.
+
+	Après avoir tenté un ordre de présentation strictement linéaire du sujet de la Mathématique Appliquée, j'ai décidé d'organiser ce livre d'une manière plus pédagogique (thématique) et toujours avec des exemples pratiques d'applications. Il est à mon avis très difficile de parler d'un sujet aussi vaste dans un ordre linéaire dans une seule vie humaine, c'est-à-dire lorsque les concepts sont introduits un à un, parmi ceux déjà connus (où chaque théorie, opérateur, etc. n'apparaîtrait pas avant sa définition). Ainsi, avec ce choix thématique, le lecteur pourra probablement se rendre compte de l'extrême complexité du sujet.
+
+	Les conséquences de ce choix sont les suivantes:
+	\begin{enumerate}
+		\item Parfois il faudra admettre certains concepts, quitte à les comprendre plus tard.
+	
+		\item Il sera probablement nécessaire au lecteur de parcourir au moins deux fois dans le livre. En première lecture, il appréhendra l'essentiel et à la deuxième lecture, il comprendrea les détails (je félicite dans tous les cas le lecteur débutant qui comprend toutes les subtilités la première fois!).
+	
+		\item Vous devez accepter le fait que certains sujets (et très faible nombre) sont parfois répétés pour le confort de lecture et l'assimilation du cerveau et qu'il existe de nombreuses références croisées et des remarques complémentaires en pied de page.
+	\end{enumerate}
+	
+	Certains savent que pour chaque théorème et modèle mathématique, il existe presque toujours plusieurs approches pour la démonstration mathématique. J'ai toujours essayé de choisir l'approche qui semblait lla plus simple (par exemple, en relativité et en physique quantique, il y a le formalisme algébrique et matriciel). L'objectif étant d'arriver au même résultat de toute façon. Dans certains cas intéressants, nous présentons même plusieurs approches d'une démonstration car nous considérons les différentes approches alors comme étant très "formatrices".
+	
+	Ce livre étant dans sa version brouillon, il manque forcément des contrôles de convergence, de continuité, de grammaire et autres ... (qui vont horrifier certains lecteurs et mathématiciens ...)! Cependant, j'ai évité (ou, sinon, je l'indique) les approximations habituelles de la physique et l'utilisation de l'analyse dimensionnelle, en l'utilisant le moins possible. J'essaie aussi d'éviter autant que possible les sujets avec des outils mathématiques qui n'ont pas été présentés auparavant et démontrés rigoureusement (selon les critères de l'ingénieur!).
+	
+	Enfin, cette présentation des Mathématiques Appliquées, qui peut encore être améliorée, n'est pas une référence absolue et contient des erreurs probablement par endroits. Tout commentaire est donc la bienvenue par e-mail ou via le forum du site compagnon déjà indiqués plus haut. Je m'efforcerai, dans la mesure du possible, de corriger les faiblesses et d'apporter les changements nécessaires le plus rapidement possible (cela prend quelques mois en général).
+	
+	Cependant, alors que les mathématiques sont exactes et indiscutables, la physique théorique (ses modèles) est toujours interprétée dans le vocabulaire commun (mais pas dans le vocabulaire mathématique) et ses conclusions sont toutes relatives d'un individu à l'autre. Je ne peux que conseiller, en lisant ce livre, de lire par vous-même et de ne pas subir d'influences extérieures dans un premier temps. Vous devez avoir un esprit très (très) critique, ne rien prendre pour acquis et tout remettre en question sans hésitation. En outre, le mot clé du bon scientifique devrait être: "Doute, doute, doute ... doute encore, et vérifie toujours.". Nous rappelons aussi que «rien de ce que nous pouvons voir, entendre, sentir, toucher ou goûter, n'est ce qu'il semble être», ne comptez donc pas sur votre expérience quotidienne pour tirer des conclusions hâtives, soyez critique, cartésien, rationnel et rigoureux dans vos développements, raisonnements et conclusions et confrontez-les avec d'autres en admettant vos erreurs et remises en question avec sagesse!
+	
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	L'une des causes du syndrôme de l'anti-intellectualisme réside probablement dans l'incapacité des établissements d'enseignement à inculquer la pensée critique au lycée. En particulier les universités, incapables de développer la pensée critique de leurs étudiants. Internet et son amalgame de vrai et de faux ont aussi leur part de responsabilité ainsi que les mass-médias qui manquent de rigueur dans la manière de citer leurs sources et leurs méthodes d'investigations. En outre, certains experts amplifient le problème en parlant s'exprimant publiquement et de manière non quantifiée et non sourcée sur des questions en dehors de leur domaine d'expertise !!!!
+	\end{tcolorbox}
+	Je veux dire à ceux qui essaieraient de retrouver par eux-mêmes les résultats de certains développements de ce livre, de ne pas s'inquiéter s'ils ne réussissent pas ou s'ils doutent de leurs compétences à cause du temps passé à résoudre une équation ou un problème donné. Effectivement, quelques théories qui semblent parfois évidents ou faciles aujourd'hui, ont parfois nécessité plusieurs semaines, mois, voire années, pour être développés par des mathématiciens ou des physiciens de premier plan dans le passé!
+	
+	J'ai aussi essayé de faire en sorte que ce livre soit agréable à consulter et lire en y ajoutant de nombreuses illustrations en couleurs et également en choisissant un style d'écriture peu formel.
+	
+	Enfin, j'ai choisi d'écrire ce travail à la première personne du pluriel: «nous». En effet, la physique mathématique n'est pas une science qui a été faite ou qui a évolué à travers un travail individuel, mais avec une collaboration intense entre des personnes liées par la même passion et désir de la connaissance. Ainsi, en utilisant le «nous», je voudrais rendre hommage aux scientifiques décédés, bien évidemment aux autres co-auteurs de ce livre mais aussi aux chercheurs contemporains et futurs pour le travail qu'ils vont effectuer afin d'approcher la vérité et la sagesse.
+	
+	\begin{center}
+	\includegraphics[scale=1]{img/humour/pure_math_vs_applied_math.jpg}
+	\end{center}
+
+	%to make section start on odd page
+	\newpage
+	\thispagestyle{empty}
+	\mbox{}
+	\section{Méthodes}	
+	La Science est l'ensemble de tous les efforts systématiques (observations scrupuleuses et hypothèses plausibles jusqu'à la preuve du contraire) pour acquérir des connaissances sur notre environnement, pour les organiser et les synthétiser en lois et théories testables, dont le but principal est d'expliquer les choses (et PAS le pourquoi!) souvent par une approche en quatre étapes:
+	\begin{itemize}
+		\item[$-$] Qu'est-ce que l'on a?
+		\item[$-$] Où est-ce que l'on ira?
+		\item[$-$] Quel est notre objectif?	
+		\item[$-$] Est-ce que c'est conforme aux données expérimentales?
+	\end{itemize}
+	Les scientifiques doivent soumettre leurs idées et résultats à une vérification indépendante et à la réplication par leurs pairs ("\NewTerm{peer-review}\index{peer-review}"). Ils doivent abandonner ou modifier leurs conclusions lorsqu'ils sont confrontés à des preuves expérimentales et calculatoires plus complètes ou différentes. La crédibilité de la Science repose donc sur ce mécanisme d'autocorrection et c'est ce qui fait encore qu'au XXIe siècle, la Science n'est peut-être pas LE meilleur outil (car nous ne savons pas ce qui existera dans le futur ...) mais elle a été prouvé comme étant la meilleure méthode d'investigation de la vérité par rapport à toutes les autres méthodes ou croyances existantes à ce jour. L'histoire de la science montre que ce système fonctionne depuis très longtemps et très bien par rapport à tous les autres puisqu'il permet d'éviter de nombreux biais cognitifs et culturels. Grâce à cela, dans chaque domaine, les progrès ont été spectaculaires. Cependant, le système a parfois échoué (et la détection de ses échecs est elle aussi une réussite!) et doit également être corrigé avant que de petites dérives ne s'accumulent.
+
+	Le problème majeur est et reste que les scientifiques sont des humains. Ils ont les imperfections de tous les humains, et surtout, la vanité, la fierté, la colère, la vanité et les biais cognitifs. De nos jours, il arrive que beaucoup de personnes travaillant sur le même sujet pendant un temps donné développent une foi commune et croient qu'elles détiennent la vérité ou qu'elles développent des biais à cause de leur environnement quotidien. Le Chef de la foi est alors le Pape et distille son opinion. Le Pape qui joue le jeu prend sa mitre et son bâton de pèlerin pour évangéliser ses compagnons hérétiques. Jusque-là, cela fait sourire. Mais, comme dans les religions réelles, ils sont parfois agaçants de vouloir étendre leur opinion à ceux qui ne croient pas et qui basent leurs opinions uniquement sur les données expérimentales. Certaines de ces "églises" n'hésitent pas à se comporter comme l'Inquisition. Ceux qui osent exprimer une opinion différente sont brûlés à chaque occasion, lors de conférences ou sur leur lieu de travail ou sur les réseaux sociaux. Certains jeunes chercheurs, peu inspirés, préfèrent se convertir à la religion dominante, devenir des clercs ce qui est bien évidemment une voie plus rapide et plus simple que celle des chercheurs innovants ou même des iconoclastes. Le grand Pape écrit sa Bible pour diffuser ses idées, l'impose à lire aux étudiants et aux nouveaux venus. Il met alors en forme la pensée des jeunes générations et assure son trône. C'est une attitude médiévale qui peut bloquer le progrès. Certains Papes vont si loin qu'ils croient être le Pape dans leur domaine de spécialisation leur donne automatiquement le même droit d'avoir le même trône dans tous les autres domaines (bias cognitif à nouveau)...
+	
+
+	Ce dernier avertissement, et les rappels qui vont suivre, doivent servir le scientifique ou tout lecteur en faisant bon usage de ce que nous considérons aujourd'hui comme les bonnes pratiques de travail / raisonnement (nous discuterons en détail des principes de la méthode Descartes plus tard) à résoudre des problèmes ou développer des modèles théoriques de façon rigoureuse et non biaisée. 
+
+	À cette fin, voici un tableau récapitulatif qui fournit les étapes qui devraient être suivies par un scientifique qui travaille en mathématiques ou en physique théorique (pour les définitions, voir ci-dessous) ou toute personne souhaitent avoir une démarche intellectuelle un tant soit peu honnnête et rigoureuse:
+
+	\begin{table}[H]
+	\begin{center}
+		\definecolor{gris}{gray}{0.85}
+			\begin{tabular}{|p{7.5cm}|p{7.5cm}|}
+				\hline
+				\multicolumn{1}{c}{\cellcolor{black!30}\textbf{Mathématiques}} & 
+  \multicolumn{1}{c}{\cellcolor{black!30}\textbf{Physique}} \\ \hline
+				\textbf{1.} Exposer formellement ou en langage commun le ou les "hypothèses", "conjectures", "propriétés" à prouver (les hypothèses sont notées H1., H2., etc. les conjectures CJ1., CJ2., etc. et les propriétés P1., P2 ., etc.). & \textbf {1.} Exposer correctement dans un langage formel ou commun tous les détails des "problèmes" à résoudre (les problèmes sont notés P1., P2., etc.). \\ \hline
+				\textbf{2.} Définir les "axiomes" (non démontrables, indépendants et non contradictoires) qui donneront les points de départ et établiront des restrictions aux développementx (les axiomes sont notés A1., A2, etc.).\footnotemark. \newline\newline
+Dans la même veine, les mathématiciens définissent le vocabulaire spécialisé lié aux opérateurs mathématiques qui sera noté D1., D2., etc. & \textbf{2.} Définir (ou énoncer) les "postulats" ou les "principes" ou les "hypothèses" (supposées improuvables ...) qui donneront le point de départ et établiront des restrictions sur les développements et raisonnements (typiquement, les hypothèses et les principes sont notés P1 ., P2., etc., les hypothèses H1., H2., etc. en essayant d'éviter la confusion entre les postulats et les principes)\footnotemark. \\ \hline
+				\textbf{3.} Une fois les axiomes posés, en extraire directement les "lemmes" ou "propriétés" dont la validité en découle et préparer le développement du théorème supposé valider l'hypothèse  ou les conjectures de départ (les lemmes étant notés L1., L2., etc. et les  propriétés P1., P2. , etc.). & \textbf{3.} Une fois le "modèle théorique" développé, vérifier les unités dimensionnelles des équations pour identifier des erreurs possibles triviales dans les développements (ces contrôles étant marqués VA1., VA2., etc.).\\ \hline
+				\textbf{4.} Une fois les "théorèmes" (notés T1., T2., etc.) démontrés on peut conclure sur les "conséquences" (notées C1., C2., Etc.) et même les propriétés (notées P1., P2., Etc.). & \textbf{4.} Recherchez les cas limites (y compris les "singularités") du modèle pour vérifier intuitivement la validité (ces contrôles borderline sont notés CL1., CL2., Etc.).\\ \hline
+				\textbf{5.} Tester la robustesse ou l'utilité des conjectures ou des hypothèses en prouvant l'inverse (réciproque) du théorème ou en les comparant avec d'autres exemples de théories mathématiques bien connues pour voir si l'ensemble forume une structure cohérente (les exemples étant notés E1., E2. , etc.). & \textbf{5.} Tester le modèle théorique obtenu expérimentalement  et soumettre le travail à comparer avec d'autres équipes de recherche indépendantes. Le nouveau modèle devrait fournir des résultats expérimentaux et jamais observés (prédictions à falsifier). Si le modèle est validé, alors il obtient le statut officiel de "théorie" jusqu'à ce qu'il soit mis en défaut. \\ \hline
+				\textbf{6.} De possibles remarques peuvent être ajoutée dans un ordre hiérarchiquement structuré et notées R1., R2., etc. & \textbf{6.} De possibles remarques peuvent être ajoutée dans un ordre hiérarchiquement structuré et notées R1., R2., etc.			
+				\\ \hline
+		\end{tabular}
+	\end{center}
+	\caption{Méthodologie pour les dévelopements en Mathématique \& Physique}
+	\end{table}	
+	\footnotetext[3]{Sometimes "properties", "conditions" and "axioms" are confused while the concept of axiom is much more accurate and profound.}
+	\footnotetext[4]{You should not forget, however, that the validity of a model is not dependent on the realism of its assumptions but on the conformity of its implications with reality.}	
+	
+	Procéder comme dans le tableau ci-dessus est une base de travail possible pour les personnes actives dans le domaine des mathématiques ou de la physique, ou toute personne intéressée à avoir une démarche intelectuelle rigoureuse. Évidemment, procéder proprement et traditionnellement comme ci-dessus prend un peu plus de temps que de faire les choses n'importe comment (c'est pourquoi la plupart des enseignants ne suivent pas ces règles, ils n'ont pas assez de temps pour couvrir tout le programme), c'est aussi la raison pour laquelle la science amène une majorité de personnes à l'extérieur de leur zone de confort intelectuelle (la plupart des gens cherchant à résoudre des problèmes et à trouver des réponses à leurs questions en moins d'une heure...).
+
+\begin{center}
+\includegraphics[scale=0.75]{img/intro/hypothesis_definitions.jpg}
+\end{center}
+Le lecteur doit aussi savoir que nous insistons sur le fait que les vrais scientifiques ne devraient pas avoir d'émotions derrière les sujets qu'ils étudient ou dont ils parlent, ce afin simplement d'éviter les biais cognitifs. Ils doivent uniquement utiliser des preuves (faits basés sur des données, évaluation par des pairs, expériences reproductibles, consensus de la communauté scientifique) plutôt que des analyses individuelles émotionnelles, biaisées, subjectives et éducatives qui ne sont pas basées sur des données sourcées, reproductibles et réfutables.
+
+Signalons aussi une forme amusante scientifique des $10$ commandements:
+\begin{enumerate}
+\item Les phénomènes tu observeras\\
+Et jamais mesure tu ne falsifieras \\
+(attention à l'erreur de confirmation: étudier que des phénomènes qui valident ses convictions)
+
+\item Des hypothèses tu formuleras\\
+Que par l'expérimentation ou la simulation tu testeras
+
+\item L'expérience précisément tu décriras, tes données et algorithmes tu fourniras\\
+Car ton collègue la reproduira\\
+(attention au piège de la discipline narrative: coller les faits aux résultats désirés)
+
+\item Fort de tes résultats\\
+Une théorie tu bâtiras
+
+\item De parcimonie tu useras\\
+Et l'hypothèse la plus simple tu retiendras
+
+\item Jamais vérité définitive ne sera (humilité épistémique)\\
+Et toujours tu chercheras
+
+\item D'une thèse non réfutable tu t'abstiendras\\
+Car hors de la science elle restera
+
+\item Tout échec sera pris comme une réussite\\
+Car la science doit confirmer mais aussi infirmer
+
+\item Mon autorité je n'utiliserai pas (argument d'autorité)\\
+Pour biaiser les opinions des gens dans des domaines où je n'ai pas d'expertise prouvée
+
+\item Je respecterai le serment d'Archimède et les Règles de Publication Scientifique\\
+Car la science doit être transparente et responsable
+\end{enumerate}
+
+	\begin{tcolorbox}[title=Remarks,colframe=black,arc=10pt]
+\textbf{R1.} Attention! Il est très facile de faire de nouvelles théories physiques en alignant simplement des mots. Ce type de démarche est nommé "\NewTerm{philosophie}\index{philosophie}" et les Grecs ont déduit l'existance des atomes avec cette méthode d'investigation. Cela peut donc conduire avec beaucoup de chance à une vraie théorie. Par contre il est beaucoup plus difficile de faire une "\NewTerm{théorie prédictive}" \index{théorie prédictive}, c'est-à-dire avec des équations qui prédisent le résultat d'une expérience.\\
+
+\textbf{R2.} Ce qui sépare les mathématiques et la physique, c'est qu'en mathématiques, l'hypothèse est toujours vraie. Le discours mathématique n'est pas une preuve d'une vérité de recherche externe, mais une cible de cohérence. Ce qui devrait être correct est juste le raisonnement.
+	\end{tcolorbox}
+	Lorsque ces règles ne sont pas respectées, on parle de "\NewTerm {fraude scientifique}"\index{fraude scientifique}" ou de "\NewTerm {fraude intellectuelle}" (qui conduit souvent à être renvoyé de son travail mais malheureusement nous ne retirons toujours pas les diplômes quand cela arrive). En général, la fraude scientifique elle-même se présente sous quatre formes principales: le plagiat, la fabrication de données et l'altération des résultats défavorables à l'hypothèse, l'omission d'hypothèses de travail claires et de données recoltées, l'usage d'arguments fallacieux et biaisés. A ces fraudes on peut aussi ajouter des comportements qui posent des problèmes de qualité de travail ou plus spécifiquement d'éthique, tels que ceux visant à soumettre par exemple plusieurs fois la même publication avec seulement quelques modifications, l'omission de conflit d'intérêt, les expériences dangereuses, la non-conservation des données primaires, etc.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/intro/peer_review.jpg}
+		\caption[]{Source: \url{http://cartoonsbyjosh.co.uk}}
+	\end{figure}	
+
+	\subsection{Méthode de Descartes}
+	Présentons maintenant les quatre principes de la méthode de Descartes qui, rappelons-le, est considéré comme le premier scientifique de l'histoire de par sa méthode d'analyse:
+	\begin{itemize}
+	\item[P1.] Ne recevoir jamais aucune chose pour vraie que je ne la connusse évidemment être telle. C'est-à-dire, d'éviter soigneusement la précipitation et de ne comprendre rien de plus en mes jugements que ce qui se présenterait si clairement et si distinctement à mon esprit, que je n'eusse aucune occasion de le mettre en doute.
+	
+	\item[P2.] De diviser chacune des difficultés que j'examinerais, en autant de parcelles qu'il se pourrait (observations scrupuleuses et hypothèses vraisemblables jusqu'à preuve du contraire), et qu'il serait requis pour les mieux résoudre.
+	
+	\item[P3.] De conduire par ordre mes pensées, en commençant par les objets les plus simples et les plus aisés à connaître, pour monter peu à peu comme par degrés jusqu'à la connaissance des plus composés, et supposant même de l'ordre entre ceux qui ne se précèdent point naturellement les uns les autres.
+	
+	\item[P4.] Faire partout des dénombrements si entiers et des revues si générales, que je fusse assuré de ne rien omettre.
+	\end{itemize}	
+
+	\subsubsection{Études en aveugle}
+	Les expériences scientifiques\footnote{Ce texte est une copier/coller d'un article écrit par Manuel Gnida à \url{http://www.symmetrymagazine.org/article/the-facts-and-nothing-but-the-facts}} sont conçues pour déterminer des faits sur notre monde en utilisant soit des "\NewTerm {études rétrospectives}\index{études rétrospectives}" basées sur la recherche de corrélations en exploitant des bases de données existantes ou sur des "\NewTerm{études prospectives}\index{études prospectives}" basées sur la recherche de causalités en utilisant des expériences contrôlées, randomisées et en double aveugle. Mais dans des analyses compliquées, il y a un risque que les chercheurs faussent involontairement les résultats pour qu'ils correspondent à ce qu'ils s'attendaient à trouver. Pour réduire ou éliminer ce biais potentiel, les scientifiques appliquent une méthode appelée "\NewTerm{l'analyse aveugle} \index{analyse aveugle}".
+	
+	Les études à l'aveugle sont probablement mieux connues par leur utilisation dans les essais cliniques de médicaments (le terme «triple aveugle se réfère parfois à ces derniers), dans lequel les patients sont tenus dans l'ignorance - ou dans l'aveugle - quand à savoir s'ils reçoivent un médicament ou un placebo (pour faire simple car dans la réalité c'est plus subtile!). Cette approche aide les chercheurs à juger si leurs résultats proviennent du traitement lui-même ou de la croyance des patients qu'ils le reçoivent. Mais la méthode est également utilisée dans la dégustation gastronomique ou dans les laboratoires médico-légaux.
+	
+	Les physiciens des particules et les astrophysiciens font également des études "en aveugle". L'approche est particulièrement utile lorsque les scientifiques recherchent des effets extrêmement faibles cachés dans le bruit de fond qui indiquent l'existence de quelque chose de nouveau, non pris en compte dans le modèle actuel. Parmi les exemples, citons les découvertes largement diffusées du boson de Higgs par des expériences menées au Large Hadron Collider du CERN (Centre Européene de la Recherche Nucléaire) et des ondes gravitationnelles par le détecteur Advanced LIGO (Laser Interferometer Gravitational-Wave Observatory).
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{img/intro/scientific_evidence.jpg}
+		\caption{Évidence Scientifique Hiérarchisée}
+	\end{figure}
+	"\textit{Les analyses scientifiques sont des processus itératifs, dans lesquels nous effectuons une série de petits ajustements aux modèles théoriques jusqu'à ce que les modèles décrivent avec précision les données expérimentales}", explique Elisabeth Krause, postdoc à l'Institut Kavli d'astrophysique des particules et de cosmologie, institut qui est conjointement exploité conjointement par l'Université Stanford et le Département de l'énergie SLAC National Accelerator Laboratory. "\textit{À chaque étape d'une analyse, il y a le danger que les connaissances antérieures nous guident dans la façon dont nous procédons aux ajustements, tandis que les analyses aveugles nous aident à prendre des décisions indépendantes et meilleures}".
+	
+	Le Retour sur EXpérience (REX) montre comme attendu que les analyses en aveugle doivent être conçues individuellement pour chaque expérience. Effectivement, la façon dont "l'aveuglement" est fait doit laisser aux chercheurs suffisamment d'informations pour permettre une analyse significative, et cela dépend du type de données provenant d'une expérience spécifique.
+
+	Une approche commune consiste à baser l'analyse uniquement sur certaines données, à l'exclusion de la partie dans laquelle une anomalie est censée se cacher. Les données exclues sont dites être dans une "boîte noire" ou une "boîte de signalisation cachée".
+
+	Prenons le cas de la recherche du boson de Higgs. En utilisant les données recueillies avec le Large Hadron Collider (LHC) jusqu'à la fin de 2011, les chercheurs ont vu des signes d'une bosse dans les statistiques comme un signe potentiel d'une nouvelle particule avec une masse d'environ $ 125 $ gigaelectronvolts. Donc, quand ils ont regardé de nouvelles données, ils ont délibérément mis en quarantaine la plage de masse autour de cette bosse et se sont concentrés sur les données restantes à la place.
+	
+	Ils ont utilisé ces données pour s'assurer qu'ils travaillaient avec un modèle suffisamment précis. Puis ils ont "ouvert la boîte" et appliqué ce même modèle à la région préalabement mise en quarantaine. La bosse s'est révélée finalement être la particule de Higgs tant recherchée.
+
+	Cela a bien fonctionné pour les chercheurs du boson de Higgs. Cependant, comme les scientifiques impliqués dans l'expérience du Large Underground Xenon (LUX) ont rapporté après cette approche, la méthode de la "boîte noire" de l'analyse aveugle peut bien évidemment poser des problèmes si les données que nous mettons dans la boîte noire contiennent des événements cruciaux.
+	
+	LUX a récemment effectué l'une des recherches les plus sensibles au monde sur les WIMP (Weakly Interacting Massive Particles) - des particules hypothétiques de matière noire, une forme invisible de la matière qui est cinq fois plus répandue que la matière ordinaire. Les scientifiques du LUX ont fait beaucoup de travail pour protéger le LUX contre les particules du bruit de fond: construction du détecteur dans une salle blanche, le remplir de liquide complètement purifié, l'entourer de blindage et l'installer sous $1,600$ mètres de roche. Mais quelques particules errantes le traversent néanmoins, et les scientifiques ont besoin de regarder toutes leurs données pour les trouver et les éliminer.
+
+	Pour cette raison, les chercheurs du LUX ont choisi une approche différente pour leurs analyses. Au lieu d'utiliser une "boîte noire", ils utilisent un processus appelé "salage".
+
+	Les scientifiques du LUX qui n'étaient pas impliqués dans l'analyse LUX la plus récente ont ajouté de faux événements aux signaux simulés par des données qui ressemblent à des signaux réels. Tout comme les patients dans un essai de médicament à l'aveugle, les scientifiques du LUX ne savaient pas s'ils analysaient des données réelles ou placebo. Une fois qu'ils ont terminé leur analyse, les scientifiques qui ont fait le "salage" ont révélé quels événements étaient faux.
+
+	Une technique similaire a été utilisée par les scientifiques de LIGO (Laser Interferometer Gravitational-Wave Observatory ), qui ont finalement fait la première détection de très petites ondulations dans l'espace-temps appelées "ondes gravitationnelles".
+
+	Pas tout le monde dans la communauté scientifique n'est convaincu que les analyses en aveugle soient nécessaires. Les analyses en aveugle sont bien évidemment plus compliquées à concevoir que les analyses non-aveugles et prennent plus de temps à compléter et sont donc plus onéreuses. Certains scientifiques participant à des analyses en aveugle passent inévitablement du temps à regarder de fausses données, ce qui peut donner l'impression d'un certain gaspillage...
+	
+	\pagebreak
+	\subsection{Serment d'Archimède}
+	Sur le modèle du serment d'Hippocrate, un groupe d'étudiants de l'École Polytechnique Fédérale de Lausanne (E.P.F.L.) a élaboré en 1990 un serment d'Archimède exprimant les responsabilités et les devoirs de l'ingénieur et du technicien. Il a été repris sous diverses versions par d'autres écoles d'ingénieurs européennes et pourrait servir d'inspiration de base comme serment pour les chercheurs en science (il manque cependant quelques points comme, dans la médecine, d'être radié de l'ordre des scientifiques en cas de tromperie grave).
+
+	« Considérant la vie d'Archimède de Syracuse qui illustra dès l'Antiquité le potentiel ambivalent de la technique, considérant la responsabilité croissante des ingénieurs et des scientifiques à l'égard des hommes et de la nature, considérant l'importance des problèmes éthiques que soulèvent la technique et ses applications, aujourd'hui, je prends les engagements suivants et m'efforcerai de tendre vers l'idéal qu'ils représentent:
+	\begin{enumerate}
+		\item Je pratiquerai ma profession pour le bien des personnes, dans le respect des Droits de l'Homme et de l'environnement.
+
+		\item Je reconnaîtrai, m'étant informé au mieux, la responsabilité de mes actes et ne m'en déchargerai en aucun cas sur autrui.
+
+		\item Je comprends que mon travail peut avoir des impacts considérables sur la société et l'économie et ce bien au delà de ma compréhension.
+
+		\item Je m'appliquerai à parfaire mes compétences professionnelles.
+
+		\item Dans le choix et la réalisation de mes projets, je resterai attentif à leur contexte et à leurs conséquences, notamment des points de vue technique, économique, social, écologique...
+
+		\item Je contribuerai, dans la mesure de mes moyens, à promouvoir des rapports équitables entre les hommes et à soutenir le développement des pays économiquement faibles.
+
+		\item Je transmettrai, avec rigueur et honnêteté, à des interlocuteurs choisis avec discernement, toute information importante, si elle représente un acquis pour la société ou si sa rétention constitue un danger pour autrui. Dans ce dernier cas, je veillerai à ce que l'information débouche sur des dispositions concrètes.
+
+		\item Je ne me laisserai pas dominer par la défense de mes intérêts ou ceux de ma profession.
+
+		\item Je m'efforcerai, dans la mesure de mes moyens, d'amener mon entreprise à prendre en compte les préoccupations du présent Serment.
+
+		\item Je pratiquerai ma profession en toute honnêteté intellectuelle, avec conscience et dignité.
+		
+		\item Je le promets solennellement, librement et sur mon honneur. »
+\end{enumerate}
+Malheureusement, ce serment devrait être complété par la "\NewTerm{Déclaration de Munich sur les droits et devoirs des journalistes (1971)}\index{Déclaration de Münich sur les devoirs et les droits des journalistes}". C'est-à-dire les tâches essentielles du scientifique dans la collecte, la communication et le commentaire des données consistent en:
+\begin{itemize}
+	\item Respecter la vérité, quelles qu’en puissent être les conséquences pour lui-même, et ce, en raison du droit que le public a de connaître la vérité.
+
+	\item Défendre la liberté de l’information, du commentaire et de la critique.
+
+	\item Publier seulement les informations dont l’origine est connue ou les accompagner, si c’est nécessaire, des réserves qui s’imposent ; ne pas supprimer les informations essentielles et ne pas altérer les textes et les documents.
+
+	\item Ne pas user de méthodes déloyales pour obtenir des informations, des photographies et des documents.
+
+	\item S'obliger à respecter la vie privée des personnes.
+
+	\item Rectifier toute information publiée qui se révèle inexacte.
+
+	\item Garder le secret professionnel et ne pas divulguer la source des informations obtenues confidentiellement.
+
+	\item S'interdire le plagiat, la calomnie, la diffamation, les accusations sans fondement ainsi que de recevoir un quelconque avantage en raison de la publication ou de la suppression d'une information.
+
+	\item Ne jamais confondre le métier de journaliste avec celui du publicitaire ou du propagandiste ; n’accepter aucune consigne, directe ou indirecte, des annonceurs.
+
+	\item Refuser toute pression et n’accepter de directives rédactionnelles que des responsables de la rédaction.
+\end{itemize}
+
+	\begin{center}
+		\includegraphics[scale=1]{img/intro/serment_archimede.jpg}
+	\end{center}
+
+	\pagebreak
+	\subsection{Règles de Publication Scientifique (RPS)}
+	Il est impossible d'avoir un débat ou une analyse constructive si le matériel de base est inutilisable ou indisponible. Malheureusement, au XXIe siècle, il est assez facile de trouver des publications de Prix Nobel qui ont fait l'objet d'un examen par les pairs\footnote{Certaines études sont publiées sans aucun examen par les pairs, même des études de Prix Nobel (...), ces "éditeurs prédateurs" inondent la littérature scientifique avec des journaux qui sont essentiellement fallacieux, tout auteur peut y être publié, il suffit qu'il paie pour cela!} et qui sont scientifiquement inutilisables (sans compter le fait qu'une proportion importante de revues scientifiques privées réchignent à publier les réplications expérimentales car trop ennuyantes selon elles, c'est-à-dire ne rapportant pas assez d'argent...). C'est pourquoi nous rappelons ici les règles de publication scientifique fondamentales pour qu'une publication soit acceptée par un véritable comité d'évaluation scientifique:
+	\begin{enumerate}
+		\item Utilisation de \LaTeX{} pour la rédaction de la publication
+		
+		\item Tous les fichiers de rédaction (*.tex) et les fichiers de données brutes doivent avoir des noms conformes aux normes ISO
+		
+		\item La publication doit avoir un GUID (un code unique semblable à l'identificateur d'objet numérique DOI)
+		
+		\item Mettre les dates de publication et d'évaluation par les pairs (format de date/heure ISO)
+		
+		\item Mettre la version majeure et mineure de la publication (ex: v3.6 r58) 
+		
+		\item Mettre la date de la période d'expérimentation/développement (format de date/heure ISO) 
+		
+		\item Rédiger un résumé ou "abstract" (bref récaptiluatif des objectifs, de l'expérience, des hypothèses, du protocole et des conclusions)
+		
+		\item Écrire une introduction
+		
+		\item Toutes les unités de mesure\footnote{Mesures qui au passage doivent être enregistrables, reproductibles et répondre à une ou plusieurs causes identifiées.} doivent respecter les normes ISO
+		
+		\item Utiliser le "principe de précaution\footnote{L'usage des expression "...nous pensons", "nous croyons" et "...nous avons la foi" ou toute expression similaire est bien évidemment interdite.}" (utilisation de conditionnel)
+		
+		\item Utiliser des "réponses réactives", c'est-à-dire faire les confrontations entre hypothèses / données, hypothèses / faits, hypothèses / observations
+		
+		\item Utiliser, si possible, des "facteurs de levier" pour donner du contenu et du crédit à la publication en faisant référence à une autre publication correspondante sur le même sujet \footnote{Ceci est aussi l'étape très importante de la "revue personnelles", c'est-à-dire de plusieurs dizaines / centaines de publications scientifiques dont vous avez fait une analyse critique que vous utilisez pour construire votre propre argumentation.}
+		
+		\item Le matériel et les méthodes doivent être décrits en détails. Pour les articles théoriques, ils doivent fournir un lien (URL) ou une référence où la preuve détaillée peut être trouvée (si la preuve détaillée est omise dans la publication originale!). Pour les expériences, le protocole détaillé randomisé en double aveugle doit être fourni
+		
+		\item Incldure des captures d'écran (ou exports) haute résolution de graphiques (incluant obligatoirement les erreurs de mesures et les intervalles de confiance/prédiction visibles sur les graphiques!) ou de photos
+		
+		\item Écrire les résultats et pour les données expérimentales toujours fournir une analyse statistique pour montrer si l'effet semble significatif ou non (tailles d'effets, intervalles de fluctuations, moyennes, médianes, écarts-types, erreurs standards, tailles d'échantillons, kurtosis, skewness et si la $p$-value est communiquée \underline{toujours} communiquer avec la puissance du test!)
+		
+		\item Calculer la propagation des erreurs des instruments de mesure
+		
+		\item Écrire la conclusion préliminaire \footnote{La conclusion pour les résultats expérimentaux (rejeter l'hypothèse nulle ou non) doit être écrite avant (!) que l'expérience soit exécutée et non modifiée par la suite pour éviter les biais cognitifs humains.}
+		
+		\item Donner accès aux données brutes dans un format non propriétaire à la communauté scientifique
+		
+		\item Donner accès aux scripts / codes utilisés pour l'analyse des données et la reproductabilité des calculs par la communauté scientifique
+		
+		\item Donner accès aux sources \LaTeX{} de la publication à la communauté scientifique
+		
+		\item Fournir la version exacte (avec version mineure!) des logiciels utilisés pour la publication (calculs, rédaction et autres)
+		
+		\item Inclure la bibliographie avec les références à la fin du document et rendre disponible le fichier BibTex correspondant.
+		
+		\item Citer des études équivalentes pour la méta-analyse \footnote{S'il n'y a pas d'études équivalentes, alors aucune méta-analyse n'est possible et les résultats ainsi que les conclusions ne peuvent amener à aucun consensus scientifique pour rappel!}
+		
+		\item Mettre le \% de soutien financier de chaque sponsor de l'étude (conflits d'intérêts, sources de financement)
+		
+		\item Soumettre la publication au comité à l'examen par les pairs (en simple ou en double aveugle\footnote{Le "simple aveugle" consiste à ce que les pairss ne connaissent pas le nom des auteurs de la publication, le"double aveugle" est que ni les auteurs ni les pairs connaissent l'identité des uns et des autres.})
+		
+		\item Dresser la liste de tous les intervenants (avec fonctions, formation, et e-mail\footnote{Et si possible avec le genre, le pays d'origine et l'année de naissance pour des objectifs statistiques. Par exemple: Vincent Isoz (Consultant, Bsc Science, isoz@sciences.ch, M, CHE, 1978)}) et des pairs (seulement le noms de famille pour ces derniers) de la publication
+	\end{enumerate}
+	Toute publication ne respectant pas au moins une de ces règles ne peut être considérée comme une publication "scientifique"! Un grand nombre des points ci-dessus s'appliquent également aux contenus vidéos (vidéos TEDx ou vidéos YouTube où l'intervenant ne cite pas les sources et les méta-analyses lorsqu'il argumente ou expose son "expérience personnelle", ses "opinions" ou son "expertise").
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Même s'il existe un consensus entre les scientifiques, une étude orientée unique (qui peut être très importante) peut être utilisée pour influencer l'opinion des principaux médias, gouvernements et individus. C'est pourquoi une étude doit toujours être répétée, évaluée par des pairs et méta-analysée par des équipes et des laboratoires indépendants.
+	\end{tcolorbox}
+	Attention! Beaucoup de gens pensent qu'un "\NewTerm{consensus scientifique}" fait référence à un grand groupe de scientifiques qui sont tous d'accord sur le fait que quelque chose est vrai. En réalité, un consensus scientifique est un vaste corpus d'études scientifiques qui s'accordent et se soutiennent mutuellement ("consensus de données"). L'accord entre les scientifiques eux-mêmes est simplement un sous-produit de la preuve cohérente.
+	
+	Un exemple bien connu de consensus inexistant est celui des religions. En effet, si quelqu'un prétend que comme les statistiques ne mentent pas, alors le Dieu chrétien doit exister car c'est la religion la plus suivie au monde avec $2$ milliards de chrétiens et comme $2$ milliards de personnes ne peuvent pas avoir tort, vous pouvez rappeler à cette même personne que comme il y a $7$ milliards d'individus dans le Monde, les autres $5$ milliards qui ne croient pas au Dieu chrétien ne peuvent pas se tromper car... justement les statistiques ne mentent pas... Le même raisonnement s'applique si vous fusionnez les musulmans et les chrétiens, alors seulement $55\%$ des personnes dans le monde croient en un Dieu unique et $55\% $ ce n'est statistiquement pas assez pour atteindre le consensus scientifique qui lui est à un seuil de $95\%$...
+	\begin{center}
+		\includegraphics[scale=0.7]{img/intro/scientific_papers.jpg}
+	\end{center}
+	Il est alors facile de comprendre pourquoi les pages Internet et les vidéos YouTube (ou toute autre plateforme similaire) ne sont pas des sources scientifiques fiables selon le protocole ci-dessus puisque:
+	\begin{enumerate}
+	   \item Les noms des pairs sont la grande majorité du temps non indiqué (à ce jour du moins!)
+	   
+	   \item Les contributeurs / éditeurs sont anonymes en grande majroité ne peuvent donc pas être identifiés (typiquement un problème de Wikipédia)
+	   
+	   \item Les détails mathématiques ne sont pas fournis (ou même pire, il n'y a pas du tout d'équations!). Donc il est difficile, voire impossible de vérifier par vous-même si le raisonnement présenté est exact
+	   
+	   \item Le protocole exact de l'expérience n'est pas communiqueé, il est donc impossible de savoir si les résultats sont faux ou réels ou même de les reproduire
+	   
+	   \item Aucune source ou référence croisée donnée
+	   
+	   \item Le contenu est dans un format non fiable (une vidéo ou une page web ne sont pas des sources pérennes et protégées \footnote{Au 21ème siècle un PDF par exemple devrait être protégé contre l'édition et signé électroniquement})
+	   
+	   \item Les nouveaux modèles théoriques présentés prédisent bien ce que fait le précédent, mais ne prédisent rien de nouveau et ne sont donc pas falsifiables (réfutables)
+	   
+	   \item L'orateur sur la vidéo fait des hypothèses qui ne sont pas falsifiables (référence à des dieux divers et varisé ou à des théories dont les détails mathématiques ne sont pas fournis)
+	   
+	   \item etc.
+	\end{enumerate}
+	\begin{center}
+		\includegraphics[scale=0.7]{img/intro/fake_science.jpg}
+	\end{center}
+
+	\pagebreak
+	\subsection{Communication des Médias de Masse en Sciences}
+	Le lecteur de médias grand public ou de réseaux sociaux ne doit jamais faire confiance à une étude scientifique si le document de référence et revu par les pairs n'est pas donné en lien (et tout en gardant à l'esprit qu'en plus le document en question se doit respecter les règles de publication scientifique que nous avons énumérées plus bas!). L'étude ne doit pas non plus être considérée comme "vérité absolue" par le lecteur s'il y a un consensus de la communauté scientifique seulement sur ... UNE SEULE ET UNIQUE ... publication/article\footnote{Gardez à l'esprit que même une pendule cassée affiche l'heure juste deux fois par jour...}. La seule façon d'être \underline{presque} sûr est alors est de lire l'étude elle-même et vérifier si elle respecte les règles précédemment énumérées.
+
+	Un premier exemple typique est une nouvelle qui a été faussement et mal reprise par de nombreux médias grand public à travers le monde sur la borréliose de Lyme dont voici une capture d'écran:
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{img/intro/lyme_borreliose.jpg}
+		\caption[Publication de la Télévision Suisse sur le traîtement de la borréliose de Lyme]{Publication de la TV Suisse à propos du traîtement de la\\ borréliose de Lyme le 2017-01-08 (source: App RTS/ATS)}
+	\end{figure}
+	En résumé ce que le "journaliste scientifique" d'une des principales chaînes nationales suisses (donc une télévision qui a assez d'argent pour enquêter correctement sur toute information avant de la relayer ... au moins en théorie ... dans un pays qui estime être le numéro un dans presque tout...), a publié est une très mauvaise interprétation de la publication scientifique originale. L'article ci-dessus rapporte que: "\textit{... un traitement appliqué pendant $3$ jours au plus tard $72$ heures après après la morsure de la tique a révélé être efficacité de $100\%$...}. La chose est que cet article est fourni par l'Agence Télégraphique Suisse (et relayé par la suite par la télévision suisse) qui se targue bêtement d'être $100 \%$ fiable (nous détectons donc un manque de précaution scientifique de la part de leurs journalistes ou d'une formation journalistique lacunaire...).
+	
+	En réalité (si les médias avaient pris soin de lire la publication originale jusqu'à la fin ...) l'étude a été arrêtée après $8$ semaines et il a été démontré que le traitement n'a pas de meilleur effet qu'un placebo...
+	
+	Une deuxième erreur typique et récurrente des médias grand public est le biais de confirmation (nous verrons l'étude des biais plus tard) dont voici un exemple lassant et honteux tellement il se répète (à croire qu'ils font exprès...):
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.25]{img/intro/miracle_lourdes.jpg}
+		\caption[Publication de la Télévision Suisse sur un miracle à Lourdes]{Publication de la TV Suisse à propos d'un miracle à\\ Lourdes le 2018-02-12 (source: App RTS/AFP)}
+	\end{figure}
+	Bien évidemment n'importe quelle personne ayant un minimum de culture générale peut vérifier assez simplement via des méta-analyses existantes que des "miracles\footnote{Un "miracle" est le terme utilisé par de nombreuses personnes lorsqu'elles ne savent pas expliquer un phénomène observé. Les éclipses étaient un exemple de "miracle" il n'y a pas si longtemps...}" ont aussi lieu dans les hôpitaux et qu'en termes de "taux" de rémission, Lourdes ne fait pas mieux que le simple hasard en comparaison aux hôpitaux dispersés sur tout le planète relativement à ce type d'observation.
+	
+	Il est donc à nouveau honteux qu'une des principales chaînes nationales suisses (donc une télévision qui a assez d'argent pour enquêter correctement sur toute information avant de la relayer ... au moins en théorie ... dans un pays qui estime être le numéro un dans presque tout...) ait publié une information biaisée et c'est d'autant plus grave que ce type d'information vient de l'AFP (Agence France Presse).
+
+	\subsubsection{Réseaux sociaux}		
+	À propos des réseaux sociaux et de la communication scientifique... A priori on pourrait constater aussi bien sur Facebook, YouTube, Twitter et Instagram que lors d'échanges:
+	\begin{itemize}
+		\item Si on simplifie le discours scientifique (en pensant bien faire...) sur certains sujets délicats\footnote{Sujets où typiquement les gens vous diront que: "les faits sont démentis par leur opinion"...} on peut se faire assez vite accuser de déformer la réalité (c'est le problème effectivement de la simplification...!). Et si vous précisez que vous avez simplifié pour la compréhension des illettrés scientifiques, vous serez probablement accusé d’attaque ad hominem. C'est une situation par la suite où il est difficile voire impossible de rétablir la confiance.
+	
+		\item Si on ne simplifie pas le discours scientifique (en utilisant le vocabulaire et les méthodes quantitative du domaine), ou qu'on communique les liens vers les études ou théories scientifiques elles-mêmes\footnote{A noter qu'il semble arriver régulièrement que lorsque des liens vers les études ou méta-analyses sont fournies, il y a presque toujours des personnes pour dire que soient elles sont financées par des lobbistes, soient elles ont été choisies dans le sens des arguments défendus, soient il n'y pas tous les liens vers toutes les études du monde et que pour le coup elles ne sont pas représentatives...}, on se fait accuser de cacher la vérité sous un vocabulaire abscont et des termes et outils techniques n'ayant ni queue ni tête ou de faire dire aux statistiques ce qu'on l'on veut. Le résultat est encore pire lorsque l'accès aux études est payant!
+	
+		\item Si on parle d'un sujet sur lequel on pas d'expertise ou de diplôme, ou qui n'est pas notre domaine d'activité, on se fait remballer rapidement (à juste titre!)
+	
+		\item Sur certaines groupes et comptes de réseaux sociaux, certains messages sont supprimés par les administrateurs, ce qui ne donne plus la possibilité d'étayer des arguments ou contre-arguments ou biaise complétement les échanges car certaines informations disparaîssent  ou n'apparaîssent jamais (certains intervenants ou messages sont typiquement masqués ou supprimés par l'administrateur).
+	
+		\item Gardez en-tête que la totalité des réseaux sociaux ne supportent par \LaTeX{}, il est donc impossible d'y avoir des échanges scientifiques (c'est-à-dire de faire usage d'équations mathématiques ou formules chimiques).
+	\end{itemize}
+	Le but ici n'est pas de donner une solution scientifique à ces problèmes (ce serait toutefois pertinent que des études soient menées sur le sujet...!). Toutefois... des pistes qui semblent assez bien fonctionner sont de bloquer les commentaires sur les contenus publiés par les scientifiques ou par la communauté scientifique. D'intervenir dans des échanges que si et seulement si on y est invité à y communiquer (et non pas d'y intervenir de son propre chef).
+	\begin{center}
+		\includegraphics[scale=0.20]{img/intro/opinions.jpg}
+	\end{center}
+	Citons enfin pour clore les techniques fallacieuses d'argumentation courantes particulièrement flagrantes sur les réseaux sociaux (et dans les autres médias en général aussi...) de la part de ceux qui sont imperméables à la méthode scientifique et aux analyses et simulations statistiques et qui s'inspirent volontairement (ou pas?) des principes de la propagande de guerre que l'historienne Anne Morelle a énoncés:
+	\begin{enumerate}
+		\item Nous ne voulons pas la guerre (ie nous ne voulons pas le "changement")
+		\item Le camp adverse est le seul responsable de la guerre (c'est lui qui force le un "changement non-naturel")
+		\item Le chef du camp adverse a le visage du diable (ou "l'affreux de service")
+		\item C'est une cause noble que nous défendons (par exemple un "service public") et non des intérêts particuliers
+		\item Le camp adverse provoque sciemment des atrocités (meurtres, licenciements, décès,...) et si nous nous commettons des erreurs c'est involontairement
+		\item Le camp adverse  utilise des armes non autorisées (ie nous ne comprenons pas les arguments de l'autre)
+		\item Nous subissons très peu de pertes, les pertes du camp adverse sont énormes (le système actuel est bon il ne faut pas le changer car il sera pire)
+		\item Les artistes et intellectuels soutiennent notre cause 
+		\item Notre cause a un caractère sacré (chercheur de vérité, service public, etc.)
+		\item Ceux (et celles) qui mettent en doute notre propagande sont des traîtres (ie ils mettent en puéril la cohésion sociale, la cohésion ou nationale, cherchent à faire du profit sur les plus pauvres, etc.)
+	\end{enumerate}
+	
+	%to make section start on odd page
+	\newpage
+	\thispagestyle{empty}
+	\mbox{}
+	\section{Vocabulaire}
+	La physique-mathématique, comme tout domaine de spécialisation, a son vocabulaire propre. Afin que le lecteur ne soit pas perdu dans la compréhension de certains textes qu'il pourra lire sur ce site (et son PDF associé), nous avons choisi d'exposer ici les quelques termes, abréviations et définitions fondamentaux à connaître. 
+
+	Ainsi, le mathématicien aime bien terminer ses démonstrations (quand il pense qu'elles sont justes) par l'abréviation "C.Q.F.D" qui signifie "Ce Qu'il Fallait Démontrer" ou encore dans les hautes écoles par souci d'esthétisme et de traditions certains professeurs (et mêmes élèves) notent cela en latin "Q.E.D" qui signifie "Quod Erat Demonstrandum" (cela en jette...).
+
+	Et lors de définitions (elles sont nombreuses en mathématique et physique...) le scientifique fait souvent usage des terminologies suivantes:
+	
+	\begin{itemize}
+	\item ... il suffit que  ...
+	
+	\item ... si et seulement si ...
+	
+	\item ... nécessaire et suffisant ...
+	
+	\item ... signifie que ...
+	
+	\item ... prouve que ...
+	\end{itemize}
+	Les cinq ne sont pas équivalentes (identiques au sens strict). Car "il suffit que" correspond à une condition suffisante, mais pas à une condition nécessaire. Il faut aussi noter que ces quatre terminologies doivent être plancés dans le contexte de l'analyse des données, de l'exactitude des données, de la reproduction et de l'évaluation par les pairs et non sur une croyance personnelle ou commune ou même émotionnelle d'un groupe de personnes (même si ce groupe à une taille de plusieurs milliards d'individus...)!
+	
+	De plus, il est peut être pertinent de noter que de nombreuses discussions ou débats dans la vie en général (en privé ou en public dans les médias) sont souvent stériles juste par le fait que le vocabulaire de base utilisé, les hypothèses de travail ou de raisonnement, ou l'objectif du débat (et des questions y relatives) n'ont pas été correctement définis dès le début. Même si cela est acceptable pour le citoyen lambda, ce type de situations n'est pas acceptable en science!
+	\begin{center}
+		\includegraphics[scale=0.30]{img/intro/an_old_age_argument.jpg}
+	\end{center}
+
+	\subsection{Sur les "sciences"}	
+	Il est important que nous définissions rigoureusement les différents types de sciences auxquelles l'être humain fait souvent référence. Effectivement, il semble qu'au 21ème siècle un abus de langage malsain s'instaure et qu'il ne devienne plus possible pour la population de distinguer la "qualité intrinsèque" d'une science d'une autre.
+
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Etymologiquement le mot "science" vient du latin "scienta" (connaissance) dont la racine est le verbe "scire" qui veut dire "savoir".
+	\end{tcolorbox}
+	
+	Cet abus de langage vient probablement du fait que les sciences pures et exactes perdent leurs illusions d'universalité et d'objectivité, dans le sens où elles s'auto-corrigent. Ceci ayant pour conséquence que certaines sciences sont reléguées au second plan et tentent d'en emprunter les méthodes, les principes et les origines pour créer une confusion. Il faut ainsi être très prudent au sujet des prétentions de scientificité en sciences humaines, et cela vaut également (ou surtout) pour les courants dominants en économie, en sociologie et en psychologie. Tout simplement, les problèmes traités par les sciences humaines sont extrêmement complexes, peu reproductibles, et les arguments empiriques étayant leurs théories sont souvent assez faibles.
+
+	\marginnote{\textcolor{NavyBlue}{{\footnotesize \textbf{~\thechapter:\myparagraph}}}}En soi, la science cependant ne produit pas de vérité absolue. Par principe, une théorie scientifique est valable tant qu'elle permet de prédire des résultats mesurables et reproductibles. Mais les problèmes d'interprétation de ces résultats font partie de la philosophie naturelle.
+	
+	\begin{center}
+		\NewTerm{\textbf{Aucune théorie scientifique n'est prouvée ou prouvable. Elle n'est simplement pas réfutée tant qu'une expérience ne vient pas dire le contraire.}}
+	\end{center}
+	Cependant, la méthodologie scientifique est suffisamment fiable pour que le pouvoir juridique ne soit pas légitime à prendre position sur des évidences scientifiques.
+
+	Étant donné la diversité des phénomènes à étudier, au cours des siècles s'est constitué un nombre grandissant de disciplines comme la chimie, la biologie, la thermodynamique, etc. Toutes ces disciplines a priori hétéroclites ont pour socle commun la physique, pour langage la mathématique et comme principe élémentaire la méthode scientifique.
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Par conséquent, gardez à l'esprit qu'un témoignage, ou une simple phrase dans un livre ou dans un séminaire même dite par un scientifique, n'a AUCUNE VALEUR SCIENTIFIQUE ou n'a aucune valeur pour tirer des conclusions, s'il n'est pas accompagné de données expérimentales et d'un modèle mathématique détaillé! Cependant, les témoignages restent utiles pour construire des hypothèses spéculatives et concevoir des expériences et des études. Si les hypothèses spéculatives ne sont cependant pas accompagnées d'une méthode expérimentale pour la vérifier ou la réfuter, alors ce n'est toujours pas de le science mais juste de la pseudo-science de comptoir!!!
+	\end{tcolorbox}
+	Ainsi, un petit rafraîchissement de mémoire peut être utile:
+
+\textbf{Définitions (\#\mydef):}
+
+\begin{itemize}
+	\item[D1.] Nous définissons par "\NewTerm{science pure}"\index{science pure}, tout ensemble de connaissances fondées sur un raisonnement rigoureux valable quel que soit le facteur (arbitraire) élémentaire choisi (nous disons alors "indépendant de la réalité sensible") et restreint au minimum nécessaire. Il n'y a que la mathématique (appelée souvent "reine des sciences") qui peut être classifiée dans cette catégorie.
+
+	\item[D2.] Nous définissons par "\NewTerm{science exacte}"\index{science exacte} ou "\NewTerm{science dure}"\index{science dure}, tout ensemble de connaissances fondées sur l'étude d'une observation, observation qui aura été transcrite sous forme symbolique (physique théorique par exemple). Principalement, le but des sciences exactes est non d'expliquer le "pourquoi" mais le "comment".
+	
+	Et n'oubliez jamais ... La science (en particulier la physique) n'a pas à "faire sens", elle doit juste faire toutes les bonnes prédictions testables (instrumentalisme)! Selon le philosophe Karl Popper, une théorie est scientifiquement acceptable si, comme présentée, elle peut être "\NewTerm{falsifiable}\index{falsiable}" (les synonymes sont "\NewTerm{réfutable}\index{réfutable}" ou "\NewTerm{testable}\index{testable}"), c'est-à-dire qu'elle peut être soumises à des tests expérimentaux (ou s'il est possible de concevoir une observation ou un argument qui nie l'énoncé en question). La "connaissance scientifique" est alors par définition l'ensemble des théories qui ont résisté à la falsification (réfutation). La science est donc de par sa nature sujette à un questionnement continu.
+	
+	Attention! Il n'y a aucun doute que les sciences exactes jouissent pour l'instant d'un prestige énorme, y compris parmi leur détracteurs, à cause de leurs succès théoriques et pratiques. Il est certain que certains scientifiques abusent parfois de ce prestige en exhibant un sentiment de supériorité non nécessairement justifié. De plus, il arrive assez souvent que des scientifiques exposent, dans la littérature de vulgarisation, des idées fort spéculatives comme si elles étaient bien établies, ou extrapolent leurs résultats en dehors du contexte où ils ont été vérifiés (et encore... à condition qu'elles aient été vérifiées un jour...).
+
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Les deux définitions précédentes sont souvent incluses dans la définition de "\NewTerm{sciences déductives}"\index{sciences déductives} ou encore de "\NewTerm{sciences phénoménologiques}"\index{sciences phénoménologiques}.
+	\end{tcolorbox}
+	
+	\item[D3.] Nous définissons par "\NewTerm{science de l'ingénieur}"\index{science de l'ingénieur}, tout ensemble de connaissances théoriques ou pratiques appliquées aux besoins de la société humaine tels que: l'électronique, la chimie, l'informatique, les télécommunications, la robotique, l'aérospatiale, biotechnologies...
+
+	\item[D4.] Nous définissons par "\NewTerm{science}"\index{science} tout ensemble de connaissances fondées sur des études ou observations de faits dont l'interprétation n'a pas encore été retranscrite ni vérifiée avec la rigueur mathématique, caractéristique des sciences qui précèdent, mais qui applique des raisonnements comparatifs statistiques. Nous incluons dans cette définition: la médecine (il faut cependant prendre garde au fait que certaines parties de la médecine étudient des phénomènes descriptifs sous forme mathématique tels que les réseaux de neurones ou autres phénomènes associés à des causes physiques connues), la sociologie, la psychologie, l'histoire, la biologie...
+
+	\item[D5.] Nous définissons par "\NewTerm{science molle}"\index{science molle}, "\NewTerm{para-science}"\index{para-science} ou "\NewTerm{pseudo-science}"\index{pseudo-science} tout ensemble de connaissances ou de pratiques qui sont actuellement basées sur des faits non vérifiables et non réfutables (non reproductibles scientifiquement) par l'expérience ou par les mathématiques. Nous incluons typiquement dans cette définition: l'astrologie, la théologie, le paranormal (qui a été démoli par la science zététique), la graphologie, la justice \footnote{En effet, en Suisse, par exemple, le juge cantonal et le juge fédéral ne donnent pas le même jugement puisque ce dernier est non scientifique mais plutôt basé sur l'expérience subjective de la vie du juge et de ses biais cognitifs}, etc.
+	
+	Comme le disent certains scientifiques: «\textit{Cela ressemble à de la science, cela utilise le vocabulaire de la science ... mais ce n'est pas du tout de la science.}»
+	
+	Les pseudo-sciences sont particulièrement caractérisées par:
+	\begin{itemize}
+		\item Elles commencent par une conclusion (croire), puis travaillent en arrière pour essayer de confirmer les croyances
+
+		\item Elles sont hostiles à la critique et la remise en question
+
+		\item Elles utilisent des raisonnements / arguments circulaires
+
+		\item Elles utilisent un jargon vague pour créer de la confusion
+
+		\item Elles utilisent des stratégies subtiles pour changer l'esprit des gens (en particulier les enfants)
+
+		\item Elles font de la "cueillette des cerises" sur des preuves favorables
+
+		\item Elles utilisent des méthodes non reproductibles / non réfutables avec des résultats non répétables
+
+		\item Elles utilisent un langage aléatoire pseudo-scientifique pour impressionner le public
+
+		\item Elles utilisent une logique incohérente (émotionnelle) et invalide
+
+		\item Les gens qui travaillent dans le domaine sont dogmatiques et inflexibles
+	\end{itemize}
+
+	\item[D6.] Nous définissons par "\NewTerm{sciences phénoménologiques}" ou "\NewTerm{sciences naturelles}", toute science qui n'est pas inclue dans les définitions précédentes (histoire, sociologie, psychologie, zoologie, biologie,...)
+
+	\item[D7.] Le "\NewTerm{Scientisms}"\index{scientisms} est une idéologie selon laquelle la science expérimentale est le seul mode de connaissance valable, ou, du moins, supérieur à toutes les autres formes d'interprétation du monde. Dans cette perspective, il n'existe pas de vérités philosophiques, religieuses ou morales supérieures aux théories scientifiques. Seul compte ce qui est scientifiquement démontré.
+
+	\item[D8.] Le "\NewTerm{Positivisms}"\index{positivisms} désigne un ensemble de courants qui considère que seules l'analyse et la connaissance des faits réels vérifiés par l'expérience peuvent expliquer les phénomènes du monde sensible. La certitude en est fournie exclusivement par l'expérience scientifique. Il rejette l'introspection, l'intuition et toute approche métaphysique pour expliquer la connaissance des phénomènes.\\
+	
+	Ce qui est intéressant dans cette doctrine, c'est que c'est certainement une des seules qui demande aux gens de devoir réfléchir par eux-mêmes et de comprendre l'environnement qui les entoure en remettant continuellement tout en question et sans ne jamais rien accepter comme acquis (...). De plus, les vraies sciences ont ceci d'extraordinaire qu'elles permettent de comprendre au-delà de ce que nous pouvons voir.
+\end{itemize}
+
+Mais enfin, la science, c'est la science, et rien de plus: une certaine mise en ordre, pas trop mal réussie, des choses qui ne conduisent plus à la métaphysique comme du temps d'Aristote, mais qui n'a pas le prétention de nous livrer toute la réalité ni même le fond des choses visibles et cela même si c'est la meilleure méthode d'investigation intellectuelle existante actuellement à notre époque et aussi depuis plusieurs millénaires.
+
+	\pagebreak
+	\subsection{Terminologie}
+
+Le tableau méthodique que nous avons présenté plus haut contient des termes qui peuvent peut-être vous sembler inconnus ou barbares. C'est la raison pour laquelle il nous semble fondamental de présenter les définitions de ces derniers, ainsi que de quelques autres tout aussi importants qui peuvent éviter des confusions malheureuses.
+
+\textbf{Définitions (\#\mydef):}
+
+\begin{itemize}
+	\item[D1.] Au-delà de son sens négatif, l'idée de "\NewTerm{problème}"\index{problème} renvoie à la première étape de la démarche scientifique. Formuler un problème est ainsi essentiel à sa résolution et permet de comprendre correctement ce qui fait problème et de voir ce qui doit être résolu.\\
+	
+	Le concept de problème est intimement relié au concept "d'hypothèse" dont nous allons voir la définition ci-dessous.
+
+	\item[D2.] Une "\NewTerm{hypothèse}"\index{hypothèse} est toujours, dans le cadre d'une théorie déjà constituée ou sous-jacente, une supposition en attente de confirmation ou d'infirmation qui tente d'expliquer un groupe de faits ou de prévoir l'apparition de faits nouveaux.\\
+	
+	Ainsi, une hypothèse peut être à l'origine d'un problème théorique qu'il faudra formellement résoudre. 
+
+	\item[D3.] Le "\NewTerm{postulat}"\index{postulat} en physique correspond fréquemment à un principe (voir définition ci-dessous) dont l'admission est nécessaire pour établir une démonstration (nous sous-entendons que cela est une proposition non-démontrable).\\
+	
+	Ainsi, une hypothèse peut être à l'origine d'un problème théorique qu'il faudra formellement résoudre. 
+
+	\item[D4.] Un "\NewTerm{principe}"\index{principe} (parent proche du "postulat") est donc une proposition admise comme base d'un raisonnement ou une règle générale théorique qui guide la conduite des raisonnements qu'il faudra effectuer. En physique, il s'agit également d'une loi générale régissant un ensemble de phénomènes et vérifiée par l'exactitude de ses conséquences.\\
+	
+	Le mot "principe" est utilisé avec abus dans les petites classes ou écoles d'ingénieurs par les professeurs ne sachant (ce qui est très rare), ou ne voulant (plutôt fréquent), ou ne pouvant faute de temps (quasi exclusivement) démontrer une relation.\\
+
+	L'équivalent du postulat ou du principe en mathématiques est "l'axiome" que nous définissons ainsi:
+
+	\item[D5.] Un "\NewTerm{axiome}"\index{axiome} est une vérité ou proposition évidente par elle-même dont l'admission est nécessaire pour établir une démonstration.\label{axiom} 
+\end{itemize}
+
+	\begin{tcolorbox}[title=Remarques,colframe=black,arc=10pt]
+	\textbf{R1.} Nous pourrions dire que c'est quelque chose que nous posons comme une vérité pour le discours que nous nous proposons de tenir, comme une règle du jeu, et qu'elle n'a pas forcément par ailleurs une valeur de vérité universelle dans le monde sensible qui nous entoure.\\
+
+	\textbf{R2.} Les axiomes doivent toujours être indépendants (on ne doit pas pouvoir démontrer l'un à partir de l'autre) et non contradictoires (nous disons également parfois qu'ils doivent être "consistants").
+	\end{tcolorbox}	
+	
+\begin{itemize}
+	\item[D6.]  Le "\NewTerm{corollaire}"\index{corollaire} est un terme malheureusement quasi inexistant en physique (à tort !) et qui est en fait une proposition résultant d'une vérité déjà démontrée. Nous pouvons également dire qu'un corollaire est une conséquence nécessaire et évidente d'un théorème (ou parfois d'un postulat en ce qui concerne la physique).
+
+	\item[D7.] Un "\NewTerm{lemma}"\index{lemma} constitue une proposition déduite d'un ou de plusieurs postulats ou axiomes et dont la démonstration prépare celle d'un théorème.
+\end{itemize}
+
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Le concept de "lemme" est lui aussi (et c'est malheureux) quasi réservé aux mathématiques.
+	\end{tcolorbox}	
+
+\begin{itemize}
+	\item[D8.] Une "\NewTerm{conjecture}"\index{conjecture} constitue une supposition ou opinion fondée sur la vraisemblance d'un résultat mathématique.
+	
+	Beaucoup de conjectures jouent un rôle un peu comparable à des lemmes, car elles sont des passages obligés pour obtenir d'importants résultats.
+	
+	\item[D9.] Par-delà son sens faible de conjecture, une "\NewTerm{théorie}"\index{théorie} ou "\NewTerm{théorème}"\index{théorème} est un ensemble articulé autour d'une hypothèse et étayé par un ensemble de faits ou développements qui lui confèrent un contenu positif et rendent l'hypothèse bien fondée (ou tout au moins plausible dans le cas de la physique théorique).
+
+	\item[D10.]  Une "\NewTerm{singularité}"\index{singularité} est une indétermination d'un calcul qui intervient par l'apparition d'une division par le nombre zéro. Ce terme est aussi bien utilisé en mathématique qu'en physique.  
+
+	\item[D11.] Une "\NewTerm{démonstration}"\index{démonstration} constitue un ensemble de procédures mathématiques à suivre pour démontrer le résultat déjà connu ou non d'un théorème.
+
+	\item[D12.] Si le mot "\NewTerm{paradoxe}"\index{paradoxe} signifie étymologiquement: contraire à l'opinion commune, ce n'est cependant pas par pur goût de la provocation, mais bel et bien pour des raisons solides. Le "\NewTerm{sophisms}"\index{sophisms} quant à lui, est un énoncé volontairement provocateur, une proposition fausse reposant sur un raisonnement apparemment valide. Ainsi parle-t-on du fameux "paradoxe de Zénon", alors qu'il ne s'agit que d'un sophisme. Le paradoxe ne se réduit pas à de la fausseté, mais implique la coexistence de la vérité et de la fausseté, au point qu'on ne parvient plus à discriminer le vrai et le faux. Le paradoxe apparaît alors problème insoluble ou "\NewTerm{aporia}"\index{aporia}. 
+	
+\end{itemize}
+
+	\begin{tcolorbox}[title=Remark,colframe=black,arc=10pt]
+	Ajoutons que les grands paradoxes, par les interrogations qu'ils ont suscitées, ont fait progresser la science et amené des révolutions conceptuelles de grande ampleur, en mathématique comme en physique théorique (les paradoxes sur les ensembles et sur l'infini en mathématique, ceux à la base de la relativité et de la physique quantique).
+	\end{tcolorbox}	
+
+	%to make section start on odd page
+	\newpage
+	\thispagestyle{empty}
+	\mbox{}
+	\section{Science et Foi}
+	Nous verrons qu'en science, une théorie est normalement incomplète, car elle ne peut décrire exhaustivement la complexité du monde réel (excepté pour la Physique Quantique ou la Relativité Générale). Il en est ainsi de toutes les théories, comme celle du Big Bang ((\SeeChapter{voir section d'Astrophyque page \pageref{astrophysics}}) ou de l'évolution des espèces (\SeeChapter{voir sections de Dynamique des Populations page \pageref{population dynamics} ou de Théorie des Jeux et de la Décision page \pageref{game and decision theory}}) ne serait-ce que parce qu'elles ne sont pas reproductibles dans des conditions identiques.
+	\begin{center}
+		\includegraphics[scale=0.9]{img/intro/science_we_trust.jpg}
+	\end{center}	
+
+	Il convient de distinguer différents courants scientifiques majeurs: 
+	\begin{itemize}
+		\item Le "\NewTerm{réalism}"\index{réalism} est une doctrine où les théories physiques ont pour objectif de décrire la réalité telle qu'elle est en soi, dans ses composantes inobservables.
+	
+		\item L'\NewTerm{Instrumentalism}"\index{instrumentalisme} est une doctrine où les théories sont des outils servant à prédire des observations mais qui ne décrivent pas la réalité en soi.
+	
+		\item Le "\NewTerm{fictionalism}"\index{fictionalisme} est le courant où le contenu référentiel (principes et postulats) des théories est un leurre, utile seulement pour assurer l'articulation linguistique des équations fondamentales.
+	\end{itemize}
+
+	\pagebreak
+	Même si aujourd'hui les théories scientifiques ont le soutien de beaucoup de spécialistes, les théories alternatives ont des arguments valables et nous ne pouvons totalement les écarter. Pour autant, la création du monde en 7 jours décrite par la Bible ne peut plus être perçue comme un possible, et bien des croyants reconnaissent qu'une lecture littérale est peu compatible avec l'état actuel de nos connaissances et qu'il est plus sage de l'interpréter comme une parabole. Si la science ne fournit jamais de réponse définitive, il n'est plus possible de ne pas en tenir compte.
+	
+	La foi (qu'elle soit religieuse, superstitieuse, pseudo-scientifique ou autre non pilotée par les données) a au contraire pour objectif de donner des vérités absolues d'une toute autre nature puisqu'elle relève d'une conviction personnelle invérifiable et non reproductibles (par exemple, la science nécessite des preuves ou des évidences expérimentales pour être valable alors que les religions nécessitent que la foi pour être considérées comme valable). C'est pourquoi un certain nombre de gens disent que \textit{la Science s'ajuste en fonction des observations alors que la foi est le rejet de l'observation afin que les croyances puissent être conservées}... En fait, l'une des fonctions des religions est de fournir du sens à des phénomènes qui ne sont pas explicables rationnellement\footnote{Ce fut avec la pluie, le tonnerre, les maladies, les étoiles, les comètes, les tremblements de terre, les éruptions volcaniques, etc. il y a quelques centaines d'années et est souvent désigné par les scientifiques sous le nom d'argument d'ignorance. \index{argument d'ignorane}}. Les progrès de la connaissance entraînent donc parfois une remise en cause des dogmes religieux par la science. 
+
+	A contrario, sauf à prétendre imposer sa foi (qui n'est autre qu'une conviction intimement personnelle et subjective) aux autres, il faut se défier de la tentation naturelle de qualifier de fait scientifiquement prouvé les extrapolations des modèles scientifiques au-delà de leur champ d'application.
+	
+	Le mot "science" est, comme nous l'avons déjà mentionné plus haut, de plus en plus utilisé pour soutenir qu'il existe des preuves scientifiques là où il n'y a que croyance (certaines pages web de ce genre prolifèrent de plus en plus). Selon ses détracteurs c'est le cas, par exemple, du mouvement de scientologie (mais il y en a beaucoup d'autres). Selon ces derniers, nous devrions plutôt parler de "\NewTerm{sciences occultes}"\index{sciences occultes}.
+
+	Les sciences occultes et sciences traditionnelles existent depuis l'Antiquité; elles consistent en un ensemble de connaissances et de pratiques mystérieuses ayant pour but de pénétrer et dominer les secrets de la nature. Au cours des derniers siècles, elles ont été progressivement exclues du champ de la science. Le philosophe Karl Popper s'est longuement interrogé sur la nature de la démarcation entre science et pseudoscience. Après avoir remarqué qu'il est possible de trouver des observations pour confirmer à peu près n'importe quelle théorie, il propose une méthodologie fondée sur la réfutabilité. Une théorie doit selon lui, pour mériter le qualificatif de "scientifique", pouvoir garantir l'impossibilité de certains événements. Elle devient dès lors réfutable, donc (et alors seulement) apte à intégrer la science. Il suffirait en effet d'observer un de ces événements pour invalider la théorie, et s'orienter par conséquent sur une amélioration de celle-ci.
+	
+	Et notons aussi que la différence majeure entre les livres de sciences et les livres de religions est que si vous détruisiez ces derniers, dans un millier d'années, la probabilité qu'ils soient réécrits naturellement à l'identique est très faible. Alors que si nous prenions chaque livre de science et chaque note de chaque observation expérimentale et les détruisions tous, dans mille ans ils seraient refaits de manière identiques et ce pour la simple raison que la majorité des tests expérimentaux redonnairent les mêmes résultats (observations) et que la mathématique est indépendante de l'endroit où nous sommes nés sur Terre et du choix religieux que nous impose la famille dans la majorité des cas.
+	
+	\subsection{Kit de Détection de Balivernes }
+	Grâce à leur formation, la majorité des scientifiques sont équipés de ce que Carl Sagan appelait "\NewTerm{Kit de détection de balivernes }\index{kit de détection de balivernes}" ou "\NewTerm{kit de détection de conneries}\index{kit de détection de conneries}" qui sont des outils cognitifs et des techniques qui fortifient l'esprit contre les arguments fallacieux et biaisés et qui permettent de définir des limites entre la science et la pseudoscience ou plus simplement entre le rationnel et l'émotionnel. Ce n'est pas seulement un outil de la science, il contient des outils inestimables de scepticisme sain qui s'appliquent tout aussi élégamment, et tout aussi nécessairement, à la vie quotidienne. En adoptant le kit, nous pouvons tous nous protéger contre la ruse et la manipulation délibérée.
+	
+	Il existe de nombreuses versions de ces outils de détection mais en voici une assez complète (mais encore incomplète par construction) proposée par Michael Shermer (éditeur fondateur de \href{http://www.skeptic.com}{Skeptic Magazine} et auteur de \textit{The Borderlands of Science}):
+	
+	\begin{enumerate}
+		\item \textit{\textbf{Quelle est la fiabilité de la source de l'information?}}
+
+		Les pseudoscientifiques semblent souvent assez fiables, mais lorsqu'on les examine de près, les faits et les chiffres qu'ils citent sont déformés, non sourcés, pris hors contexte ou parfois même fabriqués. Bien sûr, tout le monde fait des erreurs. Et en tant qu'historien de la science, Daniel Kevles a montré assez efficacement dans son livre \textit{The Baltimore Affair}, qu'il peut être difficile de détecter un signal frauduleux dans un bruit de fond et que la négligence peut alors être parfois considérée comme une partie normale du processus scientifique. La question est: Est-ce que les données et les interprétations montrent des signes de distorsion intentionnelle? Lorsqu'un comité indépendant établi pour enquêter sur une fraude potentielle a examiné un ensemble de notes de recherche dans le laboratoire du lauréat du prix Nobel David Baltimore, il a révélé un nombre surprenant d'erreurs. Baltimore a été exonéré parce que les erreurs de son laboratoire étaient aléatoires et non directionnelles ... Donc, en science, il n'y a pas d'autorités. Tout au plus, il y a des experts!
+
+		\item \textit{\textbf{Est-ce que cette source fait souvent des affirmations similaires?}}
+
+		Les pseudoscientifiques ont l'habitude d'aller bien au-delà des faits. Les géologues des inondations (les créationnistes qui croient que les inondations de Noé peuvent représenter de nombreuses formations géologiques de la Terre) font constamment des affirmations qui n'ont aucun rapport avec la science géologique. Bien sûr, certains grands penseurs vont souvent au-delà des données dans leurs spéculations créatives. Thomas Gold de l'Université Cornell est connu pour ses idées radicales, mais il a souvent eu raison de dire que d'autres scientifiques écoutaient ce qu'il avait à dire. Gold propose, par exemple, que le pétrole n'est pas du tout un combustible fossile mais le sous-produit d'une biosphère chaude et profonde (micro-organismes vivant à des profondeurs inattendues dans la croûte). Presque tous les scientifiques de la terre avec qui j'ai parlé pensent que Gold a raison, et pourtant ils ne le considèrent pas comme une référence intelectuelle dans le domaine de la géologie. Méfiez-vous donc des tendances marginales qui ignorent ou déforment constamment les données expérimentales!
+
+		\item \textit{\textbf{Est-ce que la source a été vérifiée par par d'autres experts indépendents?}}
+		
+		Typiquement, les pseudoscientifiques font des déclarations qui ne sont vérifiées ou vérifiables que par une source dans leur propre cercle de croyance. Nous devons alors nous demander qui vérifie la source et même qui vérifie les vérificateurs? Le plus gros problème avec la débâcle de la fusion froide, par exemple, n'était pas que Stanley Pons et Martin Fleischman avaient tort. C'est qu'ils ont annoncé leur découverte spectaculaire lors d'une conférence de presse avant que d'autres laboratoires ne le vérifient. Pire, lorsque la fusion à froid n'a pas été reproduite, ils ont continué à s'accrocher à leurs arguments. La vérification extérieure est essentielle à la bonne science et à un esprit sain.
+
+		\item \textit{\textbf{Comment la source correspond-elle à ce que nous savons de la façon scientifique dont le monde fonctionne?}}
+
+		Une revendication extraordinaire par une source pseudoscientifique doit être placée dans un contexte plus large pour voir comment elle s'intègre. Quand les gens prétendent que les pyramides égyptiennes et le Sphinx ont été construits il y a plus de 10'000 ans par une race inconnue et avancée, ils ne présentent aucun contexte pour cette civilisation antérieure. Où sont les autres artefacts de ces autres races? Où sont leurs oeuvres d'art, leurs armes, leurs vêtements, leurs outils, leurs déchets? L'archéologie ne fonctionne tout simplement pas de cette façon!
+
+		\item \textit{\textbf{Est-ce qu'il y a des experts qui réfutent la source, ou a-t-on seulement des experts qui la supportent?}}
+
+		Cette situation correspond au "biais de confirmation" (nous reviendrons sur les biais cognitif dans la section sur la Théorie de la Décision \pageref{cognitive bias}), ou la tendance à rechercher des preuves confirmatives et à rejeter ou ignorer les preuves allant dans le sens contraire. Le biais de confirmation est puissant, omniprésent et presque impossible à éviter pour chacun d'entre nous. C'est pourquoi les méthodes scientifiques qui mettent l'accent sur la vérification et la revérification, la réplication à l'identique ou par d'autres approces alternatives, et en particulier les tentatives de falsification d'une revendication, sont si essentielles!
+
+		\item \textit{\textbf{La prépondérance de la preuve va-t-elle dans le sens de la source ou mène-t-elle à une conclusion différente?}}
+
+		La théorie de l'évolution, par exemple, est appuyée à travers une convergence d'évidences provenant d'un certain nombre d'expériences indépendantes sur des sujets différents. Aucun fossile, aucune pièce biologique ou paléontologique ne porte écrit sur elle le mot "évolution"; Au lieu de cela, des dizaines de milliers d'éléments probants s'ajoutent à l'histoire de l'évolution de la vie. Les créationnistes ignorent commodément cette confluence, se concentrant plutôt sur des anomalies triviales ou des phénomènes actuellement inexpliqués dans l'histoire de la vie et de la Terre en général.
+
+		\item \textit{\textbf{La source utilise-t-elles les règles de la méthode scientifique, ou les a-t-on abandonnées au profit d'autres (typiquement émotionnelles) qui mènent à la conclusion souhaitée?}} 
+
+		Une distinction claire peut être faite entre les scientifiques SETI (Search for Extraterrestrial Intelligence) et les ufologues. Les scientifiques du SETI partent de l'hypothèse nulle que les ETI n'existent pas et qu'elles doivent fournir des preuves concrètes avant de faire l'affirmation extraordinaire que nous ne sommes pas seuls dans l'Univers. Les ufologues commencent par l'hypothèse positive que les ETI existent et nous ont visité, puis utilisent des techniques de recherche douteuses pour soutenir cette croyance, comme la régression hypnotique (révélations d'expériences d'abduction), le raisonnement anecdotique (innombrables histoires d'observations d'OVNIS), la pensée conspiratrice (le gouvernement nous ment sur les rencontres extraterrestres), des preuves visuelles de mauvaise qualité (photographies floues et vidéos granuleuses), et la pensée anomaliste (anomalies atmosphériques et perceptions erronées visuelles par des témoins oculaires). Ce type de démarche intellectuelle est aussi celle des religions.
+
+		\item \textit{\textbf{Le source fournit-elle une explication pour les phénomènes observés ou simplement nie-t-il l'explication existante?}}
+	
+		C'est une stratégie de débat classique: critiquez votre adversaire et n'affirmez jamais ce que vous croyez pour éviter les critiques. Il est presque impossible d'amener les créationnistes à offrir une explication à la vie (autre que "Dieu l'a fait"). Les créationnistes de la conception intelligente (ID) n'ont rien fait de mieux, se débarrassant des faiblesses des explications scientifiques pour les problèmes difficiles et l'offre à leur place. "IL l'a fait." Ce stratagème est inacceptable en science mais pourtant tellement courant dans les débats qui ont lieu même en dehors de la sphère des sciences (politique, religions, etc.).
+
+		\item \textit{\textbf{Si la source présente une nouvelle explication, est-ce que cela tient compte d'autant de phénomènes que l'ancienne explication?}}
+	
+		Beaucoup de sceptiques du VIH / SIDA affirment que le mode de vie cause le SIDA. Pourtant, leur théorie alternative n'explique pas autant de données que la théorie du VIH. Pour faire valoir leur argument, ils doivent ignorer les diverses preuves à l'appui du VIH comme vecteur causal du sida tout en ignorant la corrélation significative entre l'augmentation du SIDA chez les hémophiles peu de temps après l'introduction du VIH dans l'approvisionnement en sang par inadvertance.
+
+		\item \textit{\textbf{Les convictions personnelles et les préjugés (biais) de la source conduisent-elles aux conclusions, ou vice versa?}}
+
+		Tous les scientifiques (et plus particulièrement les non-scientifiques qui ne sont pas formés pendant de nombreuses années) ont des croyances sociales, politiques et idéologiques qui pourraient biaiser leurs interprétations des données et de la situation (c'est un "biais de confirmation" également appelé "biais de sélection de cerises" qui est aussi la principale cause de rejet des résultats et des outils scientifiques par les non-scientifiques), mais comment ces préjugés et ces croyances affectent-ils leur recherche dans la pratique? Habituellement, pendant le système d'évaluation par les pairs, ces préjugés et croyances sont extirpés, ou le papier ou le livre est rejeté. 
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=1.0\textwidth]{img/intro/baloney_detection_toolkit.jpg}
+	\end{figure}
+	En ajustant, nous pouvons aller plus loin sur les sophismes de raisonnement. Voici une liste plus exhaustive avec des cas ultra ultra classiques (qui énervent énormément par ailleurs dans les débats les gens auxquels on indique clairement qu'ils tombent dans un ou plusieurs de ces sophismes):
+	\begin{enumerate}
+		\item Ad hominem: Un argument ad hominem attaque le messager, pas le message lui-même.
+
+		\item Argument d'autorité: Argument qui repose sur l'identité d'une autorité plutôt que sur les composants de l'argument lui-même.
+
+		\item Argument des conséquences négatives: Dire que parce que les implications d'une déclaration étant vraie créeraient des résultats négatifs, cela ne doit pas être vrai.
+
+		\item Appel à l'ignorance: Si quelque chose n'est pas connu pour être faux, cela doit être vrai.
+
+		\item Plaidoyer spécial: énoncer un principe universel, en insistant sur le fait qu'il ne s'applique pas à vos affirmations pour une raison quelconque.
+
+		\item Exposer la question / supposer la réponse: Cela se produit quand une déclaration a une prémisse non prouvée. Ce sophisme est également appelé "raisonnement circulaire" ou "logique circulaire".
+
+		\item Sélection observationnelle: En regardant seulement des preuves positives tout en ignorant les négatifs et vice versa.
+
+		\item Statistiques de petits nombres: Utilisation de petits nombres pour signaler de fortes augmentations en pourcentage.
+
+		\item Méconnaissance de la nature des statistiques: L'ignorance à propos des hypothèses statistiques centrales et la définition des paramètres (la confusion entre la corrélation et la causalité, la taille de l'échantillon et la haine du biais mathématique sont des exemples bien connus).
+
+		\item Post hoc, ergo propter hoc: Fonder un effet sur une cause uniquement sur la base de la chronologie.
+
+		\item Fausse dichotomie: Représenter un problème ou un argument comme n'ayant que deux options et aucun spectre entre les deux (biais d'estimation ponctuelle).
+
+		\item Court terme vs Long terme: En supposant qu'une tendance actuelle demeurera constante tout au long de son histoire et continuera de le faire à l'avenir, même si rien ne laisse croire qu'une telle extrapolation soit justifiée.
+
+		\item Pente glissante, liée à la fausse dichotomie: Dire que quelque chose ne va pas parce que c'est à côté ou vaguement lié à quelque chose de mal.
+
+		\item Preuves réprimées et demi-vérités: tirer une conclusion injustifiée de prémisses qui sont au moins en partie correctes.
+
+		\item Paroles en l'air (manque de franchise): L'utilisation de références vagues et non spécifiques.
+	\end{enumerate}
+	
+	En plus de nous enseigner ce qu'il faut faire au minimum lors de l'évaluation d'une nouvelle source de connaissances, tout bon kit de détection de balivernes doit également nous apprendre ce qu'il ne faut pas faire. Cela nous aide à reconnaître les erreurs les plus communes et les plus périlleuses de la logique et de la rhétorique. Beaucoup de bons exemples peuvent être trouvés dans la religion et la politique, parce que leurs praticiens sont souvent obligés de justifier deux propositions contradictoires (sans parler des débats sur les réseaux sociaux...).
+
+	Enfin, citons Lavoisier: "Le physicien peut aussi, dans le silence de son laboratoire et de son cabinet, exercer des fonctions patriotiques; il peut espérer par ses travaux diminuer la masse des maux qui affligent bonheur et, n'eût-il contribué, par les routes nouvelles qu'il s'est ouvertes, qu'à prolonger de quelques années, de quelques jours, la vie moyenne des hommes, il pourrait aspirer aussi au titre glorieux de bienfaiteur de l'humanité."
+	\begin{center}
+		\includegraphics[scale=0.25]{img/humour/evidence_based.jpg}	
+	\end{center}
+	
+	\pagebreak
+	\section{L'effet retour de flemme en Sciences}
+	Un autre point important qu'il est important de souligner au sujet de la communication scientifique: Scientifiques, arrêtez de penser qu'expliquer la science va résoudre les problèmes et éviter les préjugés, surtout si vous vous trouvez dans un état d'incrédulité ou d'évidence qui vous rend fou relativement aux nombreux complots comme celui de la Terre plate. les vaccins, le changement climatique, etc., car les médias traditionnels (ou "pseudo-journalistes") ne savent pas comment communiquer sur les sujets scientifiques!!!
+
+	Les raisons sont majoritairement les suivantes et s'appliquent en dehors du cas où les gens viennent vous écouter ou écouter d'autres scientifiques dans le cadre d'une conférence ou d'un séminaire:
+	\begin{enumerate}
+		\item La plupart des gens ne veulent pas écouter quoi que ce soit à propos de la méthode scientifique surtout quand ils ne vous ont jamais demandé «est-ce vrai?», «Est-ce la meilleure méthode?», «N'est-ce pas un biais?». Si vous utilisez "votre science" juste pour souligner qu'ils ont tort sur ce qu'ils disent ou en argumentent vous allez juste les sortir de leur zone de confort et les faire en plus la science et les scientifiques (anti-intellectualisme!).
+		
+		\item La plupart des humains sont pleins de préjugés, de biais et opportunistes, ils n'aiment alors pas admettre que cela est vrai car ils supposent que l'humain est au sommet de l'évolution et ne peut donc pas avoir de tels défauts. Donc, quand vous leur expliquez qu'ils ont des biais, vous faites simplement remarquer qu'ils ne sont pas fiables. Parlez donc de partialité seulement si les gens vous demandent de le faire.
+		
+		\item La grande majorité des humains croient que leur expérience personnelle est plus fiable et significative que les centaines d'années de revue par les pairs, de tests expérimentaux, de contrôles de la "méthode scientifique" qui semble jusqu'ici, sinon LA meilleure, au moins être la meilleure méthode d'investigation intellectuelle que l'on connaisse à ce jour.
+	\end{enumerate}
+	Maintenant, citons quelques paragraphes d'un excellent \href{http://www.slate.com/articles/health_and_science/science/2017/04/explaining_science_won_t_fix_information_illiteracy.html}{{\color{blue} article}} de Tim Requarth puisque ceux-ci sont quasiment parfaits pour illustrer nos propos:
+	
+	«La théorie que de nombreux scientifiques semblent supporter est techniquement connue sous le nom de "modèle de déficit", qui stipule que les opinions des gens diffèrent du consensus scientifique parce qu'ils manquent de connaissances scientifiques. En 2010, Dan Kahan, un psychologue de Yale, semble avoir montré que cette théorie était significativement fausse. Il a \href{http://www.nature.com/nclimate/journal/v2/n10/full/nclimate1547.html}{{\color{blue} sondé}} plus de 1'500 Américains, classant chaque personne dans une «vision du monde culturelle» d'une échelle qui correspond grossièrement avec une tendance politique libérale ou conservatrice. Il a ensuite évalué la culture scientifique de chaque personne avec des questions telles que «Vrai ou Faux: les électrons sont plus petits que les atomes». Enfin, il les a interrogés sur le changement climatique. Si le modèle de déficit était correct alors les gens avec une culture scientifique supérieure, indépendamment de leur vision du monde, devraient être d'accord avec les consensus scientifique que le changement climatique représente un risque sérieux pour l'humanité.
+  
+	Ce n'est pas ce Dan Kahan a observé. Au lieu de cela, les données mettent en évidence que l'augmentation des connaissances scientifiques avait en réalité un petit effet négatif: les répondants conservateurs qui en savaient le plus sur la science semblent penser que le changement climatique pose le moins de risques. La culture scientifique, semble-t-il, augmente la polarisation. Dans une étude ultérieure, Dan Kahan a ajouté une vice dans le questionnaire: Il a demandé aux répondants ce que selon eux les climatologues croyaient (éviement l'usage du verbe "croire" est vicieux dans ce contexte!). Les répondants qui en savaient plus sur la science en général, quelle que soit leur orientation politique, étaient plus à même d'identifier le consensus scientifique - en d'autres termes, la polarisation avait disparu. Pourtant, quand on a demandé aux mêmes personnes leurs opinions sur le changement climatique, la polarisation est revenue. Il a donc été montré sur cette unique expérience que même lorsque les gens comprennent le consensus scientifique, ils peuvent souvent ne pas l'accepter.
+
+	Le point à retenir est clair: l'augmentation de la culture scientifique seule ne changera pas les esprits et le biais cognitifs. En fait, les tentatives bien intentionnées des scientifiques pour informer le public pourraient même se retourner contre eux. Présenter des faits qui entrent en conflit avec la vision du Monde d'un individu peut, en fait, inciter les gens à aller plus loin. Les psychologues, à juste titre, ont surnommé cela "l'effet de retour de flamme"\index{effet retour de flemme}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.45]{img/intro/explain_science.jpg}
+		\caption[]{Source: Dr. Jones, https://www.ratbotcomics.com}
+	\end{figure}
+	Si les scientifiques veulent simplement expliquer la science à un public curieux, diffuser plus largement leur recherche ou écrire pour s'amuser, cela n'a pas beaucoup d'importance. Mais si les scientifiques sont motivés à faire changer les opionons - et nombreux sont les scientifiques inscrits à des ateliers de communication scientifique qui semblent avoir cet objectif - ils seront a priori très déçus.
+
+	Cela ne veut pas dire que les scientifiques devraient retourner à la laboratoire et rester muets. Ils devraient juste se rendre compte que la combler le "manque d'information (ou de culture)" n'est pas l'objectif réel. Au lieu de cela, les scientifiques devraient apprendre à communiquer la science de façon stratégique!
+
+	Il y a des raisons évidentes pour lesquelles la communication scientifique est une entreprise nécessaire et utile, mais une particulièrement importante est: qu'il y a dans certains pays un politique organisée faite décridibiliser la science et atténuer son efficacité. Lors d'une conférence au Heartland Institute en Mars 2017, Lamar Smith, le président républicain du comité scientifique a déclaré aux participants qu'il qualifierait maintenant la «science du climat» de «science politiquement correcte» et ce afin de minimiser les critiques. Cela catégorse donc implicitement les scientifiques comme faisant partie de la "gauche" politique et, comme Daniel Engber l'a souligné dans le magazine Slate à propos de la prochaine Marche Pour La Science, à redéfinir l'autorité scientifique comme une forme d'élitisme.
+
+	Est-il surprenant, alors que des conférences de scientifiques construites sur le principe qu'ils en savent simplement plus (même si c'est vrai) n'arrivent pas à convaincre leur public? Plutôt que de combler le déficit d'information en construisant un arsenal de faits et d'évidences expérimentales, les scientifiques devraient plutôt envisager comment déployer leurs connaissances. Ils peuvent avoir plus de chance de communiquer si, en plus de présenter des faits et des chiffres, ils font appel aux émotions (biais émotionnels). Cela pourrait signifier non seulement expliquer la science de la façon dont quelque chose fonctionne mais passer du temps sur les raisons pour lesquelles cela compte pour l'auditeur et pourquoi cela devrait avoir de l'importance pour le conférencier. La recherche montre également que les communicateurs scientifiques peuvent être plus efficaces après avoir gagné la confiance du public. Dans cette optique, il serait peut-être plus utile de comprendre comment parler de la science avec des gens qui la connaissent déjà, par le biais d'interactions locales et communautaires, que d'essayer de publier des explications sur des sites d'information nationaux. Et les scientifiques pourraient envisager de rédiger des éditoriaux pour leurs journaux locaux, en se concentrant sur les raisons pour lesquelles la science compte pour leurs communautés respectives.
+
+	Les scientifiques peuvent également apprendre à éviter certains pièges. J'ai parlé avec Gretchen Goldman, directrice de l'Union des Centres Scientifiques Concernés pour la Science et la Démocratie, qui propose des ateliers de communication et de plaidoyer. Une leçon contre-intuitive qu'elle a apprise est que réfuter des histoires qui nient le changement climatique en abordant chaque revendication et en expliquant pourquoi c'est faux n'est pas très productif. En fait, cela pourrait être contre-productif: «Si vous répétez le mythe, c'est la partie que les gens se souviennent même si vous la démystifiez immédiatement», dit-elle. Selon elle, une meilleure approche consiste à recadrer le problème. Ne continuez pas à expliquer pourquoi le changement climatique est réel, expliquez comment le changement climatique va nuire à la santé publique ou à l'économie locale. La communication qui fait appel à des valeurs, pas seulement à l'intellect, montre la recherche, peut être beaucoup plus efficace (biais émotionnel).
+
+	[...] Mais les obstacles rencontrés par les communicateurs scientifiques ne sont pas épistémologiques mais culturels. Les compétences requises ne sont pas celles d'un professeur d'université mais d'un rhéteur.
+
+	C'est donc un but probablement admirable de communiquer sur la science, mais presque certainement destiné à échouer. C'est parce que la façon dont la plupart des scientifiques pensent à la communication scientifique - qui simplement qu'en expliquant la vraie science aidera - est tout à fait fausse. En fait, c'est tellement faux que c'est souvent l'effet inverse de ce qu'ils essaient d'accomplir qui est récolté. [...]»
+	
+	\begin{flushright}
+	Note de qualité de la section: \score{4}{5} 151 votes, 75.23\%
+	\end{flushright}

@@ -1,0 +1,2115 @@
+%---------------------------------
+%Coordinateur: Vincent ISOZ
+%Dernière mise à jour: 2019-02-04
+%Contact: info@sciences.ch
+%Compilé sur: TeXMaker 5.0.2 x64/MiKTeX 2.9 / Package Update 2018-10-25/Microsoft Windows 10 Creator Update x64/PC 16GB RAM (recommané sinon le docoument pourrait ne pas se compiler correctement sans déactiver les LOF et LOT!)
+
+%Remarques: 
+
+%R1. Les packages tkz-tab et etex doivent être installés manuellement depuis le Gestionnaire de Package MikTeX!!!
+
+%R2. When you install first MiKTeX and after TeXMaker don't forget to reboot computer. Compile the document (probably will fail first time...). Do an update of packages using the MiKTeX package updater. Try compile again and use once again de MiKTeX package update. And it should work! If it still don't work i have notice that sometimes corrupted images cause the compilation to not be possible.
+
+%R3. Merdi d'éviter d'utiliser le moins possible de styles et d'opérateurs mathématiques spéciaux définis dans le préamuble pour éviter toute confusion et complication de copier/coller (merci).
+
+%R4. Since 2015-08-29 the ctable package makes conflicts and therefore you can't compile the document with it anymore. We have commented it.
+
+%R5. When the MikTeX Updater updates the BibTex package, then you have to remove all temporary compilation files of the book to be able to compile it again.
+
+%R6. Above 2,600 pages the MikTeX compilation reach TeX memory limit. You will get the message:
+%TeX capacity exceeded, sorry [main memory size=3000000]
+%To solve this open a command Window or the PowerShell and enter:
+%initexmf --edit-config-file=pdflatex
+%Add the following line in the new document that appears on the screen:
+%pool_size=5000000
+%main_memory=6000000
+%extra_mem_bot=2000000
+%font_mem_size=2000000
+%and save it (ctrl+s) and quit the editor. After rebuild the format with:
+%initexmf --dump=pdflatex
+%that's it!!!!
+
+%R7. To remove all equation in Notepad++ with a RegEx, use:
+% (?s)\\begin\{gather\}.*?\\end\{gather\}
+%don't forget to activate the field ". match newlines"
+%---------------------------------
+\documentclass[12pt,a4paper,twoside,openright]{report}
+%solve problem of figures position
+\usepackage{float}
+%text styles and some special operators
+\newcommand{\NewTerm}[1]{\textcolor{red}{#1}}
+\newcommand{\SeeChapter}[1]{\textcolor{gray}{#1}}
+\newcommand{\Ima}{\text{Im}}
+\newcommand{\mi}{\mathrm{i}}
+\newcommand{\card}[1]{\ensuremath{\left\|#1\right\|}}
+%package to write TexMaker logo
+\usepackage{hologo}
+%package to write the reycling logo
+\usepackage{recycle}
+%package for tree logo (avoid to print)
+\usepackage{fontawesome}
+%package for beautiful quote font
+\usepackage{calligra}
+%package to control margine and paper size
+\usepackage[paperheight=297mm,paperwidth=210mm,top=2.5cm,bottom=2.5cm,left=2cm,right=2cm,bindingoffset=1cm]{geometry}
+%packages pour l'internationalisation de la police et son rendu
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{emerald} %package for nice font for book title
+\renewcommand{\rmdefault}{ptm}%to darken the text
+\usepackage[french]{babel}
+%package for specials chars (wingdings like)
+\usepackage{pifont}
+%package for per-thousand symbol
+\usepackage{textcomp}
+%package for version history
+\usepackage{vhistory}
+%packages for headers and footers
+\usepackage{fancyhdr}
+%package to force page notes to have no idents and to be at bottom of page
+\usepackage[hang,flushmargin,bottom]{footmisc} 
+%package to have more deep levels than by default
+\usepackage{enumitem}
+%package to have enumerations on multiple columsn
+\usepackage{multicol}
+%package for colors in tables, title page and anywhere else
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{BrickRed}{rgb}{0.72,0,0}
+%change color of sections
+\usepackage{sectsty}
+\allsectionsfont{\color{black!50}}
+
+%package to make captions small, bold and second package to make multiple captions
+\definecolor{ocre}{RGB}{243,102,25}
+\usepackage[font={scriptsize,bf},labelfont={color=ocre,bf},skip=0pt,justification=centering]{caption}
+
+%\renewcommand{\thefigure}{\textcolor{ocre}{\bfseries\itshape\thechapter.\arabic{figure}}}
+%\renewcommand{\figurename}{\textcolor{ocre}{\bfseries\itshape Fig.}}
+%\renewcommand{\thetable}{\textcolor{ocre}{\bfseries\itshape\arabic{table}}}
+%\renewcommand{\tablename}{\textcolor{ocre}{\bfseries\itshape Table}}
+
+\usepackage{subcaption}
+%definition of progress circles for sections
+\newlength\charwidth
+\newlength\chwidth
+\newcommand*\circled[1]{%
+  \settowidth\charwidth{#1\,\%}%
+  \settototalheight\chwidth{#1\,\%}%
+  \ifdim\chwidth>\charwidth\let\charwidth\chwidth\fi
+  \addtolength\charwidth{15pt}% twice inner sep plus half line width
+  \tikz[baseline=(char.base)]{%
+    \node [inner sep=2pt, circle] (char) {$\sim$#1\,\%};
+    \draw [line width=2pt, color=basecol] (char.north) arc (90:90-#1*3.6:.5\charwidth) coordinate (a);
+    \draw [line width=2pt, color=othercol]  (a) arc (90-#1*3.6:-270:.5\charwidth);
+  }%
+}
+\colorlet{basecol}{purple}
+\colorlet{othercol}{purple!25}
+%end of definition of progress circles
+
+%some colors for the title page
+\definecolor{titlepagecolor}{cmyk}{0.3,0.3,0.3,0.3}
+\definecolor{namecolor}{cmyk}{1,.50,0,.10}
+%toc/lof/lot stuff
+\usepackage{minitoc}
+\setcounter{minitocdepth}{3}
+\usepackage{tocloft} %this line and above two is to minimize vertical space in LOF and to increase number alignement in LOF
+\addtolength{\cftfignumwidth}{1em}
+\addtolength{\cfttabnumwidth}{1em}
+
+%various packages for tables complications
+\usepackage{hhline} %to draw correctyl double vertical/horizotnal lines
+\usepackage{dcolumn} %to align decimals
+\usepackage{multirow} %to merge cells
+\usepackage{colortbl} %for background colors
+\usepackage{array} %to center text horizontally in cells
+\usepackage{variations} %to build variation tables
+\usepackage{spreadtab} %for formulas in tables
+\usepackage{booktabs} %for special borders
+\usepackage{slashbox} %for diagonals in cells
+\usepackage{fancybox} %for rows/columns with bck colors
+\usepackage{hhline} %for double horizontal lines
+\usepackage{diagbox}
+%\usepackage{diagbox}
+\usepackage{rotating} %rotation of text
+\usepackage{makecell}
+\setlength{\textfloatsep}{0.1cm} %space below table (between table and text)
+%macro to vertically center images in cells
+\newcommand\cincludegraphics[2][]{\raisebox{-0.6\height}{\includegraphics[#1]{#2}}}
+%\usepackage{ctable} %for long tables
+\usepackage{longtable} %to repeat title row on multiple pages
+\usepackage{pbox} %for carriage return in cells
+%package for charts and images
+\usepackage{graphicx}
+\usepackage{bclogo} %four countries flags
+%package for videos (flash animations)
+\usepackage{media9}
+%package for lettrine
+\usepackage{lettrine,oldgerm,yfonts}
+%packages to include eps into final pdf (must be declared after graphicx package
+\usepackage{epstopdf}
+\epstopdfsetup{update} % only regenerate pdf files when eps file is newer
+\usepackage{pdfpages}
+%packages for *.eps images and others
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{transparent}
+\usepackage{eso-pic}
+%for background images
+\newcommand\BackImage[2][scale=1]{%
+\BgThispage
+\backgroundsetup{
+  contents={\includegraphics[#1]{#2}}
+  }
+}
+%load packages for text canvas (borders)
+\usepackage{bclogo,environ,wrapfig}
+\usepackage[many]{tcolorbox}
+\usepackage{pst-all}
+%page to use footnotes in tables
+\usepackage{footnote}
+%to force big footnotes to stay on the same page
+\interfootnotelinepenalty=10000
+
+%numbering Definitions
+\newcounter{def}
+\newcommand{\mydef}{%
+        \stepcounter{def}%
+        \thedef}
+        
+%numbering lines
+\usepackage[modulo,right]{lineno}
+%put personal paragraphs number or simply margin notes
+\usepackage{marginnote}
+\newcounter{importantparagraph}[chapter]
+\newcommand{\myparagraph}{%
+        \stepcounter{importantparagraph}%
+        \theimportantparagraph}
+
+%style for equations boxes
+\newcommand*{\boxcolor}{orange}
+\makeatletter
+\renewcommand{\boxed}[1]{\textcolor{\boxcolor}{%
+\tikz[baseline={([yshift=-1ex]current bounding box.center)}] \node [rectangle, minimum width=1ex,rounded corners,draw] {\normalcolor\m@th$\displaystyle#1$};}}
+ \makeatother
+%end for equation boxes style
+
+%post-it definition
+\definecolor{myyellow}{RGB}{242,226,149}
+\usetikzlibrary{shadows}
+\NewDocumentCommand\StickyNote{O{6cm}mO{6cm}}{%
+\begin{tikzpicture}
+\node[
+drop shadow={
+  shadow xshift=2pt,
+  shadow yshift=-4pt
+},
+inner xsep=7pt,
+fill=myyellow,
+xslant=-0.1,
+yslant=0.1,
+inner ysep=10pt
+] {\parbox[t][#1][c]{#3}{#2}};
+\end{tikzpicture}%
+}
+%end of post-it definition
+
+
+%package for flowchart/workflows and definitions of some items
+\usepackage{tikz}
+\usetikzlibrary{backgrounds,arrows.meta,calc,arrows,fadings,mindmap}
+\usetikzlibrary{decorations.pathreplacing,decorations.markings,patterns}
+\usetikzlibrary{shapes.geometric,shapes.gates.logic.US,trees,positioning,arrows}
+\usepackage{tkz-tab} %to draw tikz tables
+%tikzlibrary for the standard model particle figure
+\usetikzlibrary{calc,positioning,shadows,shadows.blur,decorations.pathreplacing}
+
+%petit code pour désactiver une erreur tikz qui est apparue depuis les mise à jour des packages CTAN de Avril 2018
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+%for circle numbers (in section Automata Theory)
+\newcommand*\circledtext[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+%package for karnaugh map
+\usepackage{karnaughmap}
+%\usepackage{karnaugh-map}
+%for smileys
+\usepackage{tikzsymbols}
+%for bohr atoms
+\usepackage{bohr}
+%package for the font size of the morphisms venn diagram
+\usepackage{scalefnt}
+%to build matrix multiplication scheme
+\usepackage{amsbsy}
+\newcommand*{\clap}[1]{\hbox to 0pt{\hss#1\hss}}
+\newcommand*{\mat}[1]{\boldsymbol{\mathrm{#1}}}
+\newcommand*{\subdims}[3]{\clap{\raisebox{#1}[0pt][0pt]{$\scriptstyle(#2 \times #3)$}}}
+\fboxrule=1pt
+%to build star vote system
+\usetikzlibrary{arrows,shapes.geometric,positioning,matrix}
+\newcommand\score[2]{
+\pgfmathsetmacro\pgfxa{#1+1}
+\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=1.3pt,anchor=outer point 3]
+  \begin{tikzpicture}[baseline]
+    \foreach \i in {1,...,#2} {
+    \pgfmathparse{(\i<=#1?"yellow":"gray")}
+    \edef\starcolor{\pgfmathresult}
+    \draw (\i*1.75ex,0) node[name=star\i,scorestars,fill=\starcolor]  {};
+   }
+  \end{tikzpicture}
+}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop}=[rectangle,rounded corners,minimum width=3cm,minimum height=1cm,text centered,draw=black,fill=red!30]
+\tikzstyle{io}=[trapezium,trapezium left angle=70,trapezium right angle=110,minimum width=3cm,minimum height=1cm, text centered,draw=black,fill=blue!30]
+\tikzstyle{process}=[rectangle,minimum width=3cm,minimum height=1cm,text centered,text width=3cm,draw=black,fill=orange!30]
+\tikzstyle{decision}=[diamond,minimum width=3cm,minimum height=1cm,text centered,draw=black,fill=green!30]
+\tikzstyle{arrow}=[thick,->,>=stealth]
+\tikzstyle{decision}=[diamond, draw,fill=blue!20,text width=4.5em,text badly centered,node distance=3cm, inner sep=0pt]
+\tikzstyle{block}=[rectangle,draw,fill=blue!20,text width=5em,text centered,rounded corners,minimum height=4em]
+\tikzstyle{line}=[draw,-latex']
+\tikzstyle{cloud}=[draw,ellipse,fill=red!20,node distance=3cm,minimum height=2em]
+%paragraphe identation by default
+\setlength\parindent{0pt}
+%package of report visual style
+\usepackage{background}
+\backgroundsetup{ contents= {\begin{tikzpicture}[remember picture, overlay] \draw [line width=0.3pt,color=gray,step=0.5cm] (current page.south west) grid (current page.north east); \end{tikzpicture} } scale=1, angle=0} 
+\usepackage{atbegshi}% http://ctan.org/pkg/atbegshi
+%for codes
+\usepackage{listings,lstautogobble,xcolor}
+%color definition for matlab script
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style}, 
+    autogobble=true   
+}
+%for algorithms
+\usepackage[linesnumbered,ruled]{algorithm2e}
+%load americal mathematical society packages for equations
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\DeclareMathOperator{\sgn}{sgn} %must be after package ams!
+\usepackage{gauss} %package for gauss elimination in linear algebra
+\usepackage{xfrac} %package for small fractions like spin 1/2
+\usepackage{gensymb} %for degree symbole
+\usepackage{arcs} %for arc symbol over letters (overarc)
+\usepackage{empheq} %for multiple equations box
+\usepackage{etoolbox} %to create matrices with outbounds legends using bbordermatrix
+\let\bbordermatrix\bordermatrix
+\patchcmd{\bbordermatrix}{8.75}{4.75}{}{}
+\patchcmd{\bbordermatrix}{\left(}{\left[}{}{}
+\patchcmd{\bbordermatrix}{\right)}{\right]}{}{}
+\AtBeginDocument{\AtBeginShipoutNext{\AtBeginShipoutDiscard}}
+%\package to automatically resize equation to page width
+\usepackage{resizegather}
+\usepackage{mathtools} %for text above arrows
+%package for linear system of equations
+\usepackage{systeme}
+%packages for special integral
+\usepackage{wasysym} %closed inetegrals
+\usepackage{esint} %intégrales de contour orientées (analyse complexe)
+\usepackage{bigints} %write huge integral
+%to have an arc over 2 letters as the arc package and the yhmath package have issues
+\def\wideparen#1{\overset{\;\rotatebox{90}{)}}{#1}}
+%package for unitary matrix
+\usepackage{dsfont}
+%definition for theorems
+\theoremstyle{definition}
+\newtheorem{theorem}{Théorème}[chapter]
+\newtheorem{dem}{Démonstration}[theorem]
+\newtheorem{corollary}{Corollaire}[theorem]
+\newtheorem{lemma}{Lemme}[theorem]
+\newtheoremstyle{itexmp}
+ {\topsep}
+ {\topsep}
+ {\normalfont}
+ {0pt}
+ {\itshape\bfseries}{.}
+ { }
+ {#1 \textit{#2}}
+\theoremstyle{itexmp}
+\newtheorem{exmp}{Example}[chapter]
+\newcommand{\statedefn}[2]{
+ \definecolor{shadethmcolor}{cmyk}{0.1,0.05,0,0}
+ \definecolor{shaderulecolor}{cmyk}{0.73,0.19,0,0}
+ \begin{defn}\label{#1}{#2}\end{defn}
+}
+%for annuities symboles
+\usepackage{lifecon}
+%for euro symbol
+\usepackage{eurosym}
+%for tensor calculus AND annuities notations
+\usepackage{tensor}
+%for quantum bra-ket symbols
+\usepackage{braket}
+%numbering of equations restart at each section
+\numberwithin{equation}{section} 
+%package for terms simplifications in equations
+\usepackage[makeroom]{cancel}
+%package for watermark
+\usepackage{draftwatermark}
+\SetWatermarkLightness{0.85}
+\SetWatermarkAngle{25}
+\SetWatermarkScale{2}
+\SetWatermarkFontSize{1cm}
+\SetWatermarkText{Brouillon 4ème Édition}
+%packages for chapters color margin markers and definitions
+\usepackage{background}
+\usepackage{xifthen}
+\usepackage{totcount}
+\regtotcounter{chapter}
+
+\backgroundsetup
+{   contents={
+        \begin{tikzpicture}[overlay]
+            \pgfmathtruncatemacro{\mytotalchapters}{\totvalue{chapter} > 0 ? \totvalue{chapter} : 20}
+            \pgfmathsetmacro{\mypaperheight}{\paperheight/28.453}
+            \pgfmathsetmacro{\mytop}{-(\thechapter-1)/\mytotalchapters*\mypaperheight}
+            \pgfmathsetmacro{\mybottom}{-\thechapter/\mytotalchapters*\mypaperheight}
+            \ifcase\thechapter
+                \xdef\mycolor{white}
+                \or \xdef\mycolor{red}
+                \or \xdef\mycolor{orange}
+                \or \xdef\mycolor{yellow}
+                \or \xdef\mycolor{green}
+                \or \xdef\mycolor{blue}
+                \or \xdef\mycolor{violet}
+                \or \xdef\mycolor{Apricot}
+                \or \xdef\mycolor{Magenta}
+                \or \xdef\mycolor{GreenYellow}
+                \or \xdef\mycolor{Sepia}
+                \or \xdef\mycolor{SkyBlue}
+                \or \xdef\mycolor{Aquamarine}
+                \or \xdef\mycolor{LimeGreen}
+                \or \xdef\mycolor{WildStrawberry}
+                \or \xdef\mycolor{RawSienna}
+                \or \xdef\mycolor{Purple}
+                \or \xdef\mycolor{RedOrange}
+                \or \xdef\mycolor{CadetBlue}
+                \else \xdef\mycolor{black}
+            \fi
+            \ifthenelse{\isodd{\value{page}}}
+            {\fill[\mycolor] ($(current page.north east)+(0,\mytop)$) rectangle ($(current page.north east)+(-0.5,\mybottom)$);}
+            {\fill[\mycolor] ($(current page.north west)+(0,\mytop)$) rectangle ($(current page.north west)+(0.5,\mybottom)$);}
+        \end{tikzpicture}
+    },
+    scale=1,
+    angle=0
+}
+%package for image positions
+\usepackage{wrapfig}
+\usepackage{picins}
+%package lipsum and blindtext for various tests
+\usepackage{lipsum,blindtext}
+%definition for numbering sections
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+%definition for main TOC depth
+%\setcounter{\tocdepth}{5}
+%package to get lastpage number
+\usepackage{lastpage}
+\AtBeginShipout{
+\ifnum\value{page}=\number\numexpr\getpagerefnumber{LastPage}-0\relax
+\phantomsection\label{preLastPage}
+\fi}
+%package for chapter styles formatting (gray box) and keept it here otherwise it will make a render bug
+\usepackage[Bjornstrup]{fncychap}
+\ChNameVar{\Huge}
+%for electronic circuit
+\usepackage[compatibility]{circuitikz}
+\input{electronic_symbols_macros.tex}
+%package for small TOC
+\usepackage{shorttoc}
+%was supposed to be use for Creative Common logo but doesn't work since August 2015 update
+%\usepackage[type={CC},modifier={by},version={3.0},]{doclicense}
+%part for bibtex
+\usepackage[backend=bibtex]{biblatex}
+\bibliography{biblio}
+%package to make index
+\usepackage{makeidx,imakeidx}
+%to make work the options below first do an index with the options commented and after compile again with the option uncommented!
+\makeindex[options=-s my_index_style.ist -c]
+
+%decoration for title page (if \titlepacagedecoration uncommented further below
+\newcommand\titlepagedecoration{
+\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+
+\coordinate (aux1) at ([yshift=-15pt]current page.north east);
+\coordinate (aux2) at ([yshift=-410pt]current page.north east);
+\coordinate (aux3) at ([xshift=-4.5cm]current page.north east);
+\coordinate (aux4) at ([yshift=-150pt]current page.north east);
+
+\begin{scope}[black!40,line width=12pt,rounded corners=12pt]
+\draw
+  (aux1) -- coordinate (a)
+  ++(225:5) --
+  ++(-45:5.1) coordinate (b);
+\draw[shorten <= -10pt]
+  (aux3) --
+  (a) --
+  (aux1);
+\draw[opacity=0.6,black,shorten <= -10pt]
+  (b) --
+  ++(225:2.2) --
+  ++(-45:2.2);
+\end{scope}
+\draw[black,line width=8pt,rounded corners=8pt,shorten <= -10pt]
+  (aux4) --
+  ++(225:0.8) --
+  ++(-45:0.8);
+\begin{scope}[black!70,line width=6pt,rounded corners=8pt]
+\draw[shorten <= -10pt]
+  (aux2) --
+  ++(225:3) coordinate[pos=0.45] (c) --
+  ++(-45:3.1);
+\draw
+  (aux2) --
+  (c) --
+  ++(135:2.5) --
+  ++(45:2.5) --
+  ++(-45:2.5) coordinate[pos=0.3] (d);   
+\draw 
+  (d) -- +(45:1);
+\end{scope}
+\end{tikzpicture}
+}
+
+%dedication page
+\newenvironment{dedication}
+  {\clearpage           % we want a new page
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{1}}% some space at the top 
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+
+%for start page
+\usepackage{authblk}
+%package for international date format
+\usepackage[yyyymmdd]{datetime}
+
+%package hyperref for links and pdf metadata, Must be the last package!
+\usepackage[unicode,pdfencoding=auto,hidelinks,pdfinfo={pdfauthor={ISOZ Vincent},pdftitle={Elementary Applied Mathematics - Sciences.ch},pdfsubject={Elementary Applied Mathematics},pdfkeywords={Arithmetics;Statistics;Geometry;Trigonometry;Quantitative Finance;Engineering;Theoretical Computing},pdfproducer={Scientifc Evolution Sàrl}, pdfcreator={ISOZ Vincent}}]{hyperref}
+\definecolor{wine-stain}{rgb}{0.5,0,0}
+\hypersetup{colorlinks,linkcolor=wine-stain,linktoc=all}
+
+%\usepackage[author={Opera Magistris}]{pdfcomment}
+
+\renewcommand{\dateseparator}{--}
+%package to control globally space between items
+\usepackage{enumitem}
+\setlist[1]{itemsep=6pt}
+%three packages for old-style background
+\usepackage{eso-pic}
+\usepackage{changepage}
+\strictpagecheck
+
+%*****************************************fancy quotes starts here
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.1\textwidth}%
+         \setlength{\rightmargin}{0.1\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{3}{\textcolor{quotemark}{''}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+ \def\endfquote{%
+ \endgroup\par%
+ \makebox[0pt][l]{%
+ \hspace{0.8\textwidth}%
+ \begin{picture}(0,0)(0,0)%
+ \put(15,15){\makebox(0,0){%
+ \scalebox{3}{\color{quotemark}''}}}%
+ \end{picture}}%
+ \ifx\tempa\empty%
+ \else%
+    \ifx\tempc\empty%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa\ \emph{\tempb}%
+   \else%
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa\ \emph{\tempb}\ \tempc%
+   \fi\fi\par%
+   \vspace{0.5em}%
+ \end{list}%
+ }%
+ \makeatother
+ %*****************************************fancy quotes ends here
+%package for some advanced plots
+\usepackage{pgfplots}
+\usetikzlibrary{patterns}
+
+\usepackage{titlesec}
+%this is a test to make chapter title bigger
+%\titleformat{\chapter}{\bf\huge}{\thechapter}{1em}{}
+
+%to make beautiful section titles
+\newcommand\titlebar{%
+\tikz[baseline,trim left=3.1cm,trim right=3cm] {
+    \fill [BrickRed!25] (4cm,-1ex) rectangle (\textwidth+3.1cm,2.5ex);
+    \node [
+        fill=BrickRed,
+        anchor= base east,
+        rounded rectangle,
+        minimum height=3.5ex] at (4.5cm,0) {
+        \textbf{\thesection.}
+        %before is it was (but the compiler don't managed same anymore)
+        %\textbf{\arabic{chapter}.\thesection.}
+    };
+}%
+}
+\titleformat{\section}{\LARGE}{\titlebar}{2cm}{} %distance from section text to number
+%to have chapter number in front of sections and subsections
+%\renewcommand*{\thesection}{\arabic{section}}
+
+%push memory limits of LaTeX
+%\usepackage{morewrites}
+%if the above "morewrites" does not work...
+\usepackage{scrwfile}
+
+%Pour renommer les titres de la liste des figures et tables et algorithmes en français
+
+\begin{document}
+	%Pour les traductions de plein de termes de la version française
+	\def\refname{R\'ef\'erences}%
+   \def\abstractname{R\'esum\'e}%
+   \def\bibname{Bibliographie}%
+   \def\prefacename{Pr\'eface}%
+   \def\chaptername{Chapitre}%
+   \def\appendixname{Annexe}%
+   \def\contentsname{Table des mati\`eres}%
+   \def\listfigurename{Table des figures}%
+   \def\listtablename{Liste des tableaux}%
+   \def\indexname{Index}%
+   \def\figurename{{\scshape Fig.}}%
+   \def\tablename{{\scshape Tab.}}%
+   \def\partname{\protect\@Fpt partie}%
+   \def\pagename{page}%
+   \def\seename{{\emph{voir}}}%
+   \def\alsoname{{\emph{voir aussi}}}%
+   \def\enclname{P.~J. }%
+   \def\ccname{Copie \`a }%
+   \def\proofname{D\'emonstration}% for AMS-LaTeX
+   
+	\sloppy %to force texts and equations to respects pages margins
+	\pageref*{LastPage} %the star is to avoid the page number to be a link
+	\raggedbottom
+	\pagenumbering{roman}
+	\newgeometry{margin=2.5cm}
+%page de couverture
+	\begin{titlepage}
+	\newgeometry{left=2cm,bottom=2cm,top=2cm} %defines the geometry for the titlepage
+	\BackImage[scale=1]{img/quantum.jpg}
+	%\pagecolor{titlepagecolor}
+	\noindent
+	\color{gray}
+	{\normalsize Le livre de niveau 1er cycle ultra-portable, ultra-facile, ultra rapide de 6'000 pages}\\
+	{\normalsize sur les Éléments de Mathématiqus Appliquées pour Ingénieurs (EMAI). Rédigé pour la culture, et non pour le profit!!}
+	\color{white}
+	\makebox[0pt][l]{\rule{1.3\textwidth}{1pt}}\\
+	\par
+	\noindent
+	\scalebox{2.2}{\fontsize{32pt}{0pt}\selectfont \textbf{Opera Magistris}} \\ \textcolor{namecolor}	{\textsf{Distribution originale}}
+	\vfill
+	\noindent
+	{\huge \textsf{3ème Édition}}
+	\vskip\baselineskip
+	\noindent
+	\textsf{\{ISBN 978-2-8399-0932-7\} Janvier 2014}
+	%DOI: 10.13140/RG.2.2.31296.02562
+	\vskip\baselineskip
+	Compilé avec {\huge \LaTeXe} sur \TeX maker
+	\vskip\baselineskip
+	{\small
+EMAI-3 est une oeuvre sous license Creative Commons "Attribution
+3.0 Unported".\\ paternité; usage commerical interdit; conditions de partage identiques\\
+\url{https://creativecommons.org/licenses/by-nc-sa/4.0/}}\\[2pt]
+\includegraphics[width=1cm]{img/icons/share2.eps}\includegraphics[width=1cm]{img/icons/remix2.eps}
+\includegraphics[width=1cm]{img/icons/by2.eps}
+\includegraphics[width=1cm]{img/icons/nc-eu2.eps}
+\includegraphics[width=1cm]{img/icons/sa2.eps}\\
+2001-2018: \textit{Une livre pour les gouverner (presque) tous!} \href{https://www.facebook.com/sharer/sharer.php?u=http://www.sciences.ch/htmlen/latex/LaTeX_SciencesCh.pdf}{\faThumbsOUp{}}
+\\\\
+	
+	%\titlepagedecoration
+	\end{titlepage}
+	\restoregeometry %restores the geometry
+	\nopagecolor %use this to restore the color pages to white (or other color depending on your choice with \pagecolor{yellow!20} for example)
+%end of title page
+	\newpage\null\thispagestyle{empty}\newpage
+	\restoregeometry
+	%old style background
+	%\AddToShipoutPicture{\checkoddpage
+	%\ifoddpage
+    %\put(0,0){\includegraphics[width=\paperwidth,height=\paperheight]{img/odd_page.jpg}}
+	%\else
+	%     \put(0,0){\includegraphics[width=\paperwidth,height=\paperheight]{img/even_page.jpg}}
+	%\fi
+ 	%}r
+	\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\Large Distribution Originale}\\[1.5cm] % Name of your university/college
+\textsc{\Huge \textbf{Opera Magistris}}\\[0.5cm] % Major heading such as course name
+\textsc{\large 3ème Édition}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \Large \bfseries Compendium sur les \\ Éléments de Mathématiques Appliquées pour Ingénieurs}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Co-editors:}\\
+%Léon \textsc{HARMEL}\\
+%Vincent \textsc{ISOZ}\\
+%\end{flushleft}
+%\end{minipage}
+%~
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Superviseurs:} \\
+%F.D.C. Tigrou % Supervisor's Name Felis domesticus catus Tigrou
+%\end{flushright}
+%\end{minipage}\\[2cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+\vspace{120px}
+\begin{center}
+\textit{La Méthode Scientifique pour un meilleur Monde et réinformer le peuple!}
+\end{center}
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\BackImage[scale=1.75]{img/god.jpg}
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+	\begin{versionhistory}
+		\vhEntry{3.10}{2018-01-20}{VI}{Nouveaux sujets ajoutés et erreurs de traductions corrigées (voir le journal des changements)}
+		\vhEntry{3.9}{2017-11-13}{VI}{Quelques mises à jour mineures pour la version gratuite du livre (voir le journal des changements)}
+		\vhEntry{3.8}{2017-08-01}{VI}{Quelques mises à jour majeures et critiques et corrections diverses (voir le journal des changements)}
+		\vhEntry{2.0}{2005-03-10}{VI}{2ème Édition francophone publiée sur Internet en tant que PDF ($2,001$ pages).}
+		\vhEntry{1.0}{2002-05-01}{VI}{1ère Édition francophone publiée sur Internet en tant que pages HTML seulement.}
+	\end{versionhistory}
+	\begin{fquote}[Toni Morrison]S'il y a un livre que tu rêves de lire, mais qui n'a pas encore été écrit, alors c'est à toi de l'écrire.
+ 	\end{fquote}
+	\newpage\null\thispagestyle{empty}\newpage %création d'une nouvelle page en forcant la disparition du numéro de page
+	\dominitoc
+	\shorttoc{Contents}{0} % Only chapters
+	\pagebreak
+	\renewcommand{\contentsname}{Table of Contents}
+	\tableofcontents
+	\newpage\null\thispagestyle{empty}\newpage
+	\setlength{\parskip}{12pt}
+	\pagenumbering{arabic}
+	\clearpage %eliminate headers and footer of table of contents page
+	\pagestyle{fancy} %du package fancyhdr!!!
+	\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\space#1}{}}
+	\renewcommand{\sectionmark}[1]{\markright{#1}}
+	\fancyhead[LE,RO]{\nouppercase\leftmark~(\nouppercase\rightmark)} %LE=Left Even,RO=Right Odd
+	\fancyhead[LO,RE]{EMAI v3.11-2014}
+	\renewcommand{\footrulewidth}{1pt}
+	\fancyfoot[LE,RO]{{\thepage}/\pageref*{LastPage} (\Acrobatmenu{GoBack}{retour})}
+	\fancyfoot[LO,RE]{\href{mailto:info@sciences.ch}{info@sciences.ch}}
+	\fancyfoot[C]{}
+	\let\cleardoublepage\clearpage
+
+	\begin{dedication}
+	{\LARGE Dédié à \textbf{Mère Nature}}
+	\end{dedication}
+
+	\chapter{Avertissements}
+	\minitoc
+	\input{Chapter_Warnings.tex}
+	
+	
+	\chapter{Remerciements}
+	Les concepts de ce livre ont été développés et renforcés par de nombreuses personnes. J'ai beaucoup bénéficié de mes interactions régulières avec des étudiants (universités, écoles d'ingénieurs) et les cadres de tous horizons, y compris les PDG, directeurs financiers, chefs de projets de nombreuses entreprises à travers le monde, sessions d'enseignement, développement de programmes spécifiques, conseil et même conversations informelles . Je leur suis reconnaissant d'avoir partagé leur sagesse tout en supportant mes nombreuses questions dans des échanges calmes et constructifs et donc d'inspiré de nombreuses idées de le livre.
+
+	Ce livre et son site Internet d'accompagnement n'auraient pas été possible sans le précieux soutien des personnes mentionnées ci-dessous. Ils trouvent ici l'expression de ma gratitude la plus sincère (et à coup sûr si quelques erreurs subsistent dans ce livre c'est évidemment leur faute...):
+	
+	\begin{itemize}		
+		\item \textbf{HARMEL Léon }(†2012), Ingénieur électricien diplômé avec une spécialisation en électronique et automatisation, responsable dans le laboratoire de recherche physique à l'AFIC à Charleroi (BEL), pour la rédection détaillée de nombreux développements disponibles dans les sections de Physique Quantique Corpusculaire, Physique Quantique Ondulatoire, Physique Quantique des Champs, Calcul Spinoriel et Relativité Générale.
+		
+		\item \textbf{KOLANI Daname}, Doctorant en Gestion de Portefeuilles à UM5-Rabat (MAR) pour son aide à la rédaction des livres d'accompagnement R \& MATLAB™, pour sa relecture et compléments de la sous-section de ce livre sur la Fouille de Données (Data Mining) et l'Apprentissage Machine (Machine Learning) et la conversion de quelques centaines de pages du site Internet francophone original (Sciences.ch) en ce livre \LaTeX.
+		
+		\item \textbf{LEGRAND Mathias}, Ph.D. de l'École Centrale de Nantes (FRA) pour son aide à la conversion des premières $550$ pages du site Internet francophone original (Sciences.ch) en ce livre \LaTeX.
+				
+		\item \textbf{RICCHIUTO Ruben}, Ingénieur HES en Physique (B.Sc.) de l'Ecole d'Ingénieurs de Genève et mathématicien de l'Université de Genève pour son aide précieuse en physique des plasmas, électromagnétisme, physique quantique, statistiques, topologie, chimie quantique, théorie des fractales, analyse fonctionnelle et de nombreux autres domaines touchant les mathématiques pures et l'informatique théorique.
+		
+		\item Habitués des forums \href{http://www.les-mathematiques.net}{{\color{blue} Les Mathematiques.net}} et \href{http://www.futura-sciences.com}{{\color{blue} Futura-Sciences.com}}, pour leur précieuse aide dans de nombreux domaines de la mathématique et de la physique. Les débats et discussions qui y ont lieu permettent de constamment améliorer l'aspect pédagogique et accessible du présent site.
+		
+		\item  Les sites Internet \href{http://www.wikipedia.com}{{\color{blue} Wikipédia}} et \href{http://www.planetmath.com}{{\color{blue} PlanetMath}} à qui je suis redevable de nombreux emprunts presque au mot par mot (et c'est réciproque...). 
+		
+		\item Les professeurs Gabriel Nagy de la Michigan State University, Liam Revell de la Massachusetts Boston University, Jorge Cham (de PhD Comics) et l'équipe OpenStax qui ont reçu \underline{et} lu mes multiples e-mails de requêtes sur les crédits/droits d'images et de textes mais n'ont jamais daigné répondre (pas tout à fait de bons exemples de ce que devrait être la "collaboration et l'esprit scientifique"...)
+	\end{itemize}
+	
+	Et encore merci à tous les internautes, webmasters et professeurs anonymes pour leurs sites et documents de qualité mis à disposition gratuitement et anonymement sur la toile et aux intervenants réguliers des divers forum existant sur Internet. J'ai parfois récupéré mot à mot leurs explications et réponses qui ne nécessitaient ni compléments ni corrections.
+
+	Inutile de dire qu'il ne faut pas supposer que ces personnes soient en accord total avec les vues scientifiquese exprimées sur dans présent livre; et elles ne sont nullement responsables des erreurs ou des obscurités qui pourraient s'y trouver par erreur.
+
+	Pour terminer, je souhaiterais remercier ici les quelques collègues et clients qui ont bien voulu me faire part de leurs remarques pour améliorer le contenu de ce livre. Il est cependant certain qu'il est encore perfectible sur de nombreux points.
+	
+	Je voudrais enfin remercier tout particulièrement ma famille pour leur soutien continu et mes amis pour leur patience car l'écriture de ce livre absorbe tout mon temps depuis plus de dix ans, mais je voudrais envoyer un remerciement spécial à mon père et à ma mère! Merci aussi à ma conjointe d'être toujours là pour prendre soin de moi quand j'oublie de le faire...
+	
+	Pour tout retour ou commentaire/critique public, vous pouvez utiliser le livre d'or associé à ce PDF (pour les questions veuillez s'il vous plaît utiliser le forum!):
+	\begin{center}
+	\url{http://www.sciences.ch/htmlfr/guestbook.php}
+	\end{center}
+	ou si vous voulez me communiquer un retour ou commentaire/critique en privé, vous pouvez me contacter par {\href{mailto:info@sciences.ch}{{\color{blue}email}}}.
+	
+  \chapter{Introduction}
+	%To add line numbers on all paragraphes each 5 lines if necessary	
+	%\linenumbers
+	
+	\minitoc
+	\pagebreak
+	\input{Chapter_Introduction.tex}
+	
+
+ \chapter{Arithmétique}
+
+	\textit{\textbf{Mathematics is the ultimate form of forced art.}} (unknown)
+	\minitoc
+	\input{Chapter_Arithmetic.tex}
+	
+	
+  \chapter{Algèbre}
+
+	\textit{\textbf{Algebra is the science of calculating the quantities or structures represented by letters.}} (Larousse)
+	\minitoc
+	\input{Chapter_Algebra.tex}
+	
+		
+ \chapter{Analyse}
+
+	\textit{\textbf{The analysis is the rigorous formulation of calculus.}}(Wikipedia)
+	\minitoc
+	\pagebreak
+	\input{Chapter_Analysis.tex}
+		
+\chapter{Géométrie}
+
+	\textit{\textbf{Geometry is the mathematical discipline that focuses on the rigorous study of spaces and forms}}. (Larousse)
+	\minitoc
+	\pagebreak
+	\input{Chapter_Geometry.tex}
+	
+   \chapter{Mécanique}
+
+	\textit{\textbf{Mechanics is the branch of physics that relates to the study of forces and their actions in abstract form}}. (Larousse)
+	\minitoc
+	\input{Chapter_Mechanics.tex}
+	
+\chapter{Éléctromagnétisme}
+
+	\textit{\textbf{Electrodynamic is the field of physics that study the dynamic action of electric currents and the propagation of electromagnetic waves.}}
+	\minitoc
+	\pagebreak
+	\input{Chapter_Electromagnetism.tex}
+
+\chapter{Atomistiques}
+
+	\textit{\textbf{The atomic physics is the part of physics that deals with quantified energy states of corpuscular and wave particles and of exchange of energies within the atom}}. (Larousse)
+	\minitoc
+	\pagebreak
+	\input{Chapter_Atomistic.tex}
+	
+
+\chapter{Cosmologie}
+
+	\textit{\textbf{Cosmology is the science that studies the structure, evolution and the general laws of the universe as a whole}}. (Larousse)
+	\minitoc
+	\pagebreak
+	\input{Chapter_Cosmology.tex}
+
+	
+\chapter{Chimie}
+
+	\textit{\textbf{Chemistry is the science that studies the nature and properties of simple substances, the molecular action of these bodies on each other and combinations due to this action.}}(Larousse)
+	\minitoc
+	\pagebreak 
+	\input{Chapter_Chemistry.tex}
+	
+	
+\chapter{Informatique Théorique}
+	\label{theoretical computing}
+	\textit{\textbf{The theoretical computer science is the branch of science that deals with the development of algorithms and theoretical tools that can be apply to IT to solve formal problems related to the simulation of physical phenomena or data treatments and the exchange of information.}}(Larousse)
+	\minitoc
+	\pagebreak 
+	\input{Chapter_Computing.tex}
+	
+	
+\chapter{Sciences Sociales}
+
+	\textit{\textbf{Social mathematics are the analysis and formal modeling tools of the behavior and management of a population and its trade in goods in all its activities, in interaction with its environment.}} (Sciences.ch)
+	\minitoc
+	\pagebreak
+	\input{Chapter_SocialSciences.tex}
+	
+		
+\chapter{Ingénierie}
+
+	\textit{\textbf{Engineering is the set of practices consisting to apply the results of the exact sciences and basic research to practical industrial or daily problems.}} (Larousse)
+	\minitoc
+	\pagebreak
+	\input{Chapter_Engineering.tex}
+
+	
+	
+ 	\chapter{Épilogue}
+	Vous avez parcouru une long chemin avec nous à travers ce livre. Nous avons maintenant atteint l'épilogue, où par tradition, le rédacteur principal est autorisé à donner ses opinions personnelles.
+
+	En effet, je veux vous laisser avec certaines de mes pensées sur la théorie par rapport à la pratique, le business et l'ingénierie, la recherche en mathématiques appliquées, et ce que j'espère vous avez appris après avoir lu ce livre.
+
+	Par nature, l'ingénierie académique est très étroitement liée à sa pratique. La théorie et la pratique sont régies par les mêmes idées. En tant qu'enseignant universitaire depuis 2001 dans des sociétés du Fortune 500 et de nombreuses PME, je suis fier d'affirmer que la majorité des idées d'ingénierie ont été inventées ou développées dans le milieu universitaire avant d'être mises en pratique.
+	
+	Mais la recherche en ingénierie ne s'adresse pas seulement aux universitaires en herbe: comme je le sais très bien, les consultants en gestion et les consultants en économie sont essentiellement des chercheurs, même si la plupart d'entre eux ont un niveau analytique très bas. Des entreprises comme McKinsey, Ernst \& Young, KPMG et Accenture peuvent avoir des audiences, des vitesses d'analyse, des systèmes gestion d'équipe et des processus de publication et d'évaluation différents, mais ils sont souvent confrontés à des problèmes similaires à ceux des universitaires et à les résoudre avec les mêmes méthodes à la petite différence que le niveau de technicité est de savoir est significativement plus bas en général par rapport à ces derniers.
+
+	Il y a aussi beaucoup de complémentarité: de nombreux professeurs travaillent régulièrement avec de grands cabinets de conseil aux Etats-Unis ou dans des sociétés d'investissement, et certains ont même carrément abandonné le monde universitaire pour multiplier leur rémunération (ou leur motivation...).
+
+	Parce que l'ingénierie est par nature une discipline appliquée, après avoir lu ce livre, vous ne devriez pas avoir besoin d'autre chose pour comprendre la recherche en ingénierie aujourd'hui. C'est-à-dire que dans l'idéal, vous devriez être maintenant être tout à fait capable de lire les publications scientifiques à la pointe dans de nombreuses domaines et ce sans trop de difficultés.
+	
+	Alors, comprenons-nous vraiment l'ingénierie? Certainement pas complètement. Nous avons vu à travers cela que la finance est autant un art qu'une science. Compte tenu de nos déficiences, étant donné que toutes nos méthodes ont leurs erreurs, que devons-nous faire? Mon meilleur conseil est d'utiliser le bon sens (en évitant soigneusement les biais), d'employer un certain nombre de techniques différentes pour arriver à une gamme de réponses possibles, et ensuite de porter un jugement sur l'estimation la plus raisonnable à la lumière de différents modèles obtenus et validés par les pairs.
+	
+	Notre livre a couvert les principes de base de l'ingénierie dans une certaine profondeur et largeur. Vous devriez être très bien préparé maintenant pour les prochaines étapes de votre formation continue en ingénierie.
+	
+	J'ai pris beaucoup de plaisir co-écrire ce livre autant que mes supports de cours de formations en entreprise, et ce pour la même raison: Cela a été comme résoudre un puzzle intrigant que peut-être personne d'autre n'a compris et expliquer de la même manière. Bien sûr, la différence majeure étant que sa co-rédaction m'a pris pas mal de temps (15 ans en incluant pas les 5 années pour la traduction de la version anglophone!).
+	
+	Mais cela en aura valu la peine si vous en avez tiré des leçons! Si vous avez étudié le livre, vous devriez maintenant savoir environ $99\%$ de ce que je connais de l'ingénierie. Fait intéressant, il y avait un certain nombre de sujets que je pensais avoir compris, mais en réalité ce n'était visiblement pas le cas - et c'était seulement mon devoir de vous les expliquer qui les a clarifiés pour moi aussi. Et cela m'amène à un point clé que je veux vous laisser - ne jamais avoir peur de poser des questions, d'admettre ses biais, même sur les premiers principes. Le faire n'est pas un signe de bêtise au contraire, c'est souvent un signe d'approfondissement de la conscience et de la compréhension.
+
+	Je ne me fais pas d'illusions: vous ne vous souviendrez très probablement pas de tous les détails de ce livre au fil du temps - je sais personnellement en tout cas que je ne le peux pas. Mais plus que les détails, j'espère que je vous aurai laissé une appréciation pour les grandes idées, un arsenal d'outils techniques et cognitifs, des méthodes pour aborder de nouveaux problèmes et des nouvelles perspectives. Vous pouvez maintenant penser comme un ingénieur ou mieux encore: comme un scientifique!
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.1]{img/knowledge_is_power.jpg}	
+	\end{figure}
+	
+	\chapter{Biographies}
+	\input{Chapter_Biographies.tex}
+
+	\chapter{Chronologie}
+	\input{Chapter_Chronology.tex}
+
+	\chapter{Humour}
+	\minitoc
+	\pagebreak
+	\input{Chapter_Humor.tex}
+
+ 	\chapter{Liens}
+	\input{Chapter_Links.tex}
+
+			
+	\chapter{Citations}
+	\begin{figure}[H]
+		\centering
+		\includegraphics{img/be_greater_than_average.jpg}	
+	\end{figure}
+	\begin{fquote}[John Aubrey]Sans la foi, Dieu n'est rien. Sans science, l'homme n'est rien!
+ 	\end{fquote}
+ 	
+	\begin{fquote}[Leonardo da Vinci]Celui qui aime la pratique sans la théorie est comme le marin qui monte à bord sans gouvernail ni compas et ne sait jamais où il peut acoster.
+ 	\end{fquote}
+ 	
+	\begin{fquote}[Richard Feynman]La physique est comme le sexe. Bien sûr, cela peut avoir des résultats pratiques, mais ce n’est pas pour cela que nous le faisons.
+ 	\end{fquote}
+ 	
+	\begin{fquote}[Martin Gardner]Les mathématiques ne sont pas seulement réelles, mais c'est la seule réalité. C'est que tout l'univers est fait de matière, évidemment. Et la matière est faite de particules. Il est composé d'électrons, de neutrons et de protons. Donc, l'univers entier est composé de particules. Maintenant, de quoi sont faites les particules? Elles ne sont pas faits de rien. La seule chose que vous pouvez dire de la réalité d'un électron est de citer ses propriétés mathématiques. Il y a donc un sens dans lequel la matière s'est complètement dissoute et ce qui reste n'est qu'une structure mathématique.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Owen Chamberlain]Chaque génération de scientifiques se tient sur les épaules de ceux qui ont précédé.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Kiyoshi Ito]Dans les structures mathématiques construites avec précision, les mathématiciens trouvent le même genre de beauté que les autres trouvent dans des pièces musicales enchanteresses ou dans des architectures magnifiques. Il y a cependant une grande différence entre la beauté des structures mathématiques et celle du grand art. La musique de Mozart, par exemple, impressionne même ceux qui ne connaissent pas la théorie musicale; la cathédrale de Cologne accable les spectateurs même s'ils ne connaissent rien du christianisme. La beauté des structures mathématiques, cependant, ne peut être appréciée sans comprendre un groupe de relations numériques qui expriment des lois de la logique. Seuls les mathématiciens peuvent lire des "partitions musicales" contenant de nombreuses relation numériques et jouer cette "musique" dans leurs coeurs.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Ray Bradbury]Vous n'avez pas besoin de brûler des livres pour détruire une culture. Empêchez juste les gens de lire.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Edward Teller]La science d'aujourd'hui est la technologie de demain.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Brian Cox]La science est différente de tous les autres systèmes de pensée ... parce que vous n'avez pas besoin d'avoir foi en elle, vous pouvez vérifier par vous-même qu'elle fonctionne!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[George Bernard Shaw]Le fait qu'un croyant soit plus heureux qu'un sceptique n'est pas plus frappant que le fait qu'un homme ivre soit plus heureux que celui qui est sobre.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Carl Sagan]Je ne veux pas croire, je veux savoir!
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Richard Feynman]La science n'est que de l'imagination dans dans une camisole de force.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Stephen Hawking]Le plus grand ennemi de la connaissance n'est pas l'ignorance, c'est l'illusion de la connaissance.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[?]Sans données, vous êtes juste une autre personne sans opinions, mais sans les mathématiques, vous n'êtes qu'un collectionneur de données.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Albert Einstein]Je n'ai pas de talents particuliers, je ne suis que passionnément curieux.
+ 	\end{fquote}
+
+	\begin{fquote}[Dara Briain]Les gens continuent à dire "la science ne sait pas tout!". Eh bien, la science sait qu'elle ne sait pas tout; sinon elle s'arrêterait.
+ 	\end{fquote}
+ 
+
+ 	 \begin{fquote}[Stephen Hawking]On ne peut pas prouver que Dieu n'existe pas, mais la Science rend Dieu inutile.
+ 	\end{fquote}
+
+ 	 \begin{fquote}[Voltaire]Le pouvoir des nombres était beaucoup plus respecté quand nous ne savions rien d'eux.
+ 	\end{fquote}
+
+	\begin{fquote}[Jean Rostand]Réfléchir, c'est déranger ses pensées!
+ 	\end{fquote} 
+ 	
+ 	\begin{fquote}[John Cleese]Si vous êtes stupide, comment pouvez-vous vous rendre compte que vous êtes stupide?
+ 	\end{fquote} 	
+ 	
+ 	\begin{fquote}[Frank Wilczek]Si vous ne faites pas d'erreurs, c'est que vous ne travaillez pas sur des problèmes assez dur. Et c'est une grosse erreur.
+ 	\end{fquote}
+
+	\begin{fquote}[?]Le succès repose sur le succès de ceux qui nous ont précédés.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Brigitte Le Roux, Henry Rouanet]Entre quantité et qualité, il y a la géométrie.
+ 	\end{fquote}
+
+	\begin{fquote}[Leonardo da Vinci]La pratique devrait toujours être basée sur une bonne connaissance de la théorie.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Richard Feynman]Peu importe la beauté de votre théorie, quelle que soit votre intelligence! Si ce n'est pas en accord avec l'expérience, c'est que c'est faux!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Ronald Fisher]Appeler le statisticien après que l'expérience soit faite n'est peut-être rien de plus que de lui demander d'exécuter un constant post-mortem - il pourra peut-être dire de quoi l'expérience est morte...
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Charles Babbage]Les erreurs utilisant des données inadéquates sont beaucoup moins nombreuses que celles n'utilisant aucune donnée!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Leonardo da Vinci]Les détails font la perfection et la perfection n'est pas un détail.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Neil Degrasse Tyson]L'ignorance est un virus. Une fois qu'il commence à se répandre, il ne peut être guéri que par la raison. Pour l'amour de l'humanité, nous devons être ce remède!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[David Hilbert]L'art de faire des mathématiques consiste à trouver ce cas particulier qui contient tous les germes de la généralité.
+ 	\end{fquote}
+
+ 	\begin{fquote}[Derek Bok]Si vous pensez que l'éducation coûte cher, essayez l'ignorance.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Benjamin Franklin]Dites-moi et j'oublie, enseignez-moi et je me souviens, impliquez-moi et j'apprends.
+ 	\end{fquote}
+ 
+
+ 	 \begin{fquote}[Niels Bohr]Un expert est une personne qui a découvert par sa propre expérience toutes les erreurs que l'on peut commettre dans un domaine très restreint.
+ 	\end{fquote}
+ 	
+ 	 \begin{fquote}[Daniel C. Denett]Ce que vous pouvez imaginer dépend de ce que vous savez.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Arthur C. Clarke]Toute technologie suffisamment avancée ne se distingue pas de la divinité.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Nikola Tesla] Ce qu'un homme appelle Dieu, un autre l'appelle les lois de la Physique.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[?]La seule personne dont vous avez besoin d'être meilleur que est la personne que vous étiez hier!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Eleanor Roosevelt]Les grands esprits discutent des idées. Les esprits moyens discutent des événements. Les petits esprits discutent des gens.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Marie Curie]Soyez moins curieux des gens et plus curieux des idées.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Albert Einstein]La créativité est de l'intelligence qui s'amuse.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Aaron Swartz]Avec suffisamment d'entre nous, partout dans le monde, nous ne ferons pas que lancer un message fort contre la privatisation de la connaissance - nous en ferons un passé!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Buddha]Lorsque vous passez votre focalisation de la concurrence à la contribution, la vie devient une célébration! N'essayez jamais de vaincre les gens, gagnez simplement leurs coeurs.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Bertrand Russell]Le problème dans le Monde est que les gends stupides sont sûrs d'eux et que les intelligents sont pleins de doutes.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Gerge Bernard Show]Certains hommes voient les choses telles qu'elles sont et demandent pourquoi? D'autres rêvent de choses qui n'ont jamais existé et se demandent pourquoi pas?
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Albert Einstein]Si vous ne pouvez pas l'expliquer à un enfant de six ans, vous ne le comprenez pas assez bien.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Hubert Reeves]L'homme est l'espèce la plus folle. Il vénère un Dieu invisible et détruit une nature visible. Ignorant que la nature qu'il détruit est ce Dieu qu'il adore.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Willima Thomson (Lord Kelvin)]Vous ne pouvez pas mesurer, vous ne pouvez l'améliorer!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Albert Einstein]Dès que vous cessez d'apprendre, vous commencez à mourir.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Socrates]Le seul bien est la CONNAISSANCE, le seul mal est l'IGNORANCE.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[?]Le but de l'argumentation ne devrait pas être la victoire, mais le progrès.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Richard Dawkins]La science est la poésie de la réalité!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Sthepen Hawking]La vraie science peut être beaucoup plus étrange que la science-fiction et beaucoup plus satisfaisante.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Alan Watts]Vous ne comprendrez pas les hypothèses de base de votre propre culture si votre propre culture est la seule culture que vous connaissez.
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Elon Musk]Ceux qui sont assez fous pour penser qu'ils peuvent changer le monde sont ceux qui le font!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Leonardo da Vinci]Le plus grand plaisir est la joie de la compréhension!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Galileo Galilei]Le doute est la source de toute invention!
+ 	\end{fquote}
+ 	
+ 	\begin{fquote}[Fred Mosteller]Il est facile de mentir avec des statistiques, mais il est plus facile de mentir sans elles.
+ 	\end{fquote}
+
+\chapter{Journal des changements}
+
+Ceci est un journal de changement (log) détaillé du présent livre pour les personnes intéressées à voir comment ce dernier a évolué (pour rester informé des nouvelles versions, envoyez-nous un e-mail pour vous abonner à la newsletter):
+	\begin{itemize}
+		\item \textbf{Mai 2002}
+		\begin{itemize}[noitemsep]
+			\item Définitions (sciences, loi, théorème, postulat, axiome, corollaire,...)
+			\item Opérations d'addition, soustraction, multiplication, division (puissance)
+			\item Les nombres (entiers, relatifs, réels, fractionnaires, complexes, algébriques, abstraits,...)
+			\item Domaine de définition d'une variable
+			\item Polynômes arithmétiques
+			\item Valeur absolue
+			\item Relations binaires, relations d'ordre
+			\item Fonction Gamma d'Euler, constante d'Euler
+			\item Equation d'onde électromagnétique, vitesse de l'onde, vitesse de la lumière, énergie véhiculée
+			\item Introduction à l'optique
+			\item Règle de trois, pourcentages
+			\item Quantités nettes, prix de revient d'achat, indices, prix de ventes, prix de ventre brut, bénéfice net, nombre clé, actifs
+			\item Intérêts simples et composés, versements tardifs et précoces
+			\item Gestion de portefeuilles (critères de décision, goodwill, return on investisment)
+			\item Modèle de Markowitz (fonction d'utilité, élaboration du critère de choix)
+			\item Bourse
+			\item Fréquence Plasma
+			\item Probabilités (univers, événements, axiomes)
+			\item Analyse combinatoire 
+			\item Statistiques (variables discrètes, variables continues, écart-type, variance et covariance)
+			\item Fonctions de distribution (fonction discrète uniforme, de Bernoulli, binomiale, hypergéométrique, multinomiale, de Poisson, de Gauss-Laplace, de Cauchy, bêta, gamma, Khi-deux, loi de Student)
+			\item Estimateurs, la corrélation
+			\item Matrice des covariances
+			\item Tests statistiques d'adéquation 
+		\end{itemize}
+		\item \textbf{Juin 2002}
+			\begin{itemize}[noitemsep]
+				\item Ensembles (théorie Zermelo-Fraenkel, l'inclusion, la complémentarité, l'intersection, la réunion, la différence, le produit, l'ensemble vide
+				\item Moyennes arithmétique, harmonique, géométrique, quadratique
+				\item Univocités
+				\item Fonctions (logarithmes et exponentielles)
+				\item Nombre d'or
+				\item Introduction aux séries de Fourier
+				\item Loi de Coulomb, champ électrostatique, potentiel électrostatique
+				\item Théorème d'Ampère
+				\item Loi de Biot et Savart, champ magnétique, induction magnétique
+				\item Equations de Maxwell
+				\item Dimensions
+				\item Formes géométriques unidimensionelles, bidimensionelles, tridimensionelles
+				\item Théorème de Pythagore
+				\item Systèmes d'unités en physique
+				\item Principe de moindre action et de conservation de l'énergie
+				\item Positions, vitesse et accélération
+				\item Equation de continuité
+				\item Equation de Bernoulli
+				\item L'effet Doppler
+				\item Relativité Restreinte, principe d'invariance, transformations de Lorentz (temps, longueurs, addition des vitesses, augmentation de la masse, espace-temps de Minkowski
+				\item Relativité générale (ligne d'univers, événement ponctuel, particules inertielles, cônes nuls, vecteurs d'espace-temps, espaces plans et courbes, tenseur métrique)
+				\item Principes d'incertitudes de Heisenberg, équation de Schrödinger, densité de probabilité
+				\item Introduction aux supercordes
+			\end{itemize}
+		\item \textbf{Juillet 2002}
+			\begin{itemize}[noitemsep]
+				\item Création d'une table des matières
+				\item Représentation des fonctions
+				\item Polynômes et zéros de polynômes du deuxième degré
+				\item Opérateur de champs vectoriels et scalaires (gradient, nabla, divergence, rotationnel, Laplacien)
+				\item Analyse vectorielle (notion de flèche, ensemble des vecteurs, multiplication par un scalaire, espace vectoriel, combinaisons linéaires, familles génératrices, bases d'un espace vectoriel)
+				\item Calcul Tensoriel (convention d'Einstein, symbole de Kronecker, symbole d'antisymétrie)
+				\item Notations de sommation (Sigma), notation de multiplication (Pi majuscule)
+				\item Axiomes pour l'ensemble des réels
+				\item Inégalités
+				\item Mouvements circulaires et relatifs
+				\item Forces d'inertie (Force de coriolis)
+				\item Equation de Drake
+			\end{itemize}
+		\item \textbf{Août 2002}
+			\begin{itemize}[noitemsep]
+				\item Nouveaux personnages (Hilbert, Riemann, Legendre)
+				\item Nouveau chapitre "Humour"
+				\item Introduction à la Topologie
+				\item Postulats d'Euclide
+				\item Plan de Gauss
+				\item Formule de Moivre
+				\item Transformations dans le plan complexe
+				\item Changement de base et produit scalaire tensoriel
+				\item Composantes covariantes et contravariantes
+				\item Transformations relativiste de la quantité de mouvement
+				\item Préfixe des multiples et sous-multiples des unités
+				\item Contrôles de qualité (probabilités), courbe d'efficacité, valeur de niveau de qualité acceptable (NQA)
+				\item Lois de Kepler
+				\item Démonstration de la force gravitationelle classique à partir des lois de Kepler
+				\item Démonstration de la loi des Aires (deuxième loi de Kepler)
+				\item Moment de force
+				\item Moment cinétique
+				\item Théorème du moment cinétique
+				\item Equation de Newton-Poisson
+				\item Modèle de l'atome de Thomson, de Bohr, de Bohr-Sommerfeld
+				\item Spectre de l'hydrogène
+				\item Hypothèse du Neutron
+				\item Nombres quantiques
+				\item Principes d'exclusion de Pauli
+				\item Analyse classique de l'équation de Schrödinger pour le puits de potentiel rectangulaire idéal
+				\item Lois de Newton
+				\item Démonstration de la troisième loi de Newton à partir du principe de moindre action
+				\item Vitesse de libération
+				\item Définition du "Scientisme"
+				\item Variation de l'accélération gravifique dans et à l'extérieur d'un astre homogène sphérique
+				\item Principe de moindre action et physique quantique (limite semi-classique)
+				\item Balistique (portée maximale, parabole de sûreté)
+				\item Introduction à la physique nucléaire
+				\item Nombre atomique, nombre de masse
+				\item Radioactivité, activité, filiation, isotopes, isotones, nucléides, datation
+				\item Système de masse atomique (UMA)
+				\item Défaut de masse
+				\item Fusion et fission nucléaire
+				\item Désintégration alpha, beta (moins et plus), capture électronique, émission gamma
+			\end{itemize}
+		\item \textbf{Septembre 2002}	
+			\begin{itemize}[noitemsep]
+				\item Biographies de Dalton, Boltzmann et Broglie
+				\item Principe du bon ordre
+				\item Propriété Archimédienne
+				\item Principe d'induction
+				\item Divisibilité (division euclidienne)
+				\item Nombres congrus
+				\item Preuve par neuf
+				\item Bases de nombres
+				\item Définition de l'utilitié des séparateurs de milliers
+				\item Priorité des parenthèses, crochets et accolades
+				\item Priorité des opérandes
+				\item Théorie de la démonstration (intro)
+				\item Notions de termes, formules et démonstrations
+				\item Définition des langages, symboles, relations et fonctions
+				\item Définition des fonctions périodiques, composées, élémentaires, rationnelles entières, fractionnelles, irrationnelles, algébriques et transcendantes
+				\item Généralisation de l'algèbre élémentaire
+				\item Dimensions d'un espace vectoriel, pronlogement d'une famille libre, rang d'une famille finie
+				\item Hyperplan vectoriel, sommes directes
+				\item Définition rigoureuse des notions de ligne, surface (plan) et volume
+				\item Droites sécantes, demi-droites, segments, partie aliquote
+				\item Axiome de continuité de la droite
+				\item Déplacement et retournement de plan
+				\item Angles, unités, mesures, côtés de l'angle, angles saillants, angles plats, angles égaux
+				\item Axiome de continuité du plan
+				\item Angles droites, aigus, obtus, supplémentaires, complémentaires
+				\item Droites perpendiculaires, bissectrice d'un angle
+				\item Définition du travail et de l'énergie: Thèroème de l'énergie cinétique et potentielle (travail moteur et résistant)
+				\item Notion de champ conservatif
+				\item Conservation de l'énergie et de la quantité de mouvement
+				\item Théorème du centre de masse
+				\item Transformation relativiste de la force
+				\item Transformées relativistes des champs électrique et magnétique
+				\item Masse limite de Chandreskhar (limite d'effondrement de naines blanches)
+				\item Défintions de l'optique, généralisation de la loi de la réfraction
+				\item Condition de normalisation de de Broglie, état liés et non liés
+				\item Oscillateur harmonique
+				\item Chimie quantique, vibrations moléculaire
+			\end{itemize}
+		\item \textbf{Octobre 2002}
+			\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Cauchy, Neumann, Bessel et Archimède
+				\item Nouvelle section sur les "Méthodes Numériques"
+				\item Plus grand commun diviseur, plus petit commun multiple
+				\item Règle des signes (...)
+				\item Démonstration de l'irrationalité d'un nombre
+				\item Introduction aux progressions arithmétiques, harmoniques et géométriques
+				\item Limite et continuité des fonctions
+				\item Définition des espaces affines
+				\item Introduction aux tenseurs euclidiens et leurs propriétés
+				\item Triangles et propriétés des triangles
+				\item Définition des systèmes thermodynamiques
+				\item Définition de la masse réduite
+				\item Fonctions de Bessel
+				\item Définition du moment d'inertie
+				\item Introduction à la théorie quantique des champs
+				\item Introduction à la radioprotection, formule de Bethe-Bloch
+				\item Effet tunnel
+				\item Introduction au formalisme de Dirac
+				\item Algorithme d'Heron et d'Archimède
+				\item Introduction aux ensembles fractals
+				\item Introduction à la théorie des jeux (jeux coopératifs, gains, matrice des gains, formes extensives, optimums de Pareto, équilibre de Nash, jeux évolutionnaires)
+			\end{itemize}
+			\item \textbf{Novembre 2002}
+				\begin{itemize}[noitemsep]
+				\item Théorème fondamental de l'arithmétique
+				\item Introduction à la crypthographie (RSA, DES, MD5, SHA-1)
+				\item Fonction phi d'Euler
+				\item Petit théorème de Fermat
+				\item Introduction aux dimensions topologiques et d'homothétie
+				\item Cosinus directeurs
+			\end{itemize}
+			\item \textbf{Décembre 2002}
+				\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Nash, Cartan, Lucas, et Lie
+				\item Développement détaillé de la fonction "Entière"
+				\item Superposition linéaire des états quantiques (cohérence quantique)
+				\item Définition des fonctions Lipschitziennes et des fonctions contractantes
+				\item Définition d'une suite convergente de Cauchy
+				\item Théorème du point fixe (utilisé dans les fractals, méthodes de Newton et bcp d'autres)
+				\item Définitions de la réalité, du problème, de la théorie et essai sur la réalité
+				\item Définition de de l'espace euclidien et de l'espace affine euclidien
+				\item Définition des notions de propriété dans le domaine de la chimie
+			\end{itemize}
+			\item \textbf{Janvier 2003}
+			\begin{itemize}[noitemsep]
+				\item Théorème de Pascal
+				\item Poussée d'Archimède
+				\item Introduction simple aux différentes symétries en physique (temporelle, spatiale)
+				\item Introduction simple aux différentes transformation dans le plan (translation, homothétie, réflexion, isométrie, rotation)
+				\item Définition d'une application réciproque et composée
+				\item Trigonométrie (introduction, relations remarquables, trigonométrie sphérique)
+				\item Signature d'un espace vectoriel
+				\item Méthodes d'orthogonalisation de Schmidt, changements de bases, espaces associés de Fourier
+				\item Tout (ou presque) sur la trigonométrie plane et sphérique
+				\item Trajectoires d'orbitales képleriennes
+				\item Introduction au modèle monétaire néo-classique (loi de say, postulat d'homogénéité)
+				\item Algèbre de Boole (propriétés et théorèmes simples)
+				\item Refonte du chapitre de physique quantique (ordre de présentation des sujets)
+				\item Démonstration de l'équation d'évolution de Schrödinger
+				\item Démonstration de l'équation d'évolution relativiste de Schrödinger
+				\item Introduction à la théorie de l'anti-matière
+			\end{itemize}
+		\item \textbf{Février 2003}
+				\begin{itemize}[noitemsep]
+				\item Démonstration gradient, divergence, rotationnel et Laplacien en coordonnées cartésiennes, polaires, cylindriques et sphériques
+				\item Développements mathématiques complets des expressions de la vitesse et de l'accélération en coordonnées cartésiennes, polaires, cylindriques et sphériques
+				\item Démonstration de l'invariance relativiste de la charge électrique (équation de conservation de la charge électrique... je pense)
+				\item Démonstration de l'existence d'anti-particule de charge opposées
+				\item Introduction à la théorie de Jauges (quadripotentiel, jauge de Lorenz, jauge de Coulomb, d'Alembertien)
+				\item Introduction au formalisme Lagrangien et Hamiltonien (coordonnées généralisées, espaces des configurations, équation d'Euler-Lagrange, formalisme canonique, transformation de Legendre, crochet de Poisson)
+				\item Définition rigoureuse du principe de moindre action
+				\item Espaces tensoriels et définition
+				\end{itemize}
+		\item \textbf{Mars 2003}
+			\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Lorentz, Hermann, Ricci-Curbastro et Levi-Civita
+				\item Définition du produit cartésien et extension du cadre d'application des cardinaux
+				\item Démonstration de l'inégalité de Cauchy-Schwarz
+				\item Démonstration de l'inégalité triangulaire
+				\item Définitions du produit vectoriel et du produit mixte
+				\item Démonstration de la forme condensée la somme des n premiers nombres entiers
+				\item Démonstration de la validité de l'intégration par partie
+				\item Définition de la structure algébrique vectorielle et d'un algèbre
+				\item Définition d'un homorphismes, isomorphisme, endomorphisme, automorphisme
+			\end{itemize}
+		\item \textbf{Avril 2003}
+			\begin{itemize}[noitemsep]
+				\item Théorie de l'équilibre de Cournot (concurrence)
+				\item Modèle de Wilson (gestion de stocks)
+				\item Mathématique des phaseurs
+				\item Modèle relativiste de l'atome de Sommerfeld
+				\item Résolution analytique de l'équation de Schrödinger
+				\item Principes d'incertitudes quantiques de Heisenberg
+				\item Formalisme Lagrangien de la physique quantique des champs
+				\item Ajout de biographies sur Göpper-Meyer, Hideki, Nöther et Cournot 
+				\item 10 nouveaux liens vers des pages web intéressantes (associations + mathématiques)
+			\end{itemize}
+		\item \textbf{Mai 2003}
+			\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Bell, Ramanujan et Landau 
+				\item Démonstration de la précession du périhélie des orbites d'astres couplés et de charges couplées
+				\item Définition et développements relatifs au théorème du Viriel
+				\item Calcul de l'énergie potentielle d'un sphère de matière (température interne des étoiles)
+				\item Définition des nombres premiers et démonstration qu'ils sont en nombre infini 
+				\item Définition d'un anneau intégralement clos
+				\item Démonstration qu'un nombre rationnel est un nombre algébrique si et seulement si c'est un entier relatif. 
+				\item Définition d'une application multi-linéaire (ou morphisme d'espace vectoriel) 
+				\item Définition d'une partition d'un ensemble et d'une classe d'équivalence. 
+				\item Descriptions des opérations ensemblistes d'absorption et d'idempotence. 
+				\item Définitions et exemples de diagrammes sagittals.
+				\item Définition d'un magma et d'un monoïde
+				\item Pseudo-démonstrations des structures aglébriques des ensembles fondamentaux de l'arithmétique
+				\item Développement de la théorie du moment cinétique en physique quantique ondulatoire
+				\item Définition d'une équation diophantienne et enoncé du grand théorème de Fermat
+			\end{itemize}
+		\item \textbf{Octobre 2003}
+			\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Abel, Banach, Boole, Bose, Luitzen Egbertus, Clausius, Cayley, Curie, Connes, Dirichlet, Frege, Gibbs, Picard, Erdös, Grothendieck,Hamilton, Hausdorf, Heaviside, Helmholtz, Hermite, Hoyle, Jacobi, Klein, Kronecker, Langevin, Lee, Lobatchevski, Möbius, Monge, Poisson, Schwartz, Shannon, Thom, Van Der Waals, Viète, Weinberg, Witten, Gamow, Sturm, Liouville, Clairaut, Teller
+				\item Définition des espaces ponctuels en mécanique classique, des conventions d'écriture et des changements de repères.
+				\item Théorie mathématique de la perspective projective à points de fuite et définition des perspectives techniques isométriques et cavalières.
+				\item Définition simpliste du concept de "dérivée" en analyse fonctionnelle. Démonstration de quelques dérivées courantes (polynômes, fonctions composées, fonctions réciproques, cosinus, sinus, arcsinus, arcosinus, quotient de deux fonctions).
+				\item Méthodes numériques: définition mathématique de la complexité d'un algorithme et recherches élémentaires d'optimisation
+				\item Méthode de calcul du nombre e
+				\item Méthode de résolution des systèmes de N équations linéaires à N inconues par la méthode du pivot 
+				\item Recherche des racines de fonction par la méthodes des parties proportionnelles, de la bissection, de la sécante (regula falsi) et de la méthode de Newton - Calculs des aires et intégrales par la méthode des sommes de riemann 
+				\item Exposition de la méthode de Monte-Carlo pour le calcul d'intégrales, de $\pi$ et de recherche de racines (dichotomie) 
+				\item Développement mathématique de l'algorithme du simplexe utilisé dans le cadre des recherches opérationnelles (programmation linéaire) 
+				\item Calcul tensoriel: la contraction des indices - de la définition et des propriétés de quelquens tenseurs particuliers (tenseurs symétriques, antisymétriques, tenseur fondamental) 
+				\item Coordoonnées curvilignes (détermination de la métrique et élément linéaire d'un espace sphérique et cartésien et du plan en coordonnées polaires) 
+				\item Symboles de christoffel (de première et de deuxième espèce).
+				\item Démonstration du théorème de Cantor-Bernstein
+				\item Détermination du lagrangien libre généralisé en Relativité Générale
+			\end{itemize}
+		\item \textbf{Décembre 2003}
+			\begin{itemize}[noitemsep]
+				\item Ajout des biographes sur Kirchhoff, Markowitz, Cox Merton, Sholes, Sharpe, Lindemann, Bachelier et Stefan 
+				\item Démonstration d'une des formules de Stirling
+				\item Calcul de la température de surface d'une étoile
+				\item Calculs des propriétés temporelles des titres de valeurs
+				\item Démonstration des séries de Taylor et Maclaurin (limité et non limité)
+				\item Définition du reste de Lagrange et des critères de divergences d'Alembert, de Cauchy, Test de l'intégrale, Convergence absolue
+				\item Développements relatifs aux définitions de la luminosité, éclat, magnitude apparente et absolue des étoiles et calcul de la distance des céphéides
+				\item Définitions de l'angle solide, l'angle solide de révolution et l'angle solide élémentaire
+				\item Introduction à la photométrie: définition des grandeurs photométriques, photoniques et S.I., définitions et développements relatifs à l'intensité lumineuse, le flux énergétique (avec démonstration de la loi de Beer-Lambert), l'émittance énergétique, luminance énergétique (avec démonstration de la loi de Lambert), loi de Kirchhoff (vois le chapitre d'optique dans la section d'électromagnétisme)
+				\item Démonstration de la loi de Stefan et de la loi de Stefan-Boltzmann
+				\item Résolutions des équations du troisième degré par radicaux (méthode de Cardan) et développements de la résolution des équations du second degré dans l'ensemble des complexes
+				\item Définition du concept d'équations et inéquations
+				\item Détermination de l'équation cartésienne du plan, d'un droite (dans l'espace), d'un cône, d'une sphère
+				\item Détermination de l'équation de Black \& Sholes (définition du postulat d'efficience du marché) et présentation des processus de Wiener et du lemme d'Ito ainsi que du mouvement Brownien (marche au hasard)
+			\end{itemize}
+		\item \textbf{January 2004}
+			\begin{itemize}[noitemsep]
+				\item Définition de l'intégrale indéfinie
+				\item Modèle cosmologique newtonien (sans la constante cosmologique)
+				\item Enoncé des axiomes de Peano
+				\item Introduction à l'algèbre linéaire (méthode de réduction de Gauss, opérations élémentaires entre matrices)
+				\item Enoncé des 5 axiomes d'Euclide et des 5 groupes d'axiomes en géométrie
+				\item Démonstration des relations de calcul du perimètre, de la surface et du barycentre du carré, du rectangle, et du triangle. Démonstration des relations du calcul des volumes et des surfaces du tore, de la sphère, de l'ellipsoïde, du cylindre et du cône
+				\item Définition du barycentre (centre de gravité) et démonstration de quatre propriétés y relatives
+				\item Démonstration de la décomposition en fonction impaire et paire de toute fonction 
+				\item Définition des fonctions trigonométriques hyperboliques et énumération des relations et propriétés remarquables y relatives
+				\item Introduction à la géométrie différentielle (définition d'une géométrie riemanienne, trièdre de Frenet, nappe paramétrée, ...)
+				\item Introduction à la théorie des graphes (ponts de Königsberg)
+				\item Définition d'un espace topologique et de Hausdorff, définition d'un espace métrique/ultra-métrique ainsi que des distances associées (hölderiennes, discrète, équivalentes, ...), définition d'une fonction lipschitzienne (et des isométries associées), définition des ensemble ouverts et fermés (boules ouvertes, fermées, sphères, adhérence, diamètre, excès de Hausdorff), définition des diamètres définition des distances ensemblistes (gap), définition d'une variété/carte/atlas et homéomorphisme différentiel.
+			\end{itemize}
+		\item \textbf{Avril 2004}
+			\begin{itemize}[noitemsep]
+				\item Démonstration du théorème de Guldin
+				\item Démonstration du théorème de König de l'énergie cinétique et du moment cinétique
+				\item Présentation et démonstration de techniques de calcul pour les moments d'inertie: théorème d'Huygens-Steiner, moment d'inertie polaire, tenseur d'inertie, théorème d'Huygens-Steiner généralisé
+				\item Définition de la "Puissance" et du "Rendement" et démonstration du calcul de la puissance d'une machine tournante
+				\item Démonstration de loi d'entropie thermodynamique de Boltzmann ainsi que des distributions statistique suivantes: vitesses de Maxwell, Maxwell-Boltzmann, Fermi-Dirac, Bose-Einstein
+				\item Démonstration de quelques moments d'inertie principaux des corps suivants: tore, boule, boule creuse, cône, plaque rectangulaire, tube
+				\item Introduction à l'optique ondulatoire: éconcé du principe de Huygens, démonstration de la loi de Malus, développement du modèle de la diffraction de Fraunhofer dans le cas d'un fente rectangulaire. Définition et détermination du pouvoir de résolution d'une fente rectangulaire simple.
+				\item Démonstration de la provenance et de la solution de la non moins fameuse équation différentielle de Bessel d'ordre n
+				\item Démonstration de la fonction d'onde d'une corde tendue et d'une membrane circulaire tendue
+				\item Démonstration de la loi de Planck et démonstration des approximations connues: première loi de Wien, loi de Rayleigh-Jeans.
+				\item Démonstration de la loi de déplacement (deuxième loi de Wien) et de la loi de Stefan-Boltzmann en passant par la loi de Planck et détermination de la constante de Stefan-Boltzmann
+				\item Démonstration des dimensions de Planck: longueur de Planck, masse de Planck, densité de Planck, temps de Planck, énergie de Planck
+			\end{itemize}
+		\item \textbf{Juillet 2004}
+			\begin{itemize}[noitemsep]
+			\item Démonstration de l'origine physique de la chaleur
+				\item Démonstration du théorème de Toricelli, de l'effet Venturi et de la loi de Poiseuille
+				\item Démonstration de l'effet Compton relativiste
+				\item Démonstration de l'existence du rayonnement fossile de l'Univers
+				\item Introductions aux ensembles quotients (en l'occurrence $\mathbb{Z}/n\mathbb{Z}$)
+				\item Démonstration des transformations de Lorentz des vitesses et des accélérations
+				\item Détermination du lagrangien relativiste d'un système libre
+				\item Démonstration et définition du théorème de Ricci, de la dérivée covariante, de l'identité de Ricci, du tenseur de Riemann-Christoffel, du tenseur de Ricci, du scalaire de Ricci, des deux identités de Bianchi et enfin du tenseur d'Einstein
+				\item Définition mathématique de la capacité et détermination de l'expression d'une capacité plane parallèle 
+				\item Détermination de l'énergie potentielle électrostatique
+				\item Démonstration de la valeur du champ et potentiel électrique d'un fil rectiligne infini.
+				\item Détermination des propriétés fondamentales des dipôles électriques tel que le moment dipolaire rigide, la présentation du moment dipolaire induite, les liaisons hydrogènes, les forces de Van der Waals, etc.
+				\item Définition du principe de symétrie de Curie et énoncé des 6 propriétés en découlant
+				\item Définition des pseudo-vecteurs
+				\item Démonstration du calcul du volume de la pyramide, du paraboloïde, du tetraèdre et de l'ocataèdre ainsi que écritue du volume du cube et de parallélépipéde
+				\item Détermination du champ magnétique produit par un solénoïde toroïdal, d'un solénoïde rectiligne infini et d'une boucle de courant
+				\item Détermination du champ magnétique produit par un dipôle magnétique et définitions fondamentales des propriétés des matériaux magnétiques 
+				\item Calcul du rayon de Larmor et de la pulsation gyromagnétique dans un cadre non relativiste
+				\item Détermination du lagrangien du champ électromagnétique et par extension dans l'approximation non relativiste du tenseur du champ électromagnétique
+				\item Introduction aux calculs du rayonnement émis par une charge accélérée (rayonnement synchrotron, potentiels retardés de Liénard-Wiechert)
+				\item Calcul des valeurs des résistances et capacités en série. 
+				\item Différence entre le potentiel électrique et le potentiel électromoteur
+				\item Démonstration de la loi de Faraday et définition de la "self"
+				\item Démonstrations des formules de Descartes pour les surfaces sphériques concaves et convexes réfringent et non réfrignent ainsi que pour les lentilles réfringentes. 
+				\item Définition du stigmatisme et démonstration que la parabole est rigoureusement stigmatique
+				\item Démonstration des formules de Descartes pour les lentilles minces et détermination de loi de conjugaison
+				\item Définition de la dioptrie et explication des différentes handicaps visuels
+			\end{itemize}
+		\item \textbf{Septembre 2004}
+			\begin{itemize}[noitemsep]
+				\item Énonce du principe de Mach
+				\item Présentation de l'effet photoélectrique et détermination de la loi physique le régissant. Démonstration par l'exemple que la lumière peut être vue à la fois comme un corpuscule ou comme une onde
+				\item Démonstration du théorème de la classe monotone
+				\item Détermination détaillée de l'équation de Klein-Gordon généralisée (particule relativiste dans un champ magnétique) ainsi que de l'équation de Dirac libre avec laquelle sont exposées les solutions explicites de Pauli (particules, antiparticules). 
+				\item Détermination du rayon de l'atome en utilisant la diffusion de Rutherford-Coulomb (in extenso: détermination de la section efficace de Rutherford)
+				\item Présentation des interactions macroscopiques et microscopiques du rayonnement X et gamma avec la matière (étude qui comporte les détails de la matérialisation du photon en une paire électron-positron). 
+				\item Introduction aux spineurs en définissant.
+				\item Définition des propriétés opératoires des matrices, des matrices remarquables, des déterminants, des vecteurs et valeurs propres dans le chapitre d'algèbre linéaire. 
+				\item Enoncés des postulats de la physique quantique ondulatoire
+- Détermination des orbitales de l'atome hydrogénoïde
+			\end{itemize}
+		\item \textbf{Novembre 2004}
+			\begin{itemize}[noitemsep]
+				\item Exposé et démonstration du théorème de Noether
+- Enumération de quelques constantes physiques, chimiques, et astronomiques
+				\item Ajout de biographies sur Smith, Say, Malthus, Keynes, Walras et Pareto
+				\item Introduction à la théorie de la spéculation: calcul de l'espérance mathématique prévisionnelle d'un actif financier
+				\item Introduction à la théorie de préférence (modèle d'Arrow-Debreu). En d'autres termes: étude de l'utilité des paniers des agents économiques et des courbes d'indifférences
+				\item Exposé des solutions de l'équation de Black \& Scholes et remarques sur le delta
+				\item Démonstration de l'équation de parité Call-Put
+				\item Modèle de détermination du stock intial (optimal) dans la cadre des technique de gestion de production 
+			\end{itemize}
+		\item \textbf{Janvier 2005}
+			\begin{itemize}[noitemsep]
+				\item Ajout de biographies sur Penrose, Hawking, Turing et Marx
+				\item Développement de la version "duaire" des équations de Maxwell et exposé (démonstration) de la provenance de l'expression (hypothèse) des monopôles magnétiques
+				\item Définition des algorithmes de classe P, NP et NPC.
+				\item Démonstration du théorème fondamental de l'analyse ou également appelé "théorème fondamental du calcul intégral et différentiel"
+				\item Présentation du cube $cGh$ et de l'interprétation de Copenhague
+				\item Introduction aux concepts des réseaux de neurones formels
+				\item Introduction aux concepts des algorithmes génétiques
+				\item Introduction rigoureuse aux espaces fractales
+				\item Introduction à l'informatique quantique
+				\item Introduction à la logique floue
+				\item Démonstration du théorème de Shannon, des théorèmes de Morgan, théorèmes d'expansion, tables de Karnaugh, addionneur complet, soustracteur complet
+			\end{itemize}
+		\item \textbf{Avril 2005}
+			\begin{itemize}[noitemsep]
+				\item Définitions de base sur les codes en blocs, les codes linéaires, les codes systématiques
+				\item Démonstration de la relation de la variation relativiste de la masse
+				\item Introduction aux codes et codes préfixes
+				\item Calcul du nombre de jours entre deux dates données
+				\item Techniques de calculs d'arrondis
+				\item Définition des rentes post et praenumerando rigides ou non à taux constant (avenir certain) ou variables
+				\item Définition et étude des propriétés des emprunts à remboursement ou annuité constant. 
+			\end{itemize}
+		\item \textbf{Avril 2006}
+			\begin{itemize}[noitemsep]
+				\item résentation du critère de Schild par l'intermédiaire de l'effet Einstein (redshift gravitationnel)
+				\item Développement de la l'approximation newtonienne de l'équation des géodésiques.
+				\item Définitions et démonstrations des formes développés des quadrivecteurs déplacement, vitesse, courant, accélération et énergie-impulsion
+				\item Démonstration de la provenance du tenseur du champ électromagnétique et calculs de transformation de référentiels.
+				\item Définition d'une tautologie, principe de non-tautologie
+				\item Descriptions, définitions et démonstrations nombreuses sur les quaternions + démonstration de l'irrationalité du nombre d'euler
+				\item Définition de la loi log-normal et triangulaire et démonstration de leur espérance et écart-type
+				\item Introduction au calcul d'erreurs (incertitudes absolues et relatives, propagation des erreurs, chiffres significatifs, etc.)
+				\item Définition de la loi de Weibull, démonstration de son espérance et écart-type
+				\item Démonstration de la déviation de la lumière au bord d'un astre avec le modèle newtonien
+				\item Définition d'une matrice de rotation (et développements y relatifs)
+				\item Démonstration de l'existence de la division euclidienne dans l'anneau des polynômes
+				\item Définitions du MWRR (Money Weighted Time of Return) et du TWRR (Time Weighted Rate of Return)
+				\item Démonstration du théorème de Gauss-Ostrogradsky 
+			\end{itemize}
+		\item \textbf{Juillet 2006}
+			\begin{itemize}[noitemsep]
+				\item Définition du concept d'espace dual
+				\item Définition de la loi de Pareto et démonstration de l'espérance et de la variance de la loi
+				\item Définition des quantiles (quartile, centile)
+				\item Démonstration que le mode est la valeur qui minimise la dispersion absolue
+				\item Démonstration de l'inégalité de Minkowski et Bienaymé-Tchebychev
+				\item Démonstration de la loi faible des grands nombres
+				\item Démonstration de la formule d'Euler pour les graphes planaires
+				\item Introduction mathématique à la méthode de contrôles de processus Six Sigma
+				\item Démonstration du théorème du calcul variationnel
+				\item Démonstration du calcul de la vitesse superluminique apparente d'un astre à Redshift élevé
+				\item Méthode de résolution de jeux à somme nul utilisant la recherche opérationnelle
+				\item Définition des fonds de placement
+				\item Démonstration de l'expression du bêta selon les modèle de régression linéaire simple (Sharpe)		
+			\end{itemize}
+		\item \textbf{Octobre 2006}
+			\begin{itemize}[noitemsep]
+				\item Démonstration des estimateurs et vraisemblances des lois de Poisson et Binomiale
+				\item Présentation du concept de "couleur" et de la synthèse additive et soustractive
+				\item Démonstration de l'équation d'Einstein des champs (approche par l'approximation des champs faibles)
+				\item Différenciation du principe d'équivalence, principe d'équivalence faible et principe d'équivalence d'Einstein
+				\item Démonstration de la durée de l'arc Diurne des planètes dans l'approximation de la précession et nutation nulle
+				\item Étude numérique et formelle (approximative) des points de Lagrange d'un système binaire
+				\item Méthode de résolution des équations polynomiales du 4èmes degré (méthode de Ferrari)
+				\item Présentation du déterminant de Gram via le volume euclidien représenté par le produit mixte des vecteurs d'une base canonique
+				\item Définition des fonctions monotones, strictement monotones, etc.. sans approche formelle pure
+				\item Détermination approximative via le potentiel de Yukawa (champs massiques) de la masse des mésons de l'interactions faible et de l'interaction nucléaire forte.
+				\item Introduction aux équation différentielles linéaires et du premier ordre
+			\end{itemize}
+		\item \textbf{Décembre 2007}
+			\begin{itemize}[noitemsep]
+				\item Nombres et polynômes de Bernoulli
+				\item Limite de Roche
+				\item Aplattisement des corps célestes
+				\item Pression et température cinétique
+				\item Force aimant ou électroaimant
+				\item Espaces vectoriels hermitiens et de Hilbert
+				\item Solution de Schwarzschild en relativité générale
+				\item Précession du périhélie de Mercure en relativité générale
+				\item Déflexion de la lumière en relativité générale
+				\item Effet Shapiro en relativité générale
+				\item Modèle d'évaluation des actifs financiers
+				\item L'Univers Trou Noir
+				\item Constantes de couplage des interactions fondamentales
+				\item Hamiltonien de l'équation de Schrödinger pour une particule chargée dans un champ électromagnétique
+				\item Chaînes de Markov
+				\item Théorie des files d'attentes
+				\item Introduction aux mathématiques du génie météo et marin
+				\item Exemples pratiques dans MS Excel du modèle d'efficience de Markowitz
+				\item Exemples pratiques dans MS Excel du modèle d'efficience de Sharp
+				\item Démonstration (simpliste) du théorème de Green(-Riemann) et de Stokes
+				\item Introduction à l'analyse par composantes principales
+				\item Démonstration du théorème spectral/cas réel
+				\item Ajout des biographies sur Heckman, McFadden et Tesla
+				\item Introduction à la régression logistique
+				\item Démonstration du théorème de Rolle et des accroissements finis
+				\item Démonstration du théorème de l'Hopital et des accroissements finis généralisés
+				\item Introduction et démonstration en statistique de la fonction géométrique, sa variance et son espérance
+				\item Démonstration du calcul de la surface et du volume des 5 polyèdres réguliers platoniciens
+				\item Introduction à l'algèbre et géométrie corporelle
+				\item Masse critique (masse Jeans) et Rayon critique (Rayons de Jeans) d'effondrement d'un nuage interstellaire/pépinières d'étoiles
+				\item Temps d'effondrements d'un nuage interstellaire
+				\item Durée de vie nucléaire d'une étoile
+				\item Introduction aux transformées de Fourier
+				\item Résolution détaillée des E.D.L. homogènes à coefficients constants
+				\item Spirale de Cornu
+				\item Mathématique des fonctions biométriques
+				\item Détermination et résolution simple de l'équation de Pauli
+				\item Solution générale (transformée de Fourier) de l'équation d'onde électromagnétique
+				\item Introduction à la resistance des matériaux
+				\item Horizon visuel
+				\item Taux de croissance d'une population en fonction de la température
+				\item Tube de Pitot et Perte de charge
+				\item Théories de jauge $U(1)$ en physique quantique des champs
+				\item Courbes de Bézier
+				\item Système d'équation différentielles avec exponentiation de matrices
+			\end{itemize}
+		\item \textbf{Septembre 2008}
+			\begin{itemize}[noitemsep]
+				\item Nouvelles primitives usuelles importantes
+				\item Démonstration détaillée des fonctions arcsinh et arccosh
+				\item Démonstration de l'équation de Laplace et de la relation de Mayer
+				\item Démonstration de la propagation d'ondes de pression
+				\item Introduction historique pour la physique nucléaire
+				\item Démonstration des relations de Maxwell en thermodynamique et introduction à l'énergie et enthalpie libre
+				\item Modèle d'atmosphère adiabatique
+				\item Démonstration des équations de Lorenz et de l'effet papillon
+				\item Prisme
+				\item Conditions de cohérence/interférence d'ondes électromagnétique
+				\item Sphère de Bloch
+				\item Primitives supplémentaires pour le Génie Civil et la Mécanique analytique
+				\item Démonstration du volume de révolution de surface minimale
+				\item Traitement de la particule libre
+				\item Traitement du qubit polarisé et de qubit de spin 1/2
+				\item Fonction caractéristique et théorème central limite
+				\item Quelques démonstrations sur les inégalités dans les triangles
+				\item Démonstration du volume d'un tonneau à section circulaire
+				\item Démonstration de l'origine de la variance et de l'espérance de la loi de Student et Fisher-Snedecor
+				\item Introduction au coût marginal
+				\item Test statistique de l'ANOVA à un facteur
+				\item Test statistique d'ajustement du Khi-deux de Pearson
+				\item Ajout des biographies sur Pearson, Gosset et Fisher
+				\item Introduction à l'analyse de la variance de la régression
+				\item Analyse Factorielle des Correspondances
+				\item Développement des circuits linéaires RC, RL, RLC série libres et forcés
+			\end{itemize}
+		\item \textbf{Septembre 2009}
+			\begin{itemize}[noitemsep]
+				\item Analyse de systèmes à topologie simple ou complexe pour la maintenance préventive
+				\item Introduction aux fractions continues finies et infinies
+				\item Solutions détaillées de l'effet tunnel d'une barrière rectangulaire
+				\item Modèle mathématique de la désintégration alpha via effet tunnel
+				\item Introduction au mouvement brownien selon modèle de Langevin
+				\item Introduction à la tribologie/frottement
+				\item Introduction à l'analyse des séries temporelles
+				\item Démonstrations supplémentaires sur les indices de capabilité et procédé long terme et court terme ainsi que des appareils de mesure en statistique des procédés, des PPM et démonstration de la relation de Taguchi
+				\item Démonstration de l'expression des potentiels électrique et magnétique de Lienard-Wiechert
+				\item Introduction à l'analyse complexe
+				\item Démonstration de la deuxième équation de Friedmann en cosmologie
+				\item Démonstration du "ralentissement" de la lumière aux abords d'un Trou Noir
+				\item Démonstration de l'expression du développement de Taylor d'une fonction de deux variables réelles
+				\item Introduction aux plans d'expérience
+				\item Démonstration du théorème d'Ehrenfest
+				\item Démonstration des estimateurs de la loi de Weibull à deux paramètres
+				\item Ajout d'un exemple d'application de la théorie de la décision
+				\item Théorie des bandes (approximation parabolique et semi-classique) dans le cadre des semi-conducteur
+				\item Théorème des résidus et séries de Laurent
+				\item Démonstration des valeurs du Lean Six Sigma pour les processus
+			\end{itemize}
+		\item \textbf{Octobre 2011}
+			\begin{itemize}[noitemsep]
+				\item Calcul de l'orbite géostationnaire
+				\item Calculs sur les ballons sonde PVC en météorologie
+				\item Développements sur le gyroscope symétrique pesant et de la toupie
+				\item Indice de Gini
+				\item Équilibre séculaire, transitoire et non-équilibre en filiation radioactive
+				\item Détermination approximative du rayon d'étoiles en rotation rapide
+				\item Présentation de la Value At Risk delta-normale historique et en variance-covariance
+				\item Deux nouvelles histoires drôles dans la section Humour...
+				\item Ajout d'une biographie sur Agner Krarup Erlang
+				\item Modèle statistique empirique de contrôle des salaires
+				\item Démonstration simplifiée de l'absence d'opportunité d'arbitrage en finance
+				\item Présentation du concept de portefeuille autofinancé sur sous-jacent risqué
+				\item  Introduction aux techniques mathématiques des assurances
+				\item Développements mathématiques sur la puissance et l'intensité d'une onde sonore longitudinale
+				\item  Test statistique $Z$ bilatéral sur la différence de deux moyennes
+				\item Test statistique de Student sur deux moyennes d'échantillons appariés
+				\item Démonstration de la relation de l'intervalle de confiance statistique de proportions d'échantillons de grande taille
+				\item Test statistique de l'égalité de deux proportions d'échantillons de grande taille
+				\item Application du théorème de Shannon au calcul d'un indice de diversité en statistiques
+				\item Démonstration de la détermination des coefficients d'une régression linéaire multiple
+				\item Démonstration de la détermination des coefficients d'une régression linéaire simple passant par l'origine
+				\item Introduction à l'analyse de la sensibilité
+				\item Introduction aux statistiques de rangs/ordres
+				\item Démonstration de la provenance, de l'espérance et de la variance de la loi binomiale négative
+				\item Introduction aux cartes de contrôles avec démonstrations mathématiques détaillées
+				\item Présentation de l'approche mathématique du Google Page Rank à ses débuts
+				\item Démonstration de l'identité de Beltrami pour la simplification de l'équation d'Euler-Lagrange
+				\item Test statistique binomial exact pour l'équilibre d'une population ayant deux caractéristiques
+				\item Développements et études des vagues de gravité dans un fluide
+				\item Quelques développements simples sur les engrenages/arbres d'engrenages
+				\item Démonstration mathématique de l'effet de peau
+				\item Théorie de l'arc-en-ciel
+				\item Théorie du pendule double
+				\item Loi de distribution de Boltzmann
+				\item Loi de Dalton et d'Amagat
+				\item Écoulement de la chaleur
+				\item Puissance moyenne en courant alternatif
+				\item Présentation de quelques calculs sur le betatron
+			\end{itemize}
+		\item \textbf{Mai 2013}
+			\begin{itemize}[noitemsep]
+				\item Exemple détaillé de construction d'un réseau de neurones particulier avec MS Office Excel
+				\item Résolution des équations différentielles linéaires homogènes d'ordre 1 à coefficients non constants
+				\item Ajout de l'exemple d'une transformée de Fourier d'une fonction Gaussienne et propriété de dérivation de la transformée de Fourier d'une dérivée
+				\item Introduction aux interactions dans les ANOVA à deux facteurs
+				\item Intervalle de confiance et intervalle de prédiction d'une régression linéaire
+				\item Test des signes (médiane) en statistiques
+				\item Introduction aux probabilités conditionnelles et l'espérance conditionnelle avec la loi de Pareto
+				\item Détermination des estimateurs de la loi Gamma selon les méthodes des moments
+				\item Ajout d'une deuxième approche pour la mise en évidence des marées
+				\item Test statistique d'ajustement de Kolmogorov-Smirnov avec approche de Lilliefors
+				\item Démonstration du modèle de gestion des quotas d'exploitation de Scheafer
+				\item Démonstration du calcul de la période synodique des planètes et du temps de rétrogradation
+				\item Démonstration de la construction de ponts browniens
+				\item Démonstration de la provenance de la carte de contrôle des événements rares
+				\item Calcul du facteur d'actualisation d'une assurance retraite basé sur l'inflation et l'espérance de vie
+				\item Démonstration de l'ANOVA à deux facteurs sans répétition et à deux facteurs avec répétition
+				\item Démonstration mathématique et physique élémentaire du fonctionnement du LASER
+				\item Ajout de petites biographies sur Neper, Wilcoxon, Born, Heisenberg, Jordan, Kolmogorov, Stokes, Ostrogradsky, Zeeman, Henry, Faraday,  Meitner, Biot, Debye, Drude et Ohm
+				\item Théorème de la série de Taylor avec reste intégral
+				\item Stabilité de la loi de Poisson
+				\item Test statistique de Poisson à 1 et 2 échantillons
+				\item Tests statistiques non paramétriques de Kruskal-Wallis et Friedman
+				\item Test statistique de normalité de Ryan-Joiner
+				\item Test statistique C de Cochran
+				\item Séries de Taylor-Maclaurin usuelles
+				\item Régression polynomiale par la méthode des moindres carrés
+				\item M.D.F. spatio-temporelle avec équations de Maxwell
+				\item Analyse du seuil de rentabilité
+				\item Oscillateur harmonique mécanique
+				\item Effet Doppler acoustique
+				\item Superposition d'ondes périodiques
+				\item Test statistique de l'étendue de Tukey
+				\item Modèle prévisionnel par moyenne mobile, coefficients saisonniers, lissage simple, double de Brown, double de Holt (additif), double de Holt et Winter (multiplicatif)
+				\item Introduction élémentaire aux processus autorégressifs AR, autorégressifs AM, ARMA et ARIMA
+				\item Démonstration de l'expression du facteur de correction sur population finie
+				\item Test statistique exact de Fisher
+				\item Lissage exponentiel de Laplace
+				\item Kappa d'agrément de Cohen et test statistique de McNemar
+				\item Modèle d'analyse de survie de Kaplan-Meier
+				\item V de Cramer
+				\item Clustering avec algorithme des K-Means
+				\item Clustering avec algorithme pour dendrogrammes
+				\item Test statistique de la somme des rangs signés de Wilcoxon à 1 échantillon et à deux échantillons appariés
+				\item Étude quantitative de l'énergie potentielle effective (modèle harmonique de la liaison atomique) de l'atome hydrogénoïde
+				\item Démonstration de l'équation des poutres (équation d'Euler-Bernoulli)
+				\item Calcul du taux de défaillance d'un système en utilisant la technique du maximum de vraisemblance
+				\item Ajout d'une chronologie des sciences
+				\item Démonstration du modèle d'Einstein (loi de Dulong-Petit) de la capacité calorifique des solides cristallins et dérivation du modèle de Debye
+				\item Modèle de Langenvin du diamagnétisme et paramagnétisme
+				\item Introduction au calcul d'intégrales curvilignes
+				\item Détermination naïve de l'énergie d'un dipôle magnétique
+				\item Modèle nucléaire en "goutte liquide"
+				\item Modèle de la résonance magnétique de spin
+				\item Méthode du facteur d'intégrant de résolution d'équations différentielles
+				\item Méthode de variation de la constante pour la résolution d'équations différentielles
+				\item Loi de Mendel
+				\item Rente viagère temporaire et différée
+				\item Cycle de Carnot
+				\item Modèle d'évaluation des actions de Durand et Gordon-Shapiro
+				\item Test statistique d'Anderson-Darling
+				\item Optimisation non-linéaire par la méthode Newton-Quadratique et de Gauss-Newton
+				\item Méthode d'interpolation polynomiale de Lagrange
+				\item Test statistique de Cochran-Mantel-Heanzel
+			\end{itemize}
+		\item \textbf{Novembre 2016}
+			\begin{itemize}[noitemsep]
+				\item Décomposition en valeurs singulières SVD
+			\end{itemize}
+		\item \textbf{Décembre 2016}
+			\begin{itemize}[noitemsep]
+				\item Test de Fieller (rapport de deux moyennes)
+			\end{itemize}
+		\item \textbf{Janvier 2017}
+			\begin{itemize}[noitemsep]
+				\item Problème de la cheminée en chute
+				\item Cartes de contrôle de Levey-Jennings
+				\item Plans d'expérience de mélange en réseau avec variables de processus
+				\item Taux de panne moyen (fiabilité)
+				\item Modèle de fiabilité de chaîne de Markov
+				\item Conception de tests de fiabilité (temps de test du khi-carré, taille de l'échantillon binomial, taille de l'échantillon bêta-binomial)
+				\item Linéarisation de la distribution de Weibull
+				\item Pendule inversé
+				\item Test d'autocorrélation de Durbin-Watson
+				\item Méthode de Fisher pour $p$-valeurs multiples
+				\item Loupe
+				\item Cartes de contrôle de Laney
+				\item Classification des coniques par le déterminant	
+				\item Classification des équations aux dérivées partielles
+			\end{itemize}
+		\item \textbf{Février 2017}
+			\begin{itemize}[noitemsep]
+				\item Bases de la loi Normale repliée (fonction de densité et cumulée)
+				\item Fonction de densité et cumulée de la loi demi-Normal et variance, espérance et médiane correspondante
+				\item Séries téléscopiques et de Gandi
+				\item Somme de Césaro
+				\item Différenciation implicite
+				\item Dérivation composée bivariée
+			\end{itemize}
+		\item \textbf{Mars 2017}
+			\begin{itemize}[noitemsep]
+				\item Méthode d'intégration de Laplace
+				\item Pseudo Erreur Standard (PSE) de Lenth pour les erreur margianles des plans factoriels non-répliqués
+				\item Erreurs marginales de Pareto pour les plans d'expériences factoriels avec réplications
+				\item Désirabilité des plans d'expérience
+			\end{itemize}
+		\item \textbf{Avril 2017}
+			\begin{itemize}[noitemsep]
+				\item Métrique de Friedmann–Lemaître–Robertson–Walker
+				\item Inégalité de Jensen
+			\end{itemize}
+		\item \textbf{Mai 2017}
+			\begin{itemize}[noitemsep]
+				\item Introduction aux ondes gravitationnelles en champs faibles
+				\item Une approche mathématique du "diviser pour mieux régner" en gouvernance
+				\item Trois nouveaux gags dans la section d'humour
+			\end{itemize}
+		\item \textbf{Juillet 2017} (v3.7 $\rightarrow$ v3.8)
+			\begin{itemize}[noitemsep]
+				\item Photos d'un arc-en-ciel quasi-vertical et photo d'un appereil fonctionnement sur la base de la résonance magnétique nucléaire
+				\item Détalis sur la méthode de rétro-propagation pour les réseaux de neurones
+				\item Nouveaux détails mathématiques sur l'effet de levier en régression linéaire simple
+				\item Applications numériques de quelques tests expérimentaux de la Relativité Générale
+				\item Détermination de la géodésique de la sphère (comme exemple dans le section de Mécanique Analytique)
+				\item Méthode de classification ZeroR
+				\item Méthode des $K$ plus proches voisins
+				\item Définition d'une fonction concave/convexe (pour la démonstration de l'inégalité de Jensen)
+				\item Démonstration de l'orthogonalité des polynômes de Hermite
+				\item Démonstration du modèle d'évaluation des options de Bachelier
+				\item Démonstration de l'égalité de Cox-Ross-Ingersoll pour les Forward/Future
+				\item Démonstration du tenseur énergie-impulsion pour un fluide non-relativiste
+				\item Définition de la distance orthodromique
+				\item Démonstration de l'aire (surface) s'une section d'ellipse
+				\item Démonstration de l'orbite stable profonde de Schwarzschild
+				\item Expérience Hafele–Keating avec traitement via le formalisme de la Relativité Générale
+				\item Introduction des hyperparamètres de Machine Learning (apprentissage machine)
+				\item Lissage par densité de noyaux (Kernel smoothing)
+				\item Risque de défaut de crédit
+				\item Ajout de nombreuses dates dans la section de chronologie
+			\end{itemize}
+		\item \textbf{Novembre 2017} (v3.8 $\rightarrow$ v3.9)
+			\begin{itemize}[noitemsep]
+				\item Création des références croisées dans le texte (mais à améliorer!)
+				\item Ajout d'un nouveau point au règles de publiction scientifiques (citer les études équivalents, si existantes, pour méta-analyses ultérieures)
+				\item Démonstration de la dérivée de $f(g)^{g(x)}$
+				\item Arbre de décision OneR (One Rule) pour la Data Science avec matrix de confusion y relative
+				\item Règles d'association pour le machine learning (apprentissage machine)
+				\item Kurtosis (coefficient d'aplatissement) et Skewness (coefficient d'asymétrie)
+			\end{itemize}
+		\item \textbf{Janvier 2018} (v3.9 $\rightarrow$ v3.10)
+			\begin{itemize}[noitemsep]
+				\item Équation de continuité de Dirac
+				\item Modèle CCR (Charnes, Cooper et Rhodes) du modèle Data Envelopment Analysis (DEA)
+				\item Divergence de Kullback-Leibler
+				\item Convolution discrète et linéaire
+				\item Intégrale de Dirichlet
+				\item Tests de permutation
+				\item Ajout de références croisées supplémentaires
+			\end{itemize}
+			\item \textbf{June 2018} (v3.10 $\rightarrow$ v3.11)
+			\begin{itemize}[noitemsep]
+				\item Il y avait une erreur de frappe concernant le signe de l'angle retourné par la fonction $\mathrm{atan()}$ ($-$ au lieu d'un $+$)
+				\item Ajout de quelques tables de Taguchi supplémentaires
+				\item Démonstration de la loi du khi-deux non-central à un degré de liberté pour l'étude des intervalles de tolérance
+				\item Ajout de détails sur la régression forcée à l'origine (particulièrement sur le problème du calcul du $R^2$ dans ce cas là!)
+				\item Ajout de nouvelles images (sur la tromperie des données, un gag sur le chat de Schrödinger, comparaison des tailles des planètes, une illustration de la différence en le bagging et boosting en apprentissage machine)
+				\item Ajout dans la section d'Astronomie de tables de données intéressantes sur les planètes du système solaire (incluant Pluton!)
+				\item Ajout dans la section d'Astrophysique d'une table de données intéressante sur quelques étoiles fameuses
+				\item Modèle de survie de Cox (modèle à hasard proportionnel de Cox)
+				\item Nous avons rendu plus explicite le lien entre la méthode de Gauss-Newton et la méthode des gradients descendants
+				\item Démonstration des intervalles de confiance pour l'estimateur de Kaplan-Meier et le modèle de hasard proportionnel de Cox (ration de hasard)
+		\end{itemize}
+		\item \textbf{June 2019} (v3.11 $\rightarrow$ v3.12)
+			\begin{itemize}[noitemsep]
+				\item Améliorations et corrections relativement au décalage vers le rouge
+				\item Ajout de petites biographies sur Yates, Friedmann, Lemaître et Cramer
+				\item Améliorations sur la partie concernant les modèles d'Univers de FRLW
+				\item Ajout d'une dizaine d'harmoniques sphériques supplémentaires dans la section de Chimie Quantique (grâce a Wikipédia!)
+				\item Brève introduction à l'analyse $XYZ$
+				\item Introduction au concept d'avantage mécanique idéal et d'avantage mécanique actuel
+		\end{itemize}
+	\end{itemize}
+
+\chapter{Nomenclature}
+
+This chapter contains a summary with simple description of all symbols used in this book.
+
+	\begin{table}[H]
+	\centering
+	\begin{tabular}{*8l}
+	$\alpha$ \verb?alpha? &$\theta$ \verb?theta? & o o &$\tau$ \verb?tau? \\
+	$\beta$ \verb?beta? &$\vartheta$ \verb?vartheta? &$\pi$ \verb?pi?         &$\upsilon$ \verb?upsilon? \\
+	$\gamma$ \verb?upsilon? &$\xi$ \verb?xi?  &$\varpi$ \verb?varpi? &$\phi$ \verb?phi?  \\
+	$\delta$ \verb?delta? &$\kappa$ \verb?kappa? &$\rho$ \verb?rho? &$\varphi$ \verb?varphi? \\
+	$\varepsilon$ \verb?epsilon? &$\lambda$ \verb?lambda? &$\varrho$ \verb?varrho? &$\chi$ \verb?chi?  \\
+	$\varepsilon$ \verb?varepsilon? &$\mu$ \verb?mu? &$\sigma$ \verb?sigma? &$\psi$ \verb?psi? \\
+	$\zeta$ \verb?zeta? &$\nu$ \verb?nu? &$\varsigma$ \verb?varsigma? &$\omega$ \verb?omega? \\
+	$\eta$ \verb?eta?\\
+    \\
+	$\Gamma$ \verb?Gamma? &$\Lambda$ \verb?Lambda? &$\Sigma$ \verb?Sigma? &$\Psi$ \verb?Psi? \\
+	$\Delta$ \verb?Delta? &$\Xi$ \verb?Xi? &$\Upsilon$ \verb?Upsilon? &$\Omega$ \verb?Omega?\\
+	$\Theta$ \verb?Theta? &$\Pi$ \verb?Pi? &$\Phi$ \verb?Phi?
+	\end{tabular}
+	\caption{Greek letters}\label{greek}
+	\end{table}
+
+	and the mathematical operators and objects used in the book:
+	\begin{itemize}[label={},leftmargin=0.5cm]
+		\setlength{\itemsep}{1pt}
+  		\item $($ Open parenthesis
+  		\item $)$ Close parenthesis
+  		\item $[$ Open bracket
+  		\item $]$ Close bracket
+  		\item $\therefore$ Therefore
+  		\item $\because$ Because
+	 	\item $\varnothing$ Empty Set
+	 	\item $=$ Equality symbol
+	 	\item $:=$, $\triangleq$ By definition symbols
+	 	\item $>$ greater than
+	 	\item $<$ less than
+	 	\item $\gg$ much greater than
+	 	\item $\ll$ much smaller than
+	 	\item $\leq$ less than or equal to
+	 	\item $\geq$ bigger or equal to
+	 	\item $\succ$ preferred to (for utility in econometry)
+	 	\item $\prec$ not preferred to (for utility in econometry)
+	 	\item $\succeq$ preferred or equal to (for utility in econometry)
+	 	\item $\preceq$ not preferred or equal to (for utility in econometry)
+	 	\item $\sim$ equivalent to (for utility in econometry)
+	 	\item $\mathbb{N}$ Natural Numbers set (positive integers)
+	 	\item $\mathbb{Z}$ Relative Numbers set (all integers)
+	 	\item $\mathbb{Q}$ Rational Numbers set (ratio of relative numbers
+	 	\item $\mathbb{R}$ Real Numbers set
+	 	\item $\mathbb{C}$ Complex Numbers set
+	 	\item $\Re$ Real part of a complex number
+	 	\item $\Im$ Imaginary par of a complex number
+	 	\item $\aleph$ Transfinite Cardinal symbol
+	 	\item $\wedge$ AND operator, noted \& in computer science and corresponding to multiplication in maths
+	 	\item $\equiv$ Identity symbol (left term is assumed to be equal to the right one and vice-versa)
+	 	\item $\cong$ Approximately equal symbol
+	 	\item $\propto$ Linear proportional symbol 
+	 	\item $\in$ Symbol that means left term belongs to the right term
+	 	\item $\not\in$ Symbol that means left term does not belong to the right term
+	 	\item $\subset$ Symbol that means left term (that is a ) is a subset of the set on the right 
+	 	\item $\not\subset$ Symbol that means left term (that is a set) is not a subset of the set on the right
+	 	\item $\subseteq$ Symbol that means left term (that is a set) is a subset or a set equal to the set on the right
+	 	\item $\not\subseteq$ Symbol that means left term (that is a set) is not a subset or even a set equal to the set on the right
+	 	\item $\cup$ Symbol that means left term (that is a set) is merged (union) with right term that is also a set
+	 	\item $\sqcup$ Symbol that means left term (that is an interval) is merged (union) with right term that is also an interval
+	 	\item $\cap$ Symbol that means we take only intersection (equal) items of left and right terms that are sets
+	 	\item $\displaystyle \bigcup_{i=1}^n$ Union of multiple sets
+	 	\item $\displaystyle \bigcap_{i=1}^n$ Intersection of multiple sets
+	 	\item $\mid$ Such that...
+	 	\item $\forall$ For all...
+	 	\item $\exists$ It exists...
+	 	\item $+$ Addition symbol of two terms
+	 	\item $\displaystyle \sum_{i=1}^n$ Summation of multiple terms
+	 	\item $-$ Subtraction symbol of two terms
+	 	\item $\times, \cdot$ Multiplication (product) symbol of two terms
+	 	\item $\times$ If left and right terms are vectors, this is the cross product (vectorial product)
+	 	\item $\circ$ dot product, also named "inner product" a scalar product
+	 	\item $\otimes$ tensor product
+	 	\item $\displaystyle \prod_{i=1}^n$ Multiplication (product) symbol of multiple terms
+	 	\item $\displaystyle\int$ Riemann primitive
+	 	\item $\displaystyle\int\limits_a^b$ Riemann integral in range $[a,b]$
+	 	\item $\displaystyle\oint$ Closed non-oriented curvilinear integral (line integral)
+	 	\item $\displaystyle\ointclockwise$ Clockwise path integral
+	 	\item $\displaystyle\ointctrclockwise$ Counterclockwise path integral
+	 	\item $\div, \backslash$, $:$ Symbols for division for two terms depending on school level
+	 	\item $:$ When the left term is a matrix at the right one a vectros, this is "Frobenius (matrix) dot product" or "Frobenius inner product"
+	 	\item $P$ Depending on the context this is a Probability, Cumulated Probability or Part of a set
+	 	\item $\text{E}$ In statistics the expected mean
+	 	\item $\text{V},\sigma^2$ In statistics the variance
+	 	\item $\hat{x}$ In physics the amplitude of $x$, in statistics an estimator of $x$
+	 	\item $C_k^n,\begin{pmatrix}n\\k\end{pmatrix}$ is the binomial coefficient define by $n!/(k!(n-k)!)$
+	 	\item $\mathds{1}$ Unity matrix (diagonal with $1$, $0$ everywhere else)
+	 	\item $\ln$ Natural logarithm (base $e$) of a number
+	 	\item $\log$ Base $10$ (if not indicated) logarithm of a number
+	 	\item $\earth$ Symbol in astronomy and astrophysics to refer to the Earth
+	 	\item $\odot$ Symbol in astronomy and astrophysics to refer to the Sun
+	\end{itemize}
+
+
+	%\chapter{About the Redactor}
+	%\input{Chapter_AboutRedactor.tex}
+
+
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Liste des Figures}
+	\listoffigures
+
+	\newpage\null\thispagestyle{empty}\newpage %création d'une nouvelle page en forcant la disparition du numéro de page	
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Liste des Tables}
+	\listoftables
+	
+	\newpage\null\thispagestyle{empty}\newpage %création d'une nouvelle page en forcant la disparition du numéro de page	
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Liste des Algorithmes}
+	\listofalgorithms
+
+	\newpage\null\thispagestyle{empty}\newpage %création d'une nouvelle page en forcant la disparition du numéro de page	
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Bibliographie}
+	\defbibnote{myprenote}{Puisque cet ouvrage se veut être une référence, nous avons choisi d'exclure quand cela était possible toute référence externe dans les textes. Nous avons donc simplement rassemblé ici une liste bibliographique finale en fonction d'un classement d'utilisation et sans prétendre à son exhaustivité.
+
+	Les livres et documents listés ci-dessous sont ce que nous considérons comme les meilleures références (excluant ainsi les PDF gratuits) qui ont été consultées pour la préparation de ce livre et à qui nous devons de nombreux emprunts de haute qualité. Leur lecture peut être aussi profitable pour tous ceux qui souhaitent améliorer, approfondir et élargir leur spectre de connaissances.
+
+	De nombreuses références, cependant, ne sont plus disponibles sur le marché et il est également nécessaire que le lecteur se souvienne que chaque entrée dans la bibliographie ci-dessous fait elle-même référence à des dizaines d'autres références, il est ainsi impossible d'avoir une liste exhaustive et objective (sans tomber sur un cercle vicieux...) de tous les livres de haute qualité existant dans les domaines couverts par \textit{Opera Magistris}.
+
+	Et donc voici la bibliographie:}
+
+	\nocite{*}
+	\printbibliography[prenote=myprenote]
+	
+	+ un millier de publications scientifiques de mauvaise qualité et incomplets qui ne mértient pas d'être cités.
+	
+	\phantomsection
+	\cleardoublepage
+	\addcontentsline{toc}{chapter}{Index}
+	\printindex  
+	
+	\chapter{Dons}
+	La rédaction de ce livre a pris jusqu'à maintenant $15$ ans et d'énormes efforts et sacrifices, donc si vous trouvez ce livre utile, tous les dons ou cadeux sont grandement appréciés et à cette fin, vous pouvez utiliser les liens ci-dessous en fonction de vos préférences:
+	
+	\begin{center}
+	\href{http://www.sciences.ch/htmlfr/donate.php}{\includegraphics[scale=0.14]{img/paypal.jpg}} $\qquad$ \href{https://www.patreon.com/sciences}{\includegraphics[scale=0.20]{img/patreon.jpg}} $\qquad$ \href{https://www.tipeee.com/elements-of-applied-mathematics}{\includegraphics[scale=0.023]{img/tipeee.jpg}} $\qquad$ \href{http://ko-fi.com/operamagistris}{\includegraphics[scale=0.34]{img/kofi.jpg}} $\quad$ \href{http://a.co/cqLIx5V}{\includegraphics[scale=0.55]{img/amazon_whish_list.jpg}}
+	\end{center}
+	\begin{center}
+		{\large \faBitcoin} 4248d58b-90f0-493e-8114-8dc9f8e5b492
+	\end{center}
+	Les dons serviront principalement aux fins suivantes:
+	\begin{itemize}
+		\item Payer des professionnels pour la relecture
+		\item Mandater des graphistes pour dessiner des illustrations vectorielles copyleft haute définition
+		\item Mandater des professionnels de  \LaTeX{} pour améliorer la conception de tous les tableaux et en-têtes
+		\item Mandater de photographes pour faire des photos d'installations techniques
+		\item Dégager du temps pour écrire les $2'400$ pages restantes et faire des améliorations continues
+		\item Pour garder le livre librement accessible dans le monde entier et le traduire dans d'autres langues
+		\item Donner les sources \LaTeX{} (et donc aussi les illustrations) gratuitement
+		\item Redistribuer $1\%$ à OpenStax, $5\%$ à Wikipedia, et $10\%$ au développeur TeXMaker et MiKTeX
+	\end{itemize}
+	Il existe également d'autres façons de soutenir ce livre pour s'assurer qu'il soit maintenu dans le futur! Passez le mot et soumettez des du contenu (avec preuves mathématiques détaillées) aidera aussi grandement!
+	
+	Merci pour votre aimable attention et votre soutien.
+	
+	\newpage\null\thispagestyle{empty}\newpage %Creation of a new empty page and force removal of page number
+	\pagestyle{empty}
+	\pagecolor{gray}
+	\newgeometry{margin=2.5cm}
+	{\Huge \textbf{Opera Magistris}}
+	
+	{\Large Éléments de Mathématiques Appliquées pour Ingénieurs}
+
+	{\color{white}Le but de ce livre et de son PDF associé est de présenter aux personnes qui découvrent l'étude des Mathématiques Appliquées, les concepts de base et de le faire avec un certain niveau de rigueur (les démonstrations sont complètes ou au moins poussées au point où elles peuvent jugées l'être), de détails et de cohérence en ce qui concerne les conventions d'écriture et avec un maximum de pédagogie. Ce livre est également né du souhait de présenter quelques idées scientifiques et de comprendre comment ils affectent modestement notre style de vie, notre façon de penser, de travailler et leur impact sur notre écosystème et l'efficacité déraisonnable des mathématiques appliquées. En effet, les enjeux liés à la science prennent de plus en plus d'importance dans notre culture contemporaine et représentent un enjeu majeur en termes d'éthique, de citoyenneté et de développement.
+
+	Ce livre n'est pas destiné à être un roman à lire du début à la fin. Il est conçu comme un ouvrage de référence (après correction de toutes les erreurs et textes complétés ...) qui, lorsque de simples questions se posent, permet de trouver rapidement des réponses en utilisant la technologie informatique gratuitement. Ce livre ne peut pas (et ne prétend pas) remplacer une éducation scolaire formelle par un enseignant et de nombreux exercices pratiques. Il peut cependant être vu comme une référence de formules (avec des preuves) ou un complément théorique relativement bon à la préparation de divers examens.
+
+	Le point de vue qui est adopté dans ce livre est celui de l'ingénieur pragmatique, désireux d'étudier les mathématiques, la physique classique, l'économétrie, l'analyse numérique, la statistique, la mécanique relativiste, la physique quantique, les mathématiques sociales, l'informatique, la chimie, etc. sans perdre du temps dans un vocabulaire formel et extravagant et inutilisable dans l'industrie moderne. De ce point de vue, les concepts et méthodes présentés ne sont que quelques-uns des outils mathématiquo-physique typiques (minimum minimorum dans le domaine). L'expert spécialiste n'y trouvera probablement rien de nouveau et l'étudiant qui serait intéressé par une théorie particulière devrait savoir que chaque sujet est malheureusement beaucoup plus vaste que tout ce qui a été discuté ici jusqu'à présent... L'ambition n'est pas celle que nous pouvons avoir pour les étudiants d'un cours de mathématiques pour lequel l'acquisition d'outils est importante. Cela rend donc possible un style un peu formel où l'on peut donner des preuves moins complètes et se focaliser sur la compréhension intuitive des sujets présentés, afin de les visualiser et de les maîtriser.
+
+	Nous dédions ce livre à tous ceux pour qui chaque réponse est une question!
+
+
+\begin{flushright}
+\includegraphics{img/ISBN.eps} 
+\end{flushright}
+
+\end{document}
